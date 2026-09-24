@@ -50,6 +50,8 @@ export function ChatPage() {
   const [error, setError] = useState('')
   const [profile, setProfile] = useState<Profile | null>(null)
   const bottomRef = useRef<HTMLDivElement | null>(null)
+  // 会话侧栏：桌面默认展开,手机(≤760px)默认收起为抽屉
+  const [sideOpen, setSideOpen] = useState(() => !window.matchMedia('(max-width: 760px)').matches)
 
   const active = store.sessions.find((s) => s.id === store.activeId) ?? store.sessions[0]
   const settings = loadSettings()
@@ -146,86 +148,99 @@ export function ChatPage() {
   const numOrNull = (v: string): number | null => (v.trim() === '' ? null : Number(v) || null)
 
   return (
-    <div className="page">
-      <header>
-        <h1>💬 对话</h1>
-        <button className="mode-badge" onClick={() => window.dispatchEvent(new CustomEvent('fna:goto', { detail: 'recognize' }))}>
-          {modeLabel}
-        </button>
-      </header>
-
-      <details className="card profile-card">
-        <summary>我的档案（注入对话）</summary>
-        {profile && (
-          <div className="profile-grid">
-            <label>
-              目标
-              <select value={profile.goal} onChange={(e) => void saveProfile({ ...profile, goal: e.target.value })}>
-                <option value="">未设置</option>
-                <option>减脂</option>
-                <option>增肌</option>
-                <option>维持</option>
-              </select>
-            </label>
-            <label>
-              每日热量目标 kcal
-              <input
-                type="number"
-                value={profile.dailyCalorieTarget ?? ''}
-                onChange={(e) => void saveProfile({ ...profile, dailyCalorieTarget: numOrNull(e.target.value) })}
-              />
-            </label>
-            <label>
-              体重 kg
-              <input
-                type="number"
-                value={profile.weightKg ?? ''}
-                onChange={(e) => void saveProfile({ ...profile, weightKg: numOrNull(e.target.value) })}
-              />
-            </label>
-            <label>
-              过敏 / 忌口
-              <input
-                value={profile.allergies}
-                placeholder="花生、乳糖不耐…"
-                onChange={(e) => void saveProfile({ ...profile, allergies: e.target.value })}
-              />
-            </label>
-            <label>
-              偏好
-              <input
-                value={profile.preference}
-                placeholder="少油、不吃香菜…"
-                onChange={(e) => void saveProfile({ ...profile, preference: e.target.value })}
-              />
-            </label>
-          </div>
-        )}
-      </details>
-
-      <div className="sess-row">
-        {store.sessions.map((se) => (
-          <span
-            key={se.id}
-            className={`sess-chip${se.id === store.activeId ? ' on' : ''}`}
-            onClick={() => setStore((st) => ({ ...st, activeId: se.id }))}
-          >
-            {se.title}
-            <i
-              className="sess-del"
-              onClick={(e) => {
-                e.stopPropagation()
-                delSession(se.id)
-              }}
+    <div className="chat-shell">
+      {sideOpen && <div className="side-overlay" onClick={() => setSideOpen(false)} />}
+      <aside className={`chat-side${sideOpen ? ' open' : ''}`}>
+        <div className="side-head">
+          <span>对话历史</span>
+          <button className="side-close" onClick={() => setSideOpen(false)}>
+            ×
+          </button>
+        </div>
+        <div className="side-sess">
+          {store.sessions.map((se) => (
+            <div
+              key={se.id}
+              className={`sess-item${se.id === store.activeId ? ' on' : ''}`}
+              onClick={() => setStore((st) => ({ ...st, activeId: se.id }))}
             >
-              ×
-            </i>
-          </span>
-        ))}
-        <button className="sess-add" onClick={addSession}>
-          ＋ 新对话
-        </button>
-      </div>
+              <span className="sess-title">{se.title}</span>
+              <i
+                className="sess-del"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  delSession(se.id)
+                }}
+              >
+                ×
+              </i>
+            </div>
+          ))}
+          <button className="side-new" onClick={addSession}>
+            ＋ 新对话
+          </button>
+        </div>
+        <details className="card profile-card">
+          <summary>我的档案（注入对话）</summary>
+          {profile && (
+            <div className="profile-grid">
+              <label>
+                目标
+                <select value={profile.goal} onChange={(e) => void saveProfile({ ...profile, goal: e.target.value })}>
+                  <option value="">未设置</option>
+                  <option>减脂</option>
+                  <option>增肌</option>
+                  <option>维持</option>
+                </select>
+              </label>
+              <label>
+                每日热量目标 kcal
+                <input
+                  type="number"
+                  value={profile.dailyCalorieTarget ?? ''}
+                  onChange={(e) => void saveProfile({ ...profile, dailyCalorieTarget: numOrNull(e.target.value) })}
+                />
+              </label>
+              <label>
+                体重 kg
+                <input
+                  type="number"
+                  value={profile.weightKg ?? ''}
+                  onChange={(e) => void saveProfile({ ...profile, weightKg: numOrNull(e.target.value) })}
+                />
+              </label>
+              <label>
+                过敏 / 忌口
+                <input
+                  value={profile.allergies}
+                  placeholder="花生、乳糖不耐…"
+                  onChange={(e) => void saveProfile({ ...profile, allergies: e.target.value })}
+                />
+              </label>
+              <label>
+                偏好
+                <input
+                  value={profile.preference}
+                  placeholder="少油、不吃香菜…"
+                  onChange={(e) => void saveProfile({ ...profile, preference: e.target.value })}
+                />
+              </label>
+            </div>
+          )}
+        </details>
+      </aside>
+      <div className="chat-main">
+        <header className="chat-head">
+          <button className="side-toggle" onClick={() => setSideOpen((v) => !v)} aria-label="切换会话栏">
+            ☰
+          </button>
+          <button
+            className="mode-badge"
+            onClick={() => window.dispatchEvent(new CustomEvent('fna:goto', { detail: 'settings' }))}
+          >
+            {modeLabel}
+          </button>
+        </header>
 
       <section className="card chat-stream">
         {!active || active.msgs.length === 0 ? (
@@ -255,6 +270,7 @@ export function ChatPage() {
         <button className="primary" disabled={busy || !input.trim()} onClick={() => void send()}>
           {busy ? '思考中…' : '发送'}
         </button>
+      </div>
       </div>
     </div>
   )

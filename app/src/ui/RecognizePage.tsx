@@ -1,21 +1,16 @@
+/** 过渡期识别试验台：对话化重构后,正式识别入口迁入对话页(P2/P3)。
+ *  本页仅保留 URL ?autotest=1 自检与联调能力,配置/备份已迁往 SettingsPage。 */
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { recognizeMeal, testConnection, type RecognizeConfig } from '../ai/vlm'
-import { PRESETS, getPreset } from '../ai/providers'
+import { recognizeMeal, type RecognizeConfig } from '../ai/vlm'
 import type { MealRecognition } from '../ai/schema'
 import { compressImage, type CompressedImage } from '../lib/image'
 import { readCache, writeCache } from '../lib/cache'
-import { loadSettings, saveSettings, type Settings } from '../lib/settings'
+import { loadSettings } from '../lib/settings'
 import { computeMeal, upsertApiDish } from '../lib/nutrition_db'
 import { applyCorrectionText } from '../lib/correction'
-import {
-  budgetInfo,
-  enrichLookup,
-  listCachedFoods,
-  toDishNutrition,
-} from '../lib/boohee_api'
+import { budgetInfo, enrichLookup, listCachedFoods, toDishNutrition } from '../lib/boohee_api'
 import { ResultCard } from './ResultCard'
 import { getMealRepo, guessMealType, localDateStr, type MealRecord, type MealType } from '../data/mealRepo'
-import { applyBackup, buildBackup, exportBackup, summarizeBackup, type BackupFile } from '../lib/backup'
 
 interface UsageInfo {
   prompt_tokens?: number
@@ -56,7 +51,7 @@ function makeSyntheticMealImage(): string {
 }
 
 export function RecognizePage() {
-  const [settings, setSettings] = useState<Settings>(loadSettings)
+  const settings = loadSettings() // 只读快照：正式配置在设置页，切换页签重挂载后刷新
   const [comp, setComp] = useState<CompressedImage | null>(null)
   const [dragOver, setDragOver] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
@@ -68,9 +63,6 @@ export function RecognizePage() {
   const [corrInput, setCorrInput] = useState('')
   const [corrLogs, setCorrLogs] = useState<string[]>([])
   const [corrBusy, setCorrBusy] = useState(false)
-  const [testing, setTesting] = useState(false)
-  const [testMsg, setTestMsg] = useState('')
-  const [showSettings, setShowSettings] = useState(false)
   const computed = useMemo(() => (result ? computeMeal(result) : null), [result, dbTick])
   const [raw, setRaw] = useState('')
   const [error, setError] = useState('')
@@ -82,21 +74,13 @@ export function RecognizePage() {
   const [saveMsg, setSaveMsg] = useState('')
   const repoRef = useRef<Awaited<ReturnType<typeof getMealRepo>> | null>(null)
 
-  // 备份与迁移（D14）
-  const [bkKey, setBkKey] = useState(true)
-  const [bkPhotos, setBkPhotos] = useState(true)
-  const [bkBusy, setBkBusy] = useState(false)
-  const [bkMsg, setBkMsg] = useState('')
-  const [pendingImport, setPendingImport] = useState<{ b: BackupFile; summary: string; hasKey: boolean } | null>(null)
-  const importInputRef = useRef<HTMLInputElement | null>(null)
-
   useEffect(() => {
     void getMealRepo().then((r) => {
       repoRef.current = r
     })
   }, [])
 
-  /** M2「能记录」：把当前识别+修正结果按餐次存入本地库（浏览器 localStorage / 原生 SQLite） */
+  /** 把当前识别+修正结果按餐次存入本地库（浏览器 localStorage / 原生 SQLite） */
   async function handleSave() {
     if (!result || !computed || !comp) return
     const repo = repoRef.current ?? (await getMealRepo())
@@ -135,10 +119,6 @@ export function RecognizePage() {
   const abortRef = useRef<AbortController | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const autotestRanRef = useRef(false)
-
-  useEffect(() => {
-    saveSettings(settings)
-  }, [settings])
 
   // 启动时：把薄荷 API 永久缓存播种进营养库（D9 按需补库层）
   useEffect(() => {
@@ -180,69 +160,9 @@ export function RecognizePage() {
     return () => {
       cancelled = true
     }
+    // settings 为挂载时快照，无需进依赖
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result])
-
-  async function handleExport() {
-    setBkBusy(true)
-    setBkMsg('')
-    try {
-      const how = await exportBackup(await buildBackup(bkKey, bkPhotos))
-      setBkMsg(
-        how === 'shared'
-          ? '备份已生成，请在系统分享面板里保存到文件或发送给自己'
-          : `备份已下载（${bkKey ? '含 API Key，请妥善保管勿外发' : '不含 Key，导入时保留目标机已有 Key'}）`,
-      )
-    } catch (e) {
-      setBkMsg(`导出失败：${e instanceof Error ? e.message : String(e)}`)
-    } finally {
-      setBkBusy(false)
-    }
-  }
-
-  async function handleImportPicked(file: File | null | undefined) {
-    if (!file) return
-    setBkMsg('')
-    try {
-      setPendingImport(summarizeBackup(await file.text()))
-    } catch (e) {
-      setBkMsg(`导入失败：${e instanceof Error ? e.message : String(e)}（需要食聊导出的 JSON 备份）`)
-    }
-  }
-
-  async function handleImportConfirm() {
-    if (!pendingImport) return
-    setBkBusy(true)
-    try {
-      await applyBackup(pendingImport.b)
-      location.reload()
-    } catch (e) {
-      setBkMsg(`导入失败：${e instanceof Error ? e.message : String(e)}`)
-      setBkBusy(false)
-    }
-  }
-
-  /** 切换预设 = 填入该预设的默认地址与模型（用户可随后自行改写） */
-  function applyPreset(presetId: string) {
-    const p = getPreset(presetId)
-    setSettings((s) => ({ ...s, presetId: p.id, baseUrl: p.baseUrl, model: p.defaultModel, chatModel: p.defaultChatModel }))
-    setTestMsg('')
-  }
-
-  async function handleTest() {
-    setTesting(true)
-    setTestMsg('')
-    try {
-      const r = await testConnection({
-        presetId: settings.presetId,
-        baseUrl: settings.baseUrl.trim(),
-        model: settings.model.trim(),
-        apiKey: settings.apiKey.trim(),
-      })
-      setTestMsg(r.message)
-    } finally {
-      setTesting(false)
-    }
-  }
 
   async function acceptFile(file: File | null | undefined) {
     if (!file) return
@@ -326,20 +246,19 @@ export function RecognizePage() {
       apiKey: settings.apiKey.trim(),
     }
     if (settings.presetId !== 'mock' && (!cfg.baseUrl || !cfg.model)) {
-      setError('请先在设置中填写接口地址与模型名')
+      setError('请先到「设置」页填写接口地址与模型名')
       setStatus('error')
       return
     }
     if (settings.presetId !== 'mock' && !cfg.apiKey) {
-      setError('请先在上方设置中填写 API Key')
+      setError('请先到「设置」页填写 API Key')
       setStatus('error')
       return
     }
     await runRecognition(comp.dataUrl, cfg)
   }
 
-  /** 一句话修正（D4 对话为核心）：规则层即时解析；失败时复用当前供应商配置做语义解析（结构化操作，本地执行）。
-   *  识别结果变化会自动触发薄荷 API 按需补库。 */
+  /** 一句话修正：规则层即时解析；失败时复用当前供应商配置做语义解析（结构化操作，本地执行） */
   async function handleCorrect() {
     if (!result || !corrInput.trim()) return
     const apiKey = settings.apiKey.trim()
@@ -398,144 +317,9 @@ export function RecognizePage() {
   return (
     <div className="page">
       <header>
-        <div className="head-row">
-          <h1>🍱 食聊</h1>
-          <button className="gear" onClick={() => setShowSettings((v) => !v)}>
-            {showSettings ? '收起设置 ▲' : '⚙ 设置'}
-          </button>
-        </div>
-        <p className="sub">
-          拍照识别 · 记录 · 对话查询（当前：{settings.presetId === 'mock' ? '模拟模式' : getPreset(settings.presetId).label}）
-        </p>
+        <h1>🍱 食聊 · 识别试验台</h1>
+        <p className="sub">过渡期联调页（正式识别入口在「对话」页发图片）；当前：{settings.presetId === 'mock' ? '模拟模式' : '已配置供应商'}</p>
       </header>
-
-      {showSettings && (
-      <section className="card">
-        <div className="row">
-          <label>供应商预设</label>
-          <select value={settings.presetId} onChange={(e) => applyPreset(e.target.value)}>
-            {PRESETS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        {settings.presetId !== 'mock' && (
-          <>
-            <div className="row">
-              <label>接口地址</label>
-              <input
-                value={settings.baseUrl}
-                placeholder="https://你的域名/v1（运行时补 /chat/completions）"
-                onChange={(e) => setSettings((s) => ({ ...s, baseUrl: e.target.value }))}
-              />
-            </div>
-            <div className="row">
-              <label>模型</label>
-              <input
-                value={settings.model}
-                list="model-suggestions"
-                placeholder="模型名（可用建议或自由填写）"
-                onChange={(e) => setSettings((s) => ({ ...s, model: e.target.value }))}
-              />
-              <datalist id="model-suggestions">
-                {getPreset(settings.presetId).modelSuggestions.map((m) => (
-                  <option key={m} value={m} />
-                ))}
-              </datalist>
-            </div>
-            <div className="row">
-              <label>API Key</label>
-              <input
-                type="password"
-                value={settings.apiKey}
-                placeholder="sk-xxxx / s-xxxx（在供应商控制台获取）"
-                onChange={(e) => setSettings((s) => ({ ...s, apiKey: e.target.value }))}
-              />
-            </div>
-            <div className="row">
-              <label>对话模型</label>
-              <input
-                value={settings.chatModel}
-                list="chat-model-suggestions"
-                placeholder="对话/语义修正用文本模型（如 glm-4-flash，比视觉模型便宜）"
-                onChange={(e) => setSettings((s) => ({ ...s, chatModel: e.target.value }))}
-              />
-              <datalist id="chat-model-suggestions">
-                {getPreset(settings.presetId)
-                  .modelSuggestions.filter((m) => !m.includes('-4v'))
-                  .map((m) => (
-                    <option key={m} value={m} />
-                  ))}
-              </datalist>
-            </div>
-            <div className="row">
-              <label></label>
-              <button disabled={testing} onClick={() => void handleTest()}>
-                {testing ? '测试中…' : '测试连通性'}
-              </button>
-              {testMsg && <span className="hint">{testMsg}</span>}
-            </div>
-          </>
-        )}
-        <div className="row">
-          <label>薄荷 API Key</label>
-          <input
-            type="password"
-            value={settings.booheeApiKey}
-            placeholder="薄荷科学 ai.boohee.com（可选；识别出错菜时按需补营养库）"
-            onChange={(e) => setSettings((s) => ({ ...s, booheeApiKey: e.target.value }))}
-          />
-        </div>
-        <div className="backup-box">
-          <h3>备份与迁移</h3>
-          <label className="check">
-            <input type="checkbox" checked={bkKey} onChange={(e) => setBkKey(e.target.checked)} />
-            <span>包含 API Key（换机完整迁移用；备份文件含明文 Key，请勿外发）</span>
-          </label>
-          <label className="check">
-            <input type="checkbox" checked={bkPhotos} onChange={(e) => setBkPhotos(e.target.checked)} />
-            <span>包含餐照（体积大；不勾则只迁移数值记录）</span>
-          </label>
-          <div className="actions">
-            <button disabled={bkBusy} onClick={() => void handleExport()}>
-              导出备份
-            </button>
-            <button disabled={bkBusy} onClick={() => importInputRef.current?.click()}>
-              导入备份
-            </button>
-            <input
-              ref={importInputRef}
-              type="file"
-              accept="application/json,.json"
-              hidden
-              onChange={(e) => {
-                void handleImportPicked(e.target.files?.[0])
-                e.target.value = ''
-              }}
-            />
-          </div>
-          {bkMsg && <p className="hint">{bkMsg}</p>}
-          {pendingImport && (
-            <div className="askback">
-              <p>将导入：{pendingImport.summary}</p>
-              <p>⚠ 覆盖本机现有全部数据{pendingImport.hasKey ? '' : '，且保留本机已有 Key'}。确定？</p>
-              <div className="actions">
-                <button className="primary" disabled={bkBusy} onClick={() => void handleImportConfirm()}>
-                  确认导入
-                </button>
-                <button onClick={() => setPendingImport(null)}>取消</button>
-              </div>
-            </div>
-          )}
-        </div>
-        <p className="hint">
-          设置自动保存在本机浏览器（localStorage），Key 仅用于本机调用。预设只是默认值，地址/模型/Key 均可改写；
-          开发期走本地代理绕 CORS，自定义 https 地址若被浏览器拦截，打包 APK 后原生请求不受限。
-        </p>
-      </section>
-      )}
 
       <section className="card">
         <h2>照片</h2>
