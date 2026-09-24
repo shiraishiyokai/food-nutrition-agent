@@ -1,0 +1,21 @@
+# ── 依赖与构建产物 ──
+node_modules/
+dist/
+build/
+.gradle/
+*.apk
+
+# ── Capacitor 同步产物(npm run build + npx cap sync android 可重建) ──
+app/android/app/src/main/assets/public/
+
+# ── 本地工具链与数据集(体积大,可重建/可下载) ──
+toolchain/
+app/.usda/
+
+# ── 本机配置(SDK 路径因机器而异) ──
+local.properties
+
+# ── 临时文件与日志 ──
+.tmp-*
+*.log
+.DS_Store

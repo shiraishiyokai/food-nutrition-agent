@@ -1,0 +1,828 @@
+{
+  "candidates_by_q": {
+    "炸带鱼": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "红烧黄花鱼": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "油焖大虾": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "油焖大虾",
+          "code": "youmendaxia2",
+          "calory": 97,
+          "protein": 13.1,
+          "fat": 3.3,
+          "carbohydrate": 3.7,
+          "units": "只/只、碗/碗"
+        },
+        {
+          "name": "油菜炒蒌蒿(少油少盐)",
+          "code": "fdf0f920",
+          "calory": 56,
+          "protein": 2.4,
+          "fat": 3,
+          "carbohydrate": 5.4,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "虾仁滑蛋": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "白切鸡": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "板栗烧鸡": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "香菇滑鸡": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "香菇滑鸡",
+          "code": "xiangguhuaji",
+          "calory": 89,
+          "protein": 10,
+          "fat": 3.5,
+          "carbohydrate": 5.1,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "红烧猪蹄": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "酱牛肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "红烧狮子头": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "梅菜扣肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "粉蒸肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "鱼香茄子": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "肉末茄子": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "肉末茄子",
+          "code": "roumoqiezi",
+          "calory": 158,
+          "protein": 4.7,
+          "fat": 13.7,
+          "carbohydrate": 5,
+          "units": "盘/盘、碗/碗"
+        }
+      ]
+    },
+    "地三鲜": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "地三鲜",
+          "code": "disanxian",
+          "calory": 103,
+          "protein": 1.4,
+          "fat": 6.7,
+          "carbohydrate": 9.9,
+          "units": "盘/盘"
+        },
+        {
+          "name": "少油版地三鲜",
+          "code": "fd181b60",
+          "calory": 61,
+          "protein": 1.8,
+          "fat": 1.2,
+          "carbohydrate": 11.5,
+          "units": "盘/盘"
+        },
+        {
+          "name": "无油版地三鲜",
+          "code": "fdd61c79",
+          "calory": 49,
+          "protein": 2.1,
+          "fat": 0.2,
+          "carbohydrate": 10.6,
+          "units": "盘/盘"
+        },
+        {
+          "name": "东北地三鲜",
+          "code": "dongbeidisanxian",
+          "calory": 79,
+          "protein": 1.5,
+          "fat": 4,
+          "carbohydrate": 10,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "木须肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "蚂蚁上树": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "蚂蚁上树",
+          "code": "mayishangshu",
+          "calory": 137,
+          "protein": 2.5,
+          "fat": 7.6,
+          "carbohydrate": 14.8,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "香菇油菜": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "蚝油香菇油菜",
+          "code": "fd979539",
+          "calory": 84,
+          "protein": 2.6,
+          "fat": 5.4,
+          "carbohydrate": 8.2,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "番茄牛腩": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "咖喱鸡": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "糖醋里脊": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "糖醋里脊",
+          "code": "tangculiji_xuanlvxinyuahizizhi",
+          "calory": 156,
+          "protein": 12.3,
+          "fat": 9,
+          "carbohydrate": 5.6,
+          "units": "盘/盘"
+        },
+        {
+          "name": "浙式糖醋里脊",
+          "code": "zheshitangculiji",
+          "calory": 172,
+          "protein": 11.8,
+          "fat": 9.2,
+          "carbohydrate": 10,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "煮玉米": {
+      "cat": "蔬菜",
+      "candidates": [
+        {
+          "name": "煮玉米",
+          "code": "zhuyumi",
+          "calory": 84,
+          "protein": 3,
+          "fat": 0.9,
+          "carbohydrate": 17.1,
+          "units": "大根/大根、小根/小根、根(中)/根(中)"
+        }
+      ]
+    },
+    "烤红薯": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "凉拌黄瓜": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "拍黄瓜": {
+      "cat": "凉菜",
+      "candidates": [
+        {
+          "name": "拍黄瓜",
+          "code": "paihuanggua",
+          "calory": 18,
+          "protein": 1,
+          "fat": 0.3,
+          "carbohydrate": 3.2,
+          "units": "盘/盘、碟/碟"
+        }
+      ]
+    },
+    "大拌菜": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "口水鸡": {
+      "cat": "凉菜",
+      "candidates": [
+        {
+          "name": "口水鸡",
+          "code": "koushuiji",
+          "calory": 174,
+          "protein": 17.7,
+          "fat": 9.9,
+          "carbohydrate": 4.1,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "老醋花生": {
+      "cat": "凉菜",
+      "candidates": [
+        {
+          "name": "老醋花生",
+          "code": "fdce42fe",
+          "calory": 306,
+          "protein": 10.9,
+          "fat": 24.2,
+          "carbohydrate": 13.3,
+          "units": "碟/碟"
+        }
+      ]
+    },
+    "紫菜蛋花汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "玉米排骨汤": {
+      "cat": "汤",
+      "candidates": [
+        {
+          "name": "嫩菱玉米排骨汤",
+          "code": "fd6a6dda",
+          "calory": 79,
+          "protein": 4.1,
+          "fat": 5.4,
+          "carbohydrate": 3.5,
+          "units": "碗/碗"
+        },
+        {
+          "name": "鸡枞玉米排骨汤",
+          "code": "fd6248ca",
+          "calory": 78,
+          "protein": 4,
+          "fat": 6,
+          "carbohydrate": 2,
+          "units": "碗/碗"
+        }
+      ]
+    },
+    "鸡汤": {
+      "cat": "汤",
+      "candidates": [
+        {
+          "name": "鸡汤",
+          "code": "mujitang",
+          "calory": 61,
+          "protein": 6.7,
+          "fat": 3.2,
+          "carbohydrate": 1.4,
+          "units": "碗/碗"
+        },
+        {
+          "name": "慈姑鸡汤",
+          "code": "cigujitang",
+          "calory": 40,
+          "protein": 5.4,
+          "fat": 1.2,
+          "carbohydrate": 2,
+          "units": "碗/碗"
+        },
+        {
+          "name": "乌鸡汤",
+          "code": "wujitang",
+          "calory": 72,
+          "protein": 10,
+          "fat": 1.1,
+          "carbohydrate": 6.1,
+          "units": "碗/碗"
+        },
+        {
+          "name": "干贝鸡汤",
+          "code": "fdcb3adc",
+          "calory": 125,
+          "protein": 17.4,
+          "fat": 5.4,
+          "carbohydrate": 1.9,
+          "units": "碗/碗"
+        }
+      ]
+    },
+    "疙瘩汤": {
+      "cat": "汤",
+      "candidates": [
+        {
+          "name": "荆芥疙瘩汤",
+          "code": "fd656812",
+          "calory": 124,
+          "protein": 4.2,
+          "fat": 2.6,
+          "carbohydrate": 21.7,
+          "units": "碗/碗"
+        },
+        {
+          "name": "蛤蜊疙瘩汤",
+          "code": "geligedatang",
+          "calory": 57,
+          "protein": 4.1,
+          "fat": 0.9,
+          "carbohydrate": 8.2,
+          "units": "碗/碗"
+        }
+      ]
+    },
+    "炸酱面": {
+      "cat": "主食",
+      "candidates": [
+        {
+          "name": "素椒炸酱面",
+          "code": "sujiaozhajiangmian",
+          "calory": 199,
+          "protein": 4.3,
+          "fat": 11.4,
+          "carbohydrate": 20.6,
+          "units": "碗/碗"
+        },
+        {
+          "name": "桂冠炸酱面",
+          "code": "guiguanzhajiangmian",
+          "calory": 206,
+          "protein": 9.1,
+          "fat": 6.1,
+          "carbohydrate": 28.8,
+          "units": ""
+        }
+      ]
+    },
+    "过桥米线": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "螺蛳粉": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "凉皮": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "肉夹馍": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "馄饨": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "锅贴": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "葱油饼": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "鸡蛋灌饼": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "烧麦": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "粽子": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "方便面": {
+      "cat": "主食",
+      "candidates": []
+    },
+    "羊肉串": {
+      "cat": "外食",
+      "candidates": []
+    },
+    "汉堡": {
+      "cat": "外食",
+      "candidates": [
+        {
+          "name": "鸭胸汉堡",
+          "code": "fd4104da",
+          "calory": 122,
+          "protein": 6.1,
+          "fat": 5.6,
+          "carbohydrate": 11.8,
+          "units": "个/个"
+        }
+      ]
+    },
+    "披萨": {
+      "cat": "外食",
+      "candidates": [
+        {
+          "name": "披萨皮",
+          "code": "fdad9f0a",
+          "calory": 387,
+          "protein": 12.4,
+          "fat": 8.6,
+          "carbohydrate": 64.7,
+          "units": "块/块"
+        }
+      ]
+    },
+    "意大利面": {
+      "cat": "外食",
+      "candidates": []
+    },
+    "三明治": {
+      "cat": "外食",
+      "candidates": []
+    },
+    "肠粉": {
+      "cat": "外食",
+      "candidates": [
+        {
+          "name": "肠粉",
+          "code": "zhuchangfen",
+          "calory": 110,
+          "protein": 1.3,
+          "fat": 2.2,
+          "carbohydrate": 21,
+          "units": "条/条"
+        },
+        {
+          "name": "猪肠粉",
+          "code": "fddd3805",
+          "calory": 143,
+          "protein": 2.7,
+          "fat": 3.1,
+          "carbohydrate": 26.3,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "蜜汁叉烧": {
+      "cat": "外食",
+      "candidates": [
+        {
+          "name": "蜜汁叉烧",
+          "code": "mizhichashao2",
+          "calory": 376,
+          "protein": 12.1,
+          "fat": 33.6,
+          "carbohydrate": 4.3,
+          "units": "盘/盘"
+        }
+      ]
+    },
+    "卤蛋": {
+      "cat": "蛋白类",
+      "candidates": [
+        {
+          "name": "卤蛋",
+          "code": "lujidan",
+          "calory": 152,
+          "protein": 7.7,
+          "fat": 11,
+          "carbohydrate": 7.1,
+          "units": "个(剥壳)/个(剥壳)"
+        }
+      ]
+    },
+    "咸鸭蛋": {
+      "cat": "蛋白类",
+      "candidates": [
+        {
+          "name": "咸鸭蛋(煮)",
+          "code": "xianyadan_zhu",
+          "calory": 177,
+          "protein": 13.8,
+          "fat": 13.5,
+          "carbohydrate": 0,
+          "units": "个/个"
+        }
+      ]
+    },
+    "鹌鹑蛋": {
+      "cat": "蛋白类",
+      "candidates": [
+        {
+          "name": "鹌鹑蛋",
+          "code": "anchundan",
+          "calory": 160,
+          "protein": 12.8,
+          "fat": 11.1,
+          "carbohydrate": 2.1,
+          "units": "个/个、颗/颗"
+        }
+      ]
+    },
+    "酸奶": {
+      "cat": "饮品",
+      "candidates": [
+        {
+          "name": "酸奶",
+          "code": "suannai_junzhi",
+          "calory": 70,
+          "protein": 3.2,
+          "fat": 1.9,
+          "carbohydrate": 10,
+          "units": "中杯/中杯、杯(小)/杯(小)、盒/盒"
+        }
+      ]
+    },
+    "拿铁咖啡": {
+      "cat": "饮品",
+      "candidates": []
+    },
+    "奶茶": {
+      "cat": "饮品",
+      "candidates": [
+        {
+          "name": "奶茶",
+          "code": "fd6d08b7",
+          "calory": 63,
+          "protein": 0.3,
+          "fat": 3.7,
+          "carbohydrate": 6.9,
+          "units": "杯/杯"
+        },
+        {
+          "name": "港式奶茶",
+          "code": "gangshinaicha",
+          "calory": 27,
+          "protein": 1.2,
+          "fat": 0.6,
+          "carbohydrate": 4.3,
+          "units": "杯/杯"
+        },
+        {
+          "name": "布蕾奶茶",
+          "code": "fde11825",
+          "calory": 71,
+          "protein": 0.7,
+          "fat": 3.8,
+          "carbohydrate": 8,
+          "units": ""
+        }
+      ]
+    },
+    "桃子": {
+      "cat": "水果",
+      "candidates": []
+    },
+    "红烧鱼块": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "清蒸龙利鱼": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "香煎三文鱼": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "蒜蓉粉丝蒸虾": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "爆炒鱿鱼": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "红烧鸡翅": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "爆炒猪肝": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "红烧茄子": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "干煸四季豆": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "虎皮青椒": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "芹菜炒肉丝": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "芹菜炒香干": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "蒜苔炒肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "洋葱炒肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "韭菜炒鸡蛋": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "苦瓜炒蛋": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "肉末豆腐": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "萝卜炖牛腩": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "葱爆羊肉": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "清炒藕片": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "干锅土豆片": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "干锅菜花": {
+      "cat": "家常菜",
+      "candidates": [
+        {
+          "name": "豌豆拌蚕豆(少油少盐)",
+          "code": "fd12d297",
+          "calory": 129,
+          "protein": 7.9,
+          "fat": 2.8,
+          "carbohydrate": 19.8,
+          "units": "盘/盘、碟/碟"
+        }
+      ]
+    },
+    "番茄菜花": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "醋溜白菜": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "手撕包菜": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "白菜炖豆腐": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "猪肉炖粉条": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "红烧冬瓜": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "清炒西葫芦": {
+      "cat": "家常菜",
+      "candidates": []
+    },
+    "蒜蓉西兰花": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "蒜蓉空心菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "清炒油菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "白灼菜心": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "上汤娃娃菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "清炒菠菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "蒜蓉油麦菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "清炒豆芽": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "蒜蓉金针菇": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "蚝油生菜": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "清炒山药": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "清炒莴笋": {
+      "cat": "蔬菜",
+      "candidates": []
+    },
+    "凉拌木耳": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "蒜泥白肉": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "凉拌海带丝": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "皮蛋豆腐": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "凉拌腐竹": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "凉拌三丝": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "水煮毛豆": {
+      "cat": "凉菜",
+      "candidates": []
+    },
+    "西红柿鸡蛋汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "冬瓜排骨汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "莲藕排骨汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "萝卜排骨汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "鲫鱼豆腐汤": {
+      "cat": "汤",
+      "candidates": []
+    },
+    "冬瓜丸子汤": {
+      "cat": "汤",
+      "candidates": []
+    }
+  }
+}

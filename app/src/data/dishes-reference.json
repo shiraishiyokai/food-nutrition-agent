@@ -1,0 +1,2212 @@
+{
+  "version": "v1-2026-09-24",
+  "_readme": "菜肴直录参考值库：数值逐菜实拉自薄荷食物库公开接口（专业营养机构测算值，非政府权威，菜肴级无政府权威数据源）。source_url 为逐条溯源链接；人工核定映射见 scripts/boohee-manual-map.json。运行时 lookup 顺序：个人校准 > 本直录库 > dishes.json 配方派生。",
+  "dishes": [
+    {
+      "id": "ref-yuxiangrousi2",
+      "name": "鱼香肉丝",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 109,
+        "protein_g": 11.4,
+        "fat_g": 5.2,
+        "carbs_g": 4.7
+      },
+      "sodium_mg": 321.54,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "盘": 350,
+        "碗": 300,
+        "碟": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/yuxiangrousi2"
+    },
+    {
+      "id": "ref-jingjiangrousi2",
+      "name": "京酱肉丝",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 170,
+        "protein_g": 15,
+        "fat_g": 9.9,
+        "carbs_g": 5.2
+      },
+      "sodium_mg": 225.23,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "盘": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jingjiangrousi2"
+    },
+    {
+      "id": "ref-huiguorou",
+      "name": "回锅肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 287,
+        "protein_g": 6.5,
+        "fat_g": 27.9,
+        "carbs_g": 2.8
+      },
+      "sodium_mg": 478.84,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/huiguorou"
+    },
+    {
+      "id": "ref-nongjiaxiaochaorou",
+      "name": "农家小炒肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 194,
+        "protein_g": 6.4,
+        "fat_g": 17.3,
+        "carbs_g": 3.9
+      },
+      "sodium_mg": 474.17,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/nongjiaxiaochaorou"
+    },
+    {
+      "id": "ref-fd48bce2",
+      "name": "小炒黄牛肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 122,
+        "protein_g": 16.1,
+        "fat_g": 4.4,
+        "carbs_g": 5
+      },
+      "sodium_mg": 386.8,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd48bce2"
+    },
+    {
+      "id": "ref-laziji",
+      "name": "辣子鸡",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 168,
+        "protein_g": 17.9,
+        "fat_g": 9.4,
+        "carbs_g": 3.2
+      },
+      "sodium_mg": 471.13,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/laziji"
+    },
+    {
+      "id": "ref-shuizhuroupian",
+      "name": "水煮肉片",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 124,
+        "protein_g": 10.4,
+        "fat_g": 7,
+        "carbs_g": 5.3
+      },
+      "sodium_mg": 321.4,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shuizhuroupian"
+    },
+    {
+      "id": "ref-shuizhuyu",
+      "name": "水煮鱼",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 117,
+        "protein_g": 12.8,
+        "fat_g": 5.9,
+        "carbs_g": 3.7
+      },
+      "sodium_mg": 461.23,
+      "typical_portion_g": 50,
+      "portion_presets": {
+        "块": 50
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shuizhuyu"
+    },
+    {
+      "id": "ref-suancaiyu",
+      "name": "酸菜鱼",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 79,
+        "protein_g": 12.1,
+        "fat_g": 2.3,
+        "carbs_g": 2.8
+      },
+      "sodium_mg": 290.38,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/suancaiyu"
+    },
+    {
+      "id": "ref-duojiaoyutou",
+      "name": "剁椒鱼头",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 107,
+        "protein_g": 14.9,
+        "fat_g": 3.1,
+        "carbs_g": 4.9
+      },
+      "sodium_mg": 353.27,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/duojiaoyutou"
+    },
+    {
+      "id": "ref-hongshaodaiyu",
+      "name": "红烧带鱼",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 148,
+        "protein_g": 14,
+        "fat_g": 7.6,
+        "carbs_g": 5.4
+      },
+      "sodium_mg": 641.8,
+      "typical_portion_g": 30,
+      "portion_presets": {
+        "块": 30
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/hongshaodaiyu"
+    },
+    {
+      "id": "ref-sanbeiji",
+      "name": "三杯鸡",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 85,
+        "protein_g": 7.1,
+        "fat_g": 5.2,
+        "carbs_g": 1.5
+      },
+      "sodium_mg": 207.2,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/sanbeiji"
+    },
+    {
+      "id": "ref-fda264b7",
+      "name": "黄焖鸡",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 120,
+        "protein_g": 12.6,
+        "fat_g": 6.2,
+        "carbs_g": 3.3
+      },
+      "sodium_mg": 339.76,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "碗": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fda264b7"
+    },
+    {
+      "id": "ref-dapanji",
+      "name": "大盘鸡",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 111,
+        "protein_g": 10.4,
+        "fat_g": 5.3,
+        "carbs_g": 5.8
+      },
+      "sodium_mg": 117.54,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/dapanji"
+    },
+    {
+      "id": "ref-fd74aa0b",
+      "name": "啤酒鸭",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 100,
+        "protein_g": 9.1,
+        "fat_g": 4.2,
+        "carbs_g": 3.1
+      },
+      "sodium_mg": 112.55,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd74aa0b"
+    },
+    {
+      "id": "ref-fd564d2f",
+      "name": "豆角炒肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 113,
+        "protein_g": 5.4,
+        "fat_g": 7.4,
+        "carbs_g": 7.5
+      },
+      "sodium_mg": 323.72,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd564d2f"
+    },
+    {
+      "id": "ref-jiachangdoufu",
+      "name": "家常豆腐",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 86,
+        "protein_g": 5.3,
+        "fat_g": 5.8,
+        "carbs_g": 4.3
+      },
+      "sodium_mg": 194.33,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "块": 80,
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jiachangdoufu"
+    },
+    {
+      "id": "ref-kaliniurou",
+      "name": "咖喱牛肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 113,
+        "protein_g": 10,
+        "fat_g": 5,
+        "carbs_g": 7.8
+      },
+      "sodium_mg": 244.15,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "碗": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kaliniurou"
+    },
+    {
+      "id": "ref-ziranyangrou2",
+      "name": "孜然羊肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 134,
+        "protein_g": 13.6,
+        "fat_g": 6.9,
+        "carbs_g": 5.1
+      },
+      "sodium_mg": 128.32,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/ziranyangrou2"
+    },
+    {
+      "id": "ref-zhenghongshu",
+      "name": "蒸红薯",
+      "aliases": [],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 65,
+        "protein_g": 1.2,
+        "fat_g": 0.1,
+        "carbs_g": 15.1
+      },
+      "sodium_mg": 41.25,
+      "typical_portion_g": 550,
+      "portion_presets": {
+        "中个": 330,
+        "大个": 550,
+        "小个": 143
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zhenghongshu"
+    },
+    {
+      "id": "ref-zhengnangua",
+      "name": "蒸南瓜",
+      "aliases": [],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 21,
+        "protein_g": 0.6,
+        "fat_g": 0.1,
+        "carbs_g": 4.8
+      },
+      "sodium_mg": 0.73,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "块": 20,
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zhengnangua"
+    },
+    {
+      "id": "ref-quansuanlatang",
+      "name": "酸辣汤",
+      "aliases": [],
+      "category": "汤",
+      "per100g": {
+        "calories": 40,
+        "protein_g": 1.9,
+        "fat_g": 2.2,
+        "carbs_g": 3.3
+      },
+      "sodium_mg": 304.31,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/quansuanlatang"
+    },
+    {
+      "id": "ref-wutangyinertang",
+      "name": "银耳汤",
+      "aliases": [],
+      "category": "汤",
+      "per100g": {
+        "calories": 25,
+        "protein_g": 0.7,
+        "fat_g": 0.1,
+        "carbs_g": 6.2
+      },
+      "sodium_mg": 5.53,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300,
+        "碗(小)": 250
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/wutangyinertang"
+    },
+    {
+      "id": "ref-lvdoutang",
+      "name": "绿豆汤",
+      "aliases": [],
+      "category": "汤",
+      "per100g": {
+        "calories": 37,
+        "protein_g": 1.9,
+        "fat_g": 0.1,
+        "carbs_g": 7.3
+      },
+      "sodium_mg": 0.29,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300,
+        "碗(小)": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/lvdoutang"
+    },
+    {
+      "id": "ref-danchaofan",
+      "name": "蛋炒饭",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 141,
+        "protein_g": 5.4,
+        "fat_g": 5.2,
+        "carbs_g": 18.3
+      },
+      "sodium_mg": 358.08,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/danchaofan"
+    },
+    {
+      "id": "ref-yangzhoudanchaofan",
+      "name": "扬州炒饭",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 151,
+        "protein_g": 6.6,
+        "fat_g": 8.4,
+        "carbs_g": 12.7
+      },
+      "sodium_mg": 428.06,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/yangzhoudanchaofan"
+    },
+    {
+      "id": "ref-niuroumian",
+      "name": "牛肉面",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 136,
+        "protein_g": 6.4,
+        "fat_g": 2.8,
+        "carbs_g": 21.8
+      },
+      "sodium_mg": 328.76,
+      "typical_portion_g": 539,
+      "portion_presets": {
+        "份": 539
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/niuroumian"
+    },
+    {
+      "id": "ref-xihongshijidanmian",
+      "name": "西红柿鸡蛋面",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 102,
+        "protein_g": 4.2,
+        "fat_g": 2.4,
+        "carbs_g": 16.2
+      },
+      "sodium_mg": 234.52,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xihongshijidanmian"
+    },
+    {
+      "id": "ref-suanlafen",
+      "name": "酸辣粉",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 133,
+        "protein_g": 1.7,
+        "fat_g": 7.1,
+        "carbs_g": 16.3
+      },
+      "sodium_mg": 693.35,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/suanlafen"
+    },
+    {
+      "id": "ref-reganmian",
+      "name": "热干面",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 153,
+        "protein_g": 4.2,
+        "fat_g": 2.4,
+        "carbs_g": 28.7
+      },
+      "sodium_mg": 165.8,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/reganmian"
+    },
+    {
+      "id": "ref-shuijianbao",
+      "name": "生煎包",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 320,
+        "protein_g": 12.4,
+        "fat_g": 18.7,
+        "carbs_g": 25.1
+      },
+      "sodium_mg": 228.71,
+      "typical_portion_g": 50,
+      "portion_presets": {
+        "个": 50
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shuijianbao"
+    },
+    {
+      "id": "ref-shanghainanxiangxiaolongbao",
+      "name": "小笼包",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 240,
+        "protein_g": 12.3,
+        "fat_g": 9,
+        "carbs_g": 28.1
+      },
+      "sodium_mg": 207.74,
+      "typical_portion_g": 35,
+      "portion_presets": {
+        "个": 35
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shanghainanxiangxiaolongbao"
+    },
+    {
+      "id": "ref-zizhijiucaihezi",
+      "name": "韭菜盒子",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 178,
+        "protein_g": 8.8,
+        "fat_g": 4.8,
+        "carbs_g": 26.1
+      },
+      "sodium_mg": 576.59,
+      "typical_portion_g": 150,
+      "portion_presets": {
+        "个": 150
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zizhijiucaihezi"
+    },
+    {
+      "id": "ref-shouzhuabing",
+      "name": "手抓饼",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 300,
+        "protein_g": 12.5,
+        "fat_g": 3.4,
+        "carbs_g": 56.3
+      },
+      "sodium_mg": 191.27,
+      "typical_portion_g": 80,
+      "portion_presets": {
+        "个": 80
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shouzhuabing"
+    },
+    {
+      "id": "ref-bc15b3ab_c_573973",
+      "name": "麻辣香锅",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 135,
+        "protein_g": 9.2,
+        "fat_g": 8.1,
+        "carbs_g": 6.8
+      },
+      "sodium_mg": 424.74,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "碗": 350,
+        "锅": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/bc15b3ab_c_573973"
+    },
+    {
+      "id": "ref-kaoyu",
+      "name": "烤鱼",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 152,
+        "protein_g": 16.1,
+        "fat_g": 9.3,
+        "carbs_g": 1
+      },
+      "sodium_mg": 178.5,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "条": 500
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kaoyu"
+    },
+    {
+      "id": "ref-kaojichi",
+      "name": "烤鸡翅",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 181,
+        "protein_g": 16.2,
+        "fat_g": 9.7,
+        "carbs_g": 7.1
+      },
+      "sodium_mg": 286.96,
+      "typical_portion_g": 70,
+      "portion_presets": {
+        "个": 70
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kaojichi"
+    },
+    {
+      "id": "ref-zhajitui",
+      "name": "炸鸡腿",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 244,
+        "protein_g": 13.6,
+        "fat_g": 7.9,
+        "carbs_g": 29.5
+      },
+      "sodium_mg": 375.54,
+      "typical_portion_g": 150,
+      "portion_presets": {
+        "个": 150,
+        "小个": 76
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zhajitui"
+    },
+    {
+      "id": "ref-jianshutiao",
+      "name": "薯条",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 188,
+        "protein_g": 2.2,
+        "fat_g": 11.9,
+        "carbs_g": 18.5
+      },
+      "sodium_mg": 470.11,
+      "typical_portion_g": 100,
+      "portion_presets": {
+        "碟": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jianshutiao"
+    },
+    {
+      "id": "ref-shousi2",
+      "name": "寿司",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 155,
+        "protein_g": 7.2,
+        "fat_g": 7.3,
+        "carbs_g": 16
+      },
+      "sodium_mg": 371.24,
+      "typical_portion_g": 30,
+      "portion_presets": {
+        "个": 30
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shousi2"
+    },
+    {
+      "id": "ref-fdc17196",
+      "name": "盐酥鸡",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 310,
+        "protein_g": 19,
+        "fat_g": 20,
+        "carbs_g": 14
+      },
+      "sodium_mg": 560,
+      "typical_portion_g": 20,
+      "portion_presets": {
+        "个": 20
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fdc17196"
+    },
+    {
+      "id": "ref-fddb62ac",
+      "name": "茶叶蛋",
+      "aliases": [],
+      "category": "蛋白类",
+      "per100g": {
+        "calories": 141,
+        "protein_g": 13.7,
+        "fat_g": 9.1,
+        "carbs_g": 2.2
+      },
+      "sodium_mg": 444,
+      "typical_portion_g": 60,
+      "portion_presets": {
+        "个": 50,
+        "大个": 60
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fddb62ac"
+    },
+    {
+      "id": "ref-suanlatudousi",
+      "name": "酸辣土豆丝",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 86,
+        "protein_g": 2.5,
+        "fat_g": 2.2,
+        "carbs_g": 15.2
+      },
+      "sodium_mg": 206.37,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/suanlatudousi"
+    },
+    {
+      "id": "ref-fd99f7ac",
+      "name": "橙汁",
+      "aliases": [],
+      "category": "饮品",
+      "per100g": {
+        "calories": 49,
+        "protein_g": 0.7,
+        "fat_g": 0.1,
+        "carbs_g": 11.5
+      },
+      "sodium_mg": 2,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "杯": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd99f7ac"
+    },
+    {
+      "id": "ref-cheng",
+      "name": "橙子",
+      "aliases": [],
+      "category": "水果",
+      "per100g": {
+        "calories": 47,
+        "protein_g": 1,
+        "fat_g": 0.1,
+        "carbs_g": 11.8
+      },
+      "sodium_mg": 0,
+      "typical_portion_g": 270,
+      "portion_presets": {
+        "中个": 270,
+        "小个": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/cheng"
+    },
+    {
+      "id": "ref-xigua_junzhi",
+      "name": "西瓜",
+      "aliases": [],
+      "category": "水果",
+      "per100g": {
+        "calories": 32,
+        "protein_g": 0.8,
+        "fat_g": 0.1,
+        "carbs_g": 8
+      },
+      "sodium_mg": 3.3,
+      "typical_portion_g": 250,
+      "portion_presets": {
+        "块": 250
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xigua_junzhi"
+    },
+    {
+      "id": "ref-putao_junzhi",
+      "name": "葡萄",
+      "aliases": [],
+      "category": "水果",
+      "per100g": {
+        "calories": 45,
+        "protein_g": 0.4,
+        "fat_g": 0.3,
+        "carbs_g": 10.3
+      },
+      "sodium_mg": 1.9,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "串": 200,
+        "大串": 500,
+        "小串": 100,
+        "粒": 10
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/putao_junzhi"
+    },
+    {
+      "id": "ref-li_junzhi",
+      "name": "梨",
+      "aliases": [],
+      "category": "水果",
+      "per100g": {
+        "calories": 51,
+        "protein_g": 0.3,
+        "fat_g": 0.1,
+        "carbs_g": 13.1
+      },
+      "sodium_mg": 1.7,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "中个": 250,
+        "大个": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/li_junzhi"
+    },
+    {
+      "id": "ref-huolongguo",
+      "name": "火龙果",
+      "aliases": [],
+      "category": "水果",
+      "per100g": {
+        "calories": 55,
+        "protein_g": 1.1,
+        "fat_g": 0.2,
+        "carbs_g": 13.3
+      },
+      "sodium_mg": 2.7,
+      "typical_portion_g": 530,
+      "portion_presets": {
+        "个": 530
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/huolongguo"
+    },
+    {
+      "id": "ref-xiarenhuadan",
+      "name": "虾仁滑蛋",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 160,
+        "protein_g": 11.1,
+        "fat_g": 11.3,
+        "carbs_g": 3.5
+      },
+      "sodium_mg": 733.32,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xiarenhuadan",
+      "note": "经变体词「虾仁滑蛋」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-jiangniurou",
+      "name": "酱牛肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 246,
+        "protein_g": 31.4,
+        "fat_g": 11.9,
+        "carbs_g": 3.2
+      },
+      "sodium_mg": 896.2,
+      "typical_portion_g": 15,
+      "portion_presets": {
+        "片": 15
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jiangniurou",
+      "note": "经变体词「酱牛肉」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-meicaikouroubao",
+      "name": "梅菜扣肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 389,
+        "protein_g": 8.3,
+        "fat_g": 36.2,
+        "carbs_g": 10
+      },
+      "sodium_mg": 684.61,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/meicaikouroubao",
+      "note": "经变体词「梅菜扣肉」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-fenzhengrou",
+      "name": "粉蒸肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 264,
+        "protein_g": 5.6,
+        "fat_g": 18.5,
+        "carbs_g": 18.2
+      },
+      "sodium_mg": 489.32,
+      "typical_portion_g": 25,
+      "portion_presets": {
+        "片": 25
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fenzhengrou",
+      "note": "经变体词「粉蒸肉」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-yuxiangqiezi",
+      "name": "鱼香茄子",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 78,
+        "protein_g": 3.8,
+        "fat_g": 3.6,
+        "carbs_g": 8.8
+      },
+      "sodium_mg": 316.1,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "盘": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/yuxiangqiezi",
+      "note": "经变体词「鱼香茄子」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-muxurou2",
+      "name": "木须肉",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 121,
+        "protein_g": 9.9,
+        "fat_g": 5.7,
+        "carbs_g": 8.5
+      },
+      "sodium_mg": 209.39,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/muxurou2",
+      "note": "经变体词「木须肉」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-kalijikuai",
+      "name": "咖喱鸡块",
+      "aliases": [
+        "咖喱鸡"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 134,
+        "protein_g": 10.2,
+        "fat_g": 7.7,
+        "carbs_g": 6
+      },
+      "sodium_mg": 252.91,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kalijikuai",
+      "note": "经变体词「咖喱鸡块」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-kaohongshu2",
+      "name": "烤红薯",
+      "aliases": [],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 90,
+        "protein_g": 2,
+        "fat_g": 0.2,
+        "carbs_g": 20.7
+      },
+      "sodium_mg": 36,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "中个": 300,
+        "大个": 500,
+        "小个": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kaohongshu2",
+      "note": "经变体词「烤红薯」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-qingbanhuanggua",
+      "name": "凉拌黄瓜",
+      "aliases": [],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 42,
+        "protein_g": 1,
+        "fat_g": 2.6,
+        "carbs_g": 3.8
+      },
+      "sodium_mg": 148.85,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/qingbanhuanggua",
+      "note": "经变体词「凉拌黄瓜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-zicaitang_yuanliao",
+      "name": "紫菜汤",
+      "aliases": [
+        "紫菜蛋花汤"
+      ],
+      "category": "汤",
+      "per100g": {
+        "calories": 14,
+        "protein_g": 1.4,
+        "fat_g": 0.1,
+        "carbs_g": 2.3
+      },
+      "sodium_mg": 194.83,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zicaitang_yuanliao",
+      "note": "经变体词「紫菜汤」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-laobeijingzhajiangmian",
+      "name": "老北京炸酱面",
+      "aliases": [
+        "炸酱面"
+      ],
+      "category": "主食",
+      "per100g": {
+        "calories": 162,
+        "protein_g": 6,
+        "fat_g": 6.1,
+        "carbs_g": 21.1
+      },
+      "sodium_mg": 490.74,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/laobeijingzhajiangmian",
+      "note": "经变体词「老北京炸酱面」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-fd3ab954",
+      "name": "螺蛳粉",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 134,
+        "protein_g": 2.5,
+        "fat_g": 6.1,
+        "carbs_g": 17.7
+      },
+      "sodium_mg": 611.32,
+      "typical_portion_g": 445,
+      "portion_presets": {
+        "份": 445
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd3ab954",
+      "note": "经变体词「螺蛳粉」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-roujiamo",
+      "name": "肉夹馍",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 186,
+        "protein_g": 7.1,
+        "fat_g": 8.1,
+        "carbs_g": 21.8
+      },
+      "sodium_mg": 82.73,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "个": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/roujiamo",
+      "note": "经变体词「肉夹馍」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-fd9f6956",
+      "name": "鲜肉馄饨",
+      "aliases": [
+        "馄饨"
+      ],
+      "category": "主食",
+      "per100g": {
+        "calories": 183,
+        "protein_g": 9.2,
+        "fat_g": 2.4,
+        "carbs_g": 31.2
+      },
+      "sodium_mg": 725.87,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "碗": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd9f6956",
+      "note": "经变体词「鲜肉馄饨」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-congyoubing",
+      "name": "葱油饼",
+      "aliases": [],
+      "category": "主食",
+      "per100g": {
+        "calories": 252,
+        "protein_g": 9.6,
+        "fat_g": 5.1,
+        "carbs_g": 43
+      },
+      "sodium_mg": 285.36,
+      "typical_portion_g": 160,
+      "portion_presets": {
+        "个": 160
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/congyoubing",
+      "note": "经变体词「葱油饼」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-kaoyangrouchuan",
+      "name": "烤羊肉串",
+      "aliases": [
+        "羊肉串"
+      ],
+      "category": "外食",
+      "per100g": {
+        "calories": 119,
+        "protein_g": 20.2,
+        "fat_g": 3.9,
+        "carbs_g": 1.1
+      },
+      "sodium_mg": 452.04,
+      "typical_portion_g": 30,
+      "portion_presets": {
+        "大串": 30,
+        "小串": 15
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/kaoyangrouchuan",
+      "note": "经变体词「烤羊肉串」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-fanqieyidalimian",
+      "name": "番茄意大利面",
+      "aliases": [
+        "意大利面"
+      ],
+      "category": "外食",
+      "per100g": {
+        "calories": 146,
+        "protein_g": 4.2,
+        "fat_g": 3.8,
+        "carbs_g": 23.9
+      },
+      "sodium_mg": 128.71,
+      "typical_portion_g": 500,
+      "portion_presets": {
+        "大碗": 500,
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fanqieyidalimian",
+      "note": "经变体词「番茄意大利面」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-hongshaoyukuai",
+      "name": "红烧鱼",
+      "aliases": [
+        "红烧鱼块"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 105,
+        "protein_g": 14.2,
+        "fat_g": 5.2,
+        "carbs_g": 0.5
+      },
+      "sodium_mg": 194.52,
+      "typical_portion_g": 30,
+      "portion_presets": {
+        "块": 30
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/hongshaoyukuai",
+      "note": "经变体词「红烧鱼」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-yuxiangganpian",
+      "name": "炒猪肝",
+      "aliases": [
+        "爆炒猪肝"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 145,
+        "protein_g": 16.7,
+        "fat_g": 5.9,
+        "carbs_g": 7.1
+      },
+      "sodium_mg": 287.45,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/yuxiangganpian",
+      "note": "经变体词「炒猪肝」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-shaoqiezi",
+      "name": "烧茄子",
+      "aliases": [
+        "红烧茄子"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 59,
+        "protein_g": 1.6,
+        "fat_g": 3.6,
+        "carbs_g": 6.6
+      },
+      "sodium_mg": 482.89,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "盘": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shaoqiezi",
+      "note": "经变体词「烧茄子」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-xilanhua",
+      "name": "西兰花",
+      "aliases": [
+        "蒜蓉西兰花"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 27,
+        "protein_g": 3.5,
+        "fat_g": 0.6,
+        "carbs_g": 3.7
+      },
+      "sodium_mg": 46.7,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "中棵": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xilanhua",
+      "note": "经变体词「西兰花」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-wengcai",
+      "name": "空心菜",
+      "aliases": [
+        "蒜蓉空心菜"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 19,
+        "protein_g": 2.2,
+        "fat_g": 0.2,
+        "carbs_g": 4
+      },
+      "sodium_mg": 107.6,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "把": 200,
+        "根": 15
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/wengcai",
+      "note": "经变体词「空心菜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-youcai",
+      "name": "油菜",
+      "aliases": [
+        "清炒油菜"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 14,
+        "protein_g": 1.3,
+        "fat_g": 0.5,
+        "carbs_g": 2
+      },
+      "sodium_mg": 73.7,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "把": 200,
+        "棵": 30
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/youcai",
+      "note": "经变体词「油菜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-baicaitai",
+      "name": "菜心",
+      "aliases": [
+        "白灼菜心"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 28,
+        "protein_g": 2.8,
+        "fat_g": 0.5,
+        "carbs_g": 4
+      },
+      "sodium_mg": 26,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "袋": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/baicaitai",
+      "note": "经变体词「菜心」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-wawacai",
+      "name": "娃娃菜",
+      "aliases": [
+        "上汤娃娃菜"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 13,
+        "protein_g": 1.9,
+        "fat_g": 0.2,
+        "carbs_g": 2.4
+      },
+      "sodium_mg": 19.3,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "小棵": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/wawacai",
+      "note": "经变体词「娃娃菜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-youmaicai",
+      "name": "油麦菜",
+      "aliases": [
+        "蒜蓉油麦菜"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 12,
+        "protein_g": 1.1,
+        "fat_g": 0.4,
+        "carbs_g": 2.1
+      },
+      "sodium_mg": 32,
+      "typical_portion_g": 150,
+      "portion_presets": {
+        "棵": 150
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/youmaicai",
+      "note": "经变体词「油麦菜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-jinzhengu",
+      "name": "金针菇",
+      "aliases": [
+        "蒜蓉金针菇"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 32,
+        "protein_g": 2.4,
+        "fat_g": 0.4,
+        "carbs_g": 6
+      },
+      "sodium_mg": 4.3,
+      "typical_portion_g": 100,
+      "portion_presets": {
+        "把": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jinzhengu",
+      "note": "经变体词「金针菇」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-shengcai_yeyongwoju",
+      "name": "生菜",
+      "aliases": [
+        "蚝油生菜"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 12,
+        "protein_g": 1.6,
+        "fat_g": 0.4,
+        "carbs_g": 1.1
+      },
+      "sodium_mg": 16.1,
+      "typical_portion_g": 400,
+      "portion_presets": {
+        "盘": 400,
+        "碗": 250,
+        "颗": 180
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shengcai_yeyongwoju",
+      "note": "经变体词「生菜」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-shanyao",
+      "name": "山药",
+      "aliases": [
+        "清炒山药"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 57,
+        "protein_g": 1.9,
+        "fat_g": 0.2,
+        "carbs_g": 12.4
+      },
+      "sodium_mg": 18.6,
+      "typical_portion_g": 400,
+      "portion_presets": {
+        "根": 400
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/shanyao",
+      "note": "经变体词「山药」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-wosun",
+      "name": "莴笋",
+      "aliases": [
+        "清炒莴笋"
+      ],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 15,
+        "protein_g": 1,
+        "fat_g": 0.1,
+        "carbs_g": 2.8
+      },
+      "sodium_mg": 36.5,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "盘": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/wosun",
+      "note": "经变体词「莴笋」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-fd1eb5b8",
+      "name": "海带丝",
+      "aliases": [
+        "凉拌海带丝"
+      ],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 22,
+        "protein_g": 0.7,
+        "fat_g": 0.1,
+        "carbs_g": 5
+      },
+      "sodium_mg": 151.21,
+      "typical_portion_g": 150,
+      "portion_presets": {
+        "份": 150
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd1eb5b8",
+      "note": "经变体词「海带丝」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-maodou",
+      "name": "毛豆",
+      "aliases": [
+        "水煮毛豆"
+      ],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 131,
+        "protein_g": 13.1,
+        "fat_g": 5,
+        "carbs_g": 10.5
+      },
+      "sodium_mg": 3.9,
+      "typical_portion_g": 2,
+      "portion_presets": {
+        "颗": 2
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/maodou",
+      "note": "经变体词「毛豆」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-jiyutang",
+      "name": "鲫鱼汤",
+      "aliases": [
+        "鲫鱼豆腐汤"
+      ],
+      "category": "汤",
+      "per100g": {
+        "calories": 45,
+        "protein_g": 5.6,
+        "fat_g": 1.9,
+        "carbs_g": 1.5
+      },
+      "sodium_mg": 90.52,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300,
+        "碗(小)": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/jiyutang",
+      "note": "经变体词「鲫鱼汤」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-hanguoqundaitang",
+      "name": "海带汤",
+      "aliases": [
+        "海带豆腐汤"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 20,
+        "protein_g": 1.6,
+        "fat_g": 0.1,
+        "carbs_g": 2.8
+      },
+      "sodium_mg": 370.55,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/hanguoqundaitang",
+      "note": "经变体词「海带汤」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-doufunao",
+      "name": "豆腐花",
+      "aliases": [
+        "豆腐脑"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 15,
+        "protein_g": 1.9,
+        "fat_g": 0.8,
+        "carbs_g": 0
+      },
+      "sodium_mg": 0,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "块": 350,
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/doufunao",
+      "note": "经变体词「豆腐花」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-xiaomizhou",
+      "name": "小米粥",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 46,
+        "protein_g": 1.4,
+        "fat_g": 0.7,
+        "carbs_g": 8.4
+      },
+      "sodium_mg": 4.1,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "小碗": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xiaomizhou",
+      "note": "经变体词「小米粥」匹配，菜名与搜索词完全一致"
+    },
+    {
+      "id": "ref-youmendaxia2",
+      "name": "油焖大虾",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 97,
+        "protein_g": 13.1,
+        "fat_g": 3.3,
+        "carbs_g": 3.7
+      },
+      "sodium_mg": 331.98,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "只": 15,
+        "碗": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/youmendaxia2",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-xiangguhuaji",
+      "name": "香菇滑鸡",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 89,
+        "protein_g": 10,
+        "fat_g": 3.5,
+        "carbs_g": 5.1
+      },
+      "sodium_mg": 693.1,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xiangguhuaji",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-roumoqiezi",
+      "name": "肉末茄子",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 158,
+        "protein_g": 4.7,
+        "fat_g": 13.7,
+        "carbs_g": 5
+      },
+      "sodium_mg": 104.31,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300,
+        "碗": 250
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/roumoqiezi",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-disanxian",
+      "name": "地三鲜",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 103,
+        "protein_g": 1.4,
+        "fat_g": 6.7,
+        "carbs_g": 9.9
+      },
+      "sodium_mg": 282.66,
+      "typical_portion_g": 400,
+      "portion_presets": {
+        "盘": 400
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/disanxian",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-mayishangshu",
+      "name": "蚂蚁上树",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 137,
+        "protein_g": 2.5,
+        "fat_g": 7.6,
+        "carbs_g": 14.8
+      },
+      "sodium_mg": 397.89,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "盘": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/mayishangshu",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-fd979539",
+      "name": "蚝油香菇油菜",
+      "aliases": [
+        "香菇油菜"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 84,
+        "protein_g": 2.6,
+        "fat_g": 5.4,
+        "carbs_g": 8.2
+      },
+      "sodium_mg": 385.82,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "盘": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd979539",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-tangculiji_xuanlvxinyuahizizhi",
+      "name": "糖醋里脊",
+      "aliases": [],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 156,
+        "protein_g": 12.3,
+        "fat_g": 9,
+        "carbs_g": 5.6
+      },
+      "sodium_mg": 207.47,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/tangculiji_xuanlvxinyuahizizhi",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-zhuyumi",
+      "name": "煮玉米",
+      "aliases": [],
+      "category": "蔬菜",
+      "per100g": {
+        "calories": 84,
+        "protein_g": 3,
+        "fat_g": 0.9,
+        "carbs_g": 17.1
+      },
+      "sodium_mg": 0.83,
+      "typical_portion_g": 290,
+      "portion_presets": {
+        "大根": 290,
+        "小根": 160,
+        "根(中)": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zhuyumi",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-paihuanggua",
+      "name": "拍黄瓜",
+      "aliases": [],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 18,
+        "protein_g": 1,
+        "fat_g": 0.3,
+        "carbs_g": 3.2
+      },
+      "sodium_mg": 389.53,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300,
+        "碟": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/paihuanggua",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-koushuiji",
+      "name": "口水鸡",
+      "aliases": [],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 174,
+        "protein_g": 17.7,
+        "fat_g": 9.9,
+        "carbs_g": 4.1
+      },
+      "sodium_mg": 283.71,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/koushuiji",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-fdce42fe",
+      "name": "老醋花生",
+      "aliases": [],
+      "category": "凉菜",
+      "per100g": {
+        "calories": 306,
+        "protein_g": 10.9,
+        "fat_g": 24.2,
+        "carbs_g": 13.3
+      },
+      "sodium_mg": 202.85,
+      "typical_portion_g": 100,
+      "portion_presets": {
+        "碟": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fdce42fe",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-mujitang",
+      "name": "鸡汤",
+      "aliases": [],
+      "category": "汤",
+      "per100g": {
+        "calories": 61,
+        "protein_g": 6.7,
+        "fat_g": 3.2,
+        "carbs_g": 1.4
+      },
+      "sodium_mg": 240.52,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "碗": 300
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/mujitang",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-zhuchangfen",
+      "name": "肠粉",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 110,
+        "protein_g": 1.3,
+        "fat_g": 2.2,
+        "carbs_g": 21
+      },
+      "sodium_mg": null,
+      "typical_portion_g": 120,
+      "portion_presets": {
+        "条": 120
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/zhuchangfen",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-mizhichashao2",
+      "name": "蜜汁叉烧",
+      "aliases": [],
+      "category": "外食",
+      "per100g": {
+        "calories": 376,
+        "protein_g": 12.1,
+        "fat_g": 33.6,
+        "carbs_g": 4.3
+      },
+      "sodium_mg": 311.32,
+      "typical_portion_g": 200,
+      "portion_presets": {
+        "盘": 200
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/mizhichashao2",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-lujidan",
+      "name": "卤蛋",
+      "aliases": [],
+      "category": "蛋白类",
+      "per100g": {
+        "calories": 152,
+        "protein_g": 7.7,
+        "fat_g": 11,
+        "carbs_g": 7.1
+      },
+      "sodium_mg": 2534.52,
+      "typical_portion_g": 30,
+      "portion_presets": {
+        "个(剥壳)": 30
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/lujidan",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-xianyadan_zhu",
+      "name": "咸鸭蛋(煮)",
+      "aliases": [
+        "咸鸭蛋"
+      ],
+      "category": "蛋白类",
+      "per100g": {
+        "calories": 177,
+        "protein_g": 13.8,
+        "fat_g": 13.5,
+        "carbs_g": 0
+      },
+      "sodium_mg": 1131,
+      "typical_portion_g": 60,
+      "portion_presets": {
+        "个": 60
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/xianyadan_zhu",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-anchundan",
+      "name": "鹌鹑蛋",
+      "aliases": [],
+      "category": "蛋白类",
+      "per100g": {
+        "calories": 160,
+        "protein_g": 12.8,
+        "fat_g": 11.1,
+        "carbs_g": 2.1
+      },
+      "sodium_mg": 106.6,
+      "typical_portion_g": 12,
+      "portion_presets": {
+        "个": 10,
+        "颗": 12
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/anchundan",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-suannai_junzhi",
+      "name": "酸奶",
+      "aliases": [],
+      "category": "饮品",
+      "per100g": {
+        "calories": 70,
+        "protein_g": 3.2,
+        "fat_g": 1.9,
+        "carbs_g": 10
+      },
+      "sodium_mg": 60,
+      "typical_portion_g": 250,
+      "portion_presets": {
+        "中杯": 200,
+        "杯(小)": 100,
+        "盒": 250
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/suannai_junzhi",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-fd6d08b7",
+      "name": "奶茶",
+      "aliases": [],
+      "category": "饮品",
+      "per100g": {
+        "calories": 63,
+        "protein_g": 0.3,
+        "fat_g": 3.7,
+        "carbs_g": 6.9
+      },
+      "sodium_mg": 27.63,
+      "typical_portion_g": 250,
+      "portion_presets": {
+        "杯": 250
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd6d08b7",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-ganzhadaiyu",
+      "name": "干炸带鱼",
+      "aliases": [
+        "炸带鱼"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 174,
+        "protein_g": 14.7,
+        "fat_g": 8.2,
+        "carbs_g": 10.8
+      },
+      "sodium_mg": 442.8,
+      "typical_portion_g": 300,
+      "portion_presets": {
+        "盘": 300,
+        "碟": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/ganzhadaiyu",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-fd85e9b7",
+      "name": "白切鸡腿",
+      "aliases": [
+        "白切鸡"
+      ],
+      "category": "家常菜",
+      "per100g": {
+        "calories": 127,
+        "protein_g": 14.9,
+        "fat_g": 4.9,
+        "carbs_g": 6.8
+      },
+      "sodium_mg": 686.25,
+      "typical_portion_g": 120,
+      "portion_presets": {
+        "只": 120
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd85e9b7",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-baizongzi",
+      "name": "白粽子",
+      "aliases": [
+        "粽子"
+      ],
+      "category": "主食",
+      "per100g": {
+        "calories": 118,
+        "protein_g": 2.4,
+        "fat_g": 0.3,
+        "carbs_g": 26.5
+      },
+      "sodium_mg": 0.5,
+      "typical_portion_g": 100,
+      "portion_presets": {
+        "个": 100
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/baizongzi",
+      "note": "菜名映射经人工核定"
+    },
+    {
+      "id": "ref-fd8f4694",
+      "name": "冰拿铁咖啡",
+      "aliases": [
+        "拿铁咖啡"
+      ],
+      "category": "饮品",
+      "per100g": {
+        "calories": 27,
+        "protein_g": 1.7,
+        "fat_g": 1,
+        "carbs_g": 2.8
+      },
+      "sodium_mg": 23,
+      "typical_portion_g": 350,
+      "portion_presets": {
+        "杯": 350
+      },
+      "source": "boohee",
+      "source_url": "https://food.boohee.com/fb/v1/foods/fd8f4694",
+      "note": "菜名映射经人工核定"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/ai/prompt.ts","./src/ai/providers.ts","./src/ai/schema.ts","./src/ai/vlm.ts","./src/lib/boohee_api.ts","./src/lib/cache.ts","./src/lib/image.ts","./src/lib/nutrition_db.ts","./src/lib/settings.ts","./src/ui/recognizepage.tsx","./src/ui/resultcard.tsx"],"errors":true,"version":"5.8.3"}

@@ -1,0 +1,1516 @@
+{
+ "crawled_at": "2026-09-23",
+ "foods": {
+  "鸡腿": {
+   "name": "鸡腿",
+   "code": "jitui",
+   "calory": "146",
+   "protein": "20.2",
+   "fat": "7.2",
+   "carbohydrate": "0.0",
+   "natrium": "73.6",
+   "units": [
+    {
+     "unit_id": 323,
+     "amount": "1.0",
+     "unit": "只",
+     "unit_name": "只",
+     "weight": "120.0",
+     "eat_weight": "88.8",
+     "calory": "175.2"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jitui"
+  },
+  "鸡肉": {
+   "name": "鸡肉",
+   "code": "fd8c8a8e",
+   "calory": "167",
+   "protein": "19.3",
+   "fat": "9.4",
+   "carbohydrate": "1.3",
+   "natrium": "63.0",
+   "units": [
+    {
+     "unit_id": 1153428,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "50.0",
+     "eat_weight": "50.0",
+     "calory": "83.5"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd8c8a8e"
+  },
+  "烧鸡": {
+   "name": "烧鸡",
+   "code": "shaoji",
+   "calory": "154",
+   "protein": "14.8",
+   "fat": "9.1",
+   "carbohydrate": "3.3",
+   "natrium": "232.77",
+   "units": [
+    {
+     "unit_id": 753,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "46.29"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_shaoji"
+  },
+  "烤鸡": {
+   "name": "烤鸡",
+   "code": "kaoji",
+   "calory": "265",
+   "protein": "28.1",
+   "fat": "16.9",
+   "carbohydrate": "0.0",
+   "natrium": "560.0",
+   "units": [
+    {
+     "unit_id": 370,
+     "amount": "1.0",
+     "unit": "只",
+     "unit_name": "只",
+     "weight": "650.0",
+     "eat_weight": "468.0",
+     "calory": "1722.5"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_kaoji"
+  },
+  "鸡胸肉": {
+   "name": "鸡胸肉",
+   "code": "jixiongfurou",
+   "calory": "118",
+   "protein": "24.6",
+   "fat": "1.9",
+   "carbohydrate": "0.6",
+   "natrium": "44.8",
+   "units": [
+    {
+     "unit_id": 52,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "120.0",
+     "eat_weight": "120.0",
+     "calory": "141.6"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jixiongfurou"
+  },
+  "鸡爪": {
+   "name": "鸡爪",
+   "code": "jizhua",
+   "calory": "254",
+   "protein": "23.9",
+   "fat": "16.4",
+   "carbohydrate": "2.7",
+   "natrium": "169.0",
+   "units": [
+    {
+     "unit_id": 405,
+     "amount": "1.0",
+     "unit": "只",
+     "unit_name": "只",
+     "weight": "50.0",
+     "eat_weight": "30.0",
+     "calory": "127.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jizhua"
+  },
+  "扒鸡": {
+   "name": "扒鸡",
+   "code": "baji",
+   "calory": "217",
+   "protein": "29.6",
+   "fat": "11.0",
+   "carbohydrate": "0.0",
+   "natrium": "1000.7",
+   "units": [
+    {
+     "unit_id": 1152635,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "50.0",
+     "eat_weight": "33.0",
+     "calory": "108.5"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_baji"
+  },
+  "炒鸡": {
+   "name": "炒鸡",
+   "code": "chaoji",
+   "calory": "185",
+   "protein": "17.8",
+   "fat": "11.2",
+   "carbohydrate": "3.8",
+   "natrium": "335.66",
+   "units": [
+    {
+     "unit_id": 1090028,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "555.96"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_chaoji"
+  },
+  "卤鸡": {
+   "name": "卤鸡",
+   "code": "luji",
+   "calory": "168",
+   "protein": "18.9",
+   "fat": "9.3",
+   "carbohydrate": "2.6",
+   "natrium": "299.01",
+   "units": [
+    {
+     "unit_id": 1111810,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "336.46"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_luji"
+  },
+  "鸡翅": {
+   "name": "鸡翅",
+   "code": "jichi",
+   "calory": "202",
+   "protein": "19.0",
+   "fat": "11.5",
+   "carbohydrate": "5.5",
+   "natrium": "50.8",
+   "units": [
+    {
+     "unit_id": 1152631,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "50.0",
+     "eat_weight": "34.5",
+     "calory": "101.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jichi"
+  },
+  "白切鸡": {
+   "name": "白切鸡",
+   "code": "baiqieji",
+   "calory": "159",
+   "protein": "16.0",
+   "fat": "9.0",
+   "carbohydrate": "2.2",
+   "natrium": "180.63",
+   "units": [
+    {
+     "unit_id": 226443,
+     "amount": "1.0",
+     "unit": "只",
+     "unit_name": "只",
+     "weight": "900.0",
+     "eat_weight": "567.0",
+     "calory": "1429.38"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_baiqieji"
+  },
+  "煮鸡蛋": {
+   "name": "煮鸡蛋",
+   "code": "fd62b842",
+   "calory": "144",
+   "protein": "14.0",
+   "fat": "9.2",
+   "carbohydrate": "1.7",
+   "natrium": "124.0",
+   "units": [
+    {
+     "unit_id": 200705,
+     "amount": "1.0",
+     "unit": "个(中)带壳",
+     "unit_name": "个(中)带壳",
+     "weight": "60.0",
+     "eat_weight": "54.0",
+     "calory": "86.53"
+    },
+    {
+     "unit_id": 200704,
+     "amount": "1.0",
+     "unit": "个(大)带壳",
+     "unit_name": "个(大)带壳",
+     "weight": "70.0",
+     "eat_weight": "63.0",
+     "calory": "100.95"
+    },
+    {
+     "unit_id": 223558,
+     "amount": "1.0",
+     "unit": "个(小)带壳",
+     "unit_name": "个(小)带壳",
+     "weight": "50.0",
+     "eat_weight": "45.0",
+     "calory": "72.11"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd62b842"
+  },
+  "芋儿鸡": {
+   "name": "芋儿鸡",
+   "code": "fd9640ad",
+   "calory": "100",
+   "protein": "9.0",
+   "fat": "4.9",
+   "carbohydrate": "5.2",
+   "natrium": "81.73",
+   "units": [
+    {
+     "unit_id": 1140375,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "301.17"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd9640ad"
+  },
+  "鸡蛋白": {
+   "name": "鸡蛋白",
+   "code": "fd78b8e7",
+   "calory": "60",
+   "protein": "11.6",
+   "fat": "0.1",
+   "carbohydrate": "3.1",
+   "natrium": "79.4",
+   "units": [
+    {
+     "unit_id": 223010,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "18.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd78b8e7"
+  },
+  "素鸡": {
+   "name": "素鸡",
+   "code": "suji",
+   "calory": "194",
+   "protein": "16.5",
+   "fat": "12.5",
+   "carbohydrate": "4.2",
+   "natrium": "373.8",
+   "units": [
+    {
+     "unit_id": 968692,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "35.0",
+     "eat_weight": "35.0",
+     "calory": "67.9"
+    },
+    {
+     "unit_id": 1501,
+     "amount": "1.0",
+     "unit": "条",
+     "unit_name": "条",
+     "weight": "50.0",
+     "eat_weight": "50.0",
+     "calory": "97.0"
+    },
+    {
+     "unit_id": 1333,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "350.0",
+     "eat_weight": "350.0",
+     "calory": "679.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_suji"
+  },
+  "熏鸡": {
+   "name": "熏鸡",
+   "code": "xunji",
+   "calory": "168",
+   "protein": "17.1",
+   "fat": "9.1",
+   "carbohydrate": "4.5",
+   "natrium": "565.86",
+   "units": [
+    {
+     "unit_id": 1137198,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "335.52"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_xunji"
+  },
+  "白斩鸡": {
+   "name": "白斩鸡",
+   "code": "baizhanji2",
+   "calory": "90",
+   "protein": "9.4",
+   "fat": "5.3",
+   "carbohydrate": "1.4",
+   "natrium": "97.38",
+   "units": [
+    {
+     "unit_id": 524,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "25.0",
+     "eat_weight": "25.0",
+     "calory": "22.56"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_baizhanji2"
+  },
+  "鸡柳": {
+   "name": "鸡柳",
+   "code": "fda2f07e",
+   "calory": "133",
+   "protein": "19.4",
+   "fat": "5.0",
+   "carbohydrate": "2.5",
+   "natrium": "34.0",
+   "units": [
+    {
+     "unit_id": 1153425,
+     "amount": "1.0",
+     "unit": "条",
+     "unit_name": "条",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "39.9"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fda2f07e"
+  },
+  "卤鸡腿": {
+   "name": "卤鸡腿",
+   "code": "fd6ba167",
+   "calory": "127",
+   "protein": "16.3",
+   "fat": "5.9",
+   "carbohydrate": "2.4",
+   "natrium": "277.64",
+   "units": [
+    {
+     "unit_id": 228277,
+     "amount": "1.0",
+     "unit": "只",
+     "unit_name": "只",
+     "weight": "150.0",
+     "eat_weight": "111.0",
+     "calory": "189.84"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd6ba167"
+  },
+  "鸡蛋": {
+   "name": "鸡蛋",
+   "code": "jidan_junzhi",
+   "calory": "139",
+   "protein": "13.1",
+   "fat": "8.6",
+   "carbohydrate": "2.4",
+   "natrium": "131.5",
+   "units": [
+    {
+     "unit_id": 34,
+     "amount": "1.0",
+     "unit": "只(中)",
+     "unit_name": "只(中)",
+     "weight": "60.0",
+     "eat_weight": "52.8",
+     "calory": "83.4"
+    },
+    {
+     "unit_id": 210,
+     "amount": "1.0",
+     "unit": "只(大)",
+     "unit_name": "只(大)",
+     "weight": "70.0",
+     "eat_weight": "61.6",
+     "calory": "97.3"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jidan_junzhi"
+  },
+  "鸡胗": {
+   "name": "鸡胗",
+   "code": "fdce5160",
+   "calory": "118",
+   "protein": "19.2",
+   "fat": "2.8",
+   "carbohydrate": "4.0",
+   "natrium": "74.8",
+   "units": [
+    {
+     "unit_id": 1153526,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "35.4"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_fdce5160"
+  },
+  "椒麻鸡": {
+   "name": "椒麻鸡",
+   "code": "jiaomaji",
+   "calory": "77",
+   "protein": "7.7",
+   "fat": "4.8",
+   "carbohydrate": "1.0",
+   "natrium": "179.92",
+   "units": [
+    {
+     "unit_id": 1071298,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "231.27"
+    },
+    {
+     "unit_id": 1070063,
+     "amount": "1.0",
+     "unit": "碟",
+     "unit_name": "碟",
+     "weight": "100.0",
+     "eat_weight": "100.0",
+     "calory": "77.09"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_jiaomaji"
+  },
+  "炸鸡": {
+   "name": "炸鸡",
+   "code": "zhajipai",
+   "calory": "191",
+   "protein": "19.4",
+   "fat": "6.4",
+   "carbohydrate": "14.8",
+   "natrium": "384.43",
+   "units": [
+    {
+     "unit_id": 1346,
+     "amount": "1.0",
+     "unit": "份",
+     "unit_name": "份",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "381.54"
+    },
+    {
+     "unit_id": 226453,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "125.0",
+     "eat_weight": "125.0",
+     "calory": "238.46"
+    }
+   ],
+   "health_light": 3,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_zhajipai"
+  },
+  "鸡汤": {
+   "name": "鸡汤",
+   "code": "mujitang",
+   "calory": "61",
+   "protein": "6.7",
+   "fat": "3.2",
+   "carbohydrate": "1.4",
+   "natrium": "240.52",
+   "units": [
+    {
+     "unit_id": 1396,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "184.26"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_mujitang"
+  },
+  "田鸡": {
+   "name": "田鸡",
+   "code": "tianji",
+   "calory": "93",
+   "protein": "20.5",
+   "fat": "1.2",
+   "carbohydrate": "0.0",
+   "natrium": "11.8",
+   "units": [
+    {
+     "unit_id": 1152915,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "279.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡",
+   "source_url": "https://food.boohee.com/fb/view_detail_tianji"
+  },
+  "鸡阑尾": {
+   "name": "豌豆拌蚕豆(少油少盐)",
+   "code": "fd12d297",
+   "calory": "129",
+   "protein": "7.9",
+   "fat": "2.8",
+   "carbohydrate": "19.8",
+   "natrium": "193.39",
+   "units": [
+    {
+     "unit_id": 1130154,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "388.47"
+    },
+    {
+     "unit_id": 1130153,
+     "amount": "1.0",
+     "unit": "碟",
+     "unit_name": "碟",
+     "weight": "100.0",
+     "eat_weight": "100.0",
+     "calory": "129.49"
+    }
+   ],
+   "health_light": 1,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd12d297"
+  },
+  "炖猪肉": {
+   "name": "炖猪肉",
+   "code": "dunzhurou",
+   "calory": "268",
+   "protein": "9.0",
+   "fat": "24.6",
+   "carbohydrate": "2.8",
+   "natrium": "154.14",
+   "units": [
+    {
+     "unit_id": 1094203,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "350.0",
+     "eat_weight": "350.0",
+     "calory": "937.27"
+    }
+   ],
+   "health_light": 2,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_dunzhurou"
+  },
+  "腊味猪肉": {
+   "name": "腊味猪肉",
+   "code": "laweizhurou",
+   "calory": "370",
+   "protein": "12.6",
+   "fat": "33.1",
+   "carbohydrate": "6.8",
+   "natrium": "352.46",
+   "units": [
+    {
+     "unit_id": 1109639,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "1109.64"
+    }
+   ],
+   "health_light": 2,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_laweizhurou"
+  },
+  "煎猪肉": {
+   "name": "煎猪肉",
+   "code": "jianzhurou",
+   "calory": "499",
+   "protein": "8.1",
+   "fat": "50.9",
+   "carbohydrate": "2.7",
+   "natrium": "605.71",
+   "units": [
+    {
+     "unit_id": 1103580,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "998.78"
+    }
+   ],
+   "health_light": 3,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_jianzhurou"
+  },
+  "熏猪肉": {
+   "name": "熏猪肉",
+   "code": "xunzhurou",
+   "calory": "383",
+   "protein": "12.8",
+   "fat": "35.6",
+   "carbohydrate": "3.0",
+   "natrium": "813.03",
+   "units": [
+    {
+     "unit_id": 1137214,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "765.86"
+    }
+   ],
+   "health_light": 3,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_xunzhurou"
+  },
+  "猪肉薄饼": {
+   "name": "猪肉薄饼",
+   "code": "fd3dd00c",
+   "calory": "290",
+   "protein": "8.6",
+   "fat": "14.5",
+   "carbohydrate": "30.6",
+   "natrium": "178.53",
+   "units": [
+    {
+     "unit_id": 1141527,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "90.0",
+     "eat_weight": "90.0",
+     "calory": "260.96"
+    }
+   ],
+   "health_light": null,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd3dd00c"
+  },
+  "客家焖猪肉": {
+   "name": "客家焖猪肉",
+   "code": "kejiamenzhurou",
+   "calory": "355",
+   "protein": "11.6",
+   "fat": "31.1",
+   "carbohydrate": "6.7",
+   "natrium": "876.67",
+   "units": [
+    {
+     "unit_id": 1108129,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "350.0",
+     "eat_weight": "350.0",
+     "calory": "1241.31"
+    }
+   ],
+   "health_light": 3,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_kejiamenzhurou"
+  },
+  "野猪肉": {
+   "name": "野猪肉",
+   "code": "fd6ece89",
+   "calory": "147",
+   "protein": "20.7",
+   "fat": "7.1",
+   "carbohydrate": "0.0",
+   "natrium": "80.0",
+   "units": [
+    {
+     "unit_id": 1154533,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "150.0",
+     "eat_weight": "150.0",
+     "calory": "220.85"
+    }
+   ],
+   "health_light": 1,
+   "via": "猪肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd6ece89"
+  },
+  "炒鸡蛋": {
+   "name": "炒鸡蛋",
+   "code": "fd78b319",
+   "calory": "149",
+   "protein": "10.0",
+   "fat": "11.0",
+   "carbohydrate": "1.6",
+   "natrium": "145.0",
+   "units": [
+    {
+     "unit_id": 936217,
+     "amount": "1.0",
+     "unit": "份",
+     "unit_name": "份",
+     "weight": "110.0",
+     "eat_weight": "110.0",
+     "calory": "163.9"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd78b319"
+  },
+  "藏鸡蛋": {
+   "name": "藏鸡蛋",
+   "code": "cangjidan",
+   "calory": "162",
+   "protein": "12.6",
+   "fat": "11.3",
+   "carbohydrate": "2.4",
+   "natrium": "",
+   "units": [
+    {
+     "unit_id": 1153052,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "60.0",
+     "eat_weight": "60.0",
+     "calory": "97.2"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_cangjidan"
+  },
+  "醋熘鸡蛋": {
+   "name": "醋熘鸡蛋",
+   "code": "culiujidan",
+   "calory": "165",
+   "protein": "11.8",
+   "fat": "11.6",
+   "carbohydrate": "3.6",
+   "natrium": "405.06",
+   "units": [
+    {
+     "unit_id": 1091112,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "495.24"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_culiujidan"
+  },
+  "酱鸡蛋": {
+   "name": "酱鸡蛋",
+   "code": "jiangjidan",
+   "calory": "151",
+   "protein": "10.9",
+   "fat": "9.3",
+   "carbohydrate": "7.1",
+   "natrium": "984.01",
+   "units": [
+    {
+     "unit_id": 809,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "50.0",
+     "eat_weight": "50.0",
+     "calory": "75.63"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_jiangjidan"
+  },
+  "鸡蛋寿司": {
+   "name": "鸡蛋寿司",
+   "code": "fdff8e45",
+   "calory": "146",
+   "protein": "8.9",
+   "fat": "5.9",
+   "carbohydrate": "14.8",
+   "natrium": "181.1",
+   "units": [
+    {
+     "unit_id": 1102468,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "43.76"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fdff8e45"
+  },
+  "翡翠鸡蛋": {
+   "name": "翡翠鸡蛋",
+   "code": "feicuijidan",
+   "calory": "199",
+   "protein": "6.8",
+   "fat": "12.4",
+   "carbohydrate": "15.8",
+   "natrium": "352.2",
+   "units": [
+    {
+     "unit_id": 1146460,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "398.12"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_feicuijidan"
+  },
+  "绣球鸡蛋": {
+   "name": "绣球鸡蛋",
+   "code": "xiuqiujidan",
+   "calory": "125",
+   "protein": "11.5",
+   "fat": "7.3",
+   "carbohydrate": "3.5",
+   "natrium": "635.29",
+   "units": [
+    {
+     "unit_id": 1145386,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "249.56"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_xiuqiujidan"
+  },
+  "鸡蛋参": {
+   "name": "鸡蛋参",
+   "code": "fd675cc8",
+   "calory": "102",
+   "protein": "2.0",
+   "fat": "3.9",
+   "carbohydrate": "10.9",
+   "natrium": "",
+   "units": [
+    {
+     "unit_id": 1153343,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "10.0",
+     "eat_weight": "10.0",
+     "calory": "10.18"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd675cc8"
+  },
+  "鸡蛋烙饼": {
+   "name": "鸡蛋烙饼",
+   "code": "jidanlaobing",
+   "calory": "247",
+   "protein": "8.1",
+   "fat": "8.0",
+   "carbohydrate": "36.6",
+   "natrium": "485.27",
+   "units": [
+    {
+     "unit_id": 1102443,
+     "amount": "1.0",
+     "unit": "张",
+     "unit_name": "张",
+     "weight": "100.0",
+     "eat_weight": "100.0",
+     "calory": "247.39"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_jidanlaobing"
+  },
+  "野鸡蛋": {
+   "name": "野鸡蛋",
+   "code": "fd35bc7b",
+   "calory": "144",
+   "protein": "13.3",
+   "fat": "8.8",
+   "carbohydrate": "2.8",
+   "natrium": "132.0",
+   "units": [
+    {
+     "unit_id": 1153426,
+     "amount": "1.0",
+     "unit": "个",
+     "unit_name": "个",
+     "weight": "30.0",
+     "eat_weight": "30.0",
+     "calory": "43.2"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd35bc7b"
+  },
+  "白汁鸡蛋": {
+   "name": "白汁鸡蛋",
+   "code": "baizhijidan",
+   "calory": "238",
+   "protein": "11.4",
+   "fat": "17.3",
+   "carbohydrate": "9.9",
+   "natrium": "494.26",
+   "units": [
+    {
+     "unit_id": 1144993,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "476.34"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_baizhijidan"
+  },
+  "蒸鸡蛋": {
+   "name": "蒸鸡蛋",
+   "code": "fd737763",
+   "calory": "107",
+   "protein": "9.2",
+   "fat": "7.1",
+   "carbohydrate": "1.7",
+   "natrium": "368.16",
+   "units": [
+    {
+     "unit_id": 1070947,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "214.0"
+    }
+   ],
+   "health_light": 2,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd737763"
+  },
+  "鸡蛋仔": {
+   "name": "鸡蛋仔",
+   "code": "fd1752db",
+   "calory": "350",
+   "protein": "5.2",
+   "fat": "13.0",
+   "carbohydrate": "54.0",
+   "natrium": "110.0",
+   "units": [
+    {
+     "unit_id": 223196,
+     "amount": "1.0",
+     "unit": "份",
+     "unit_name": "份",
+     "weight": "133.0",
+     "eat_weight": "133.0",
+     "calory": "465.5"
+    }
+   ],
+   "health_light": 1,
+   "via": "鸡蛋",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd1752db"
+  },
+  "卤牛肉": {
+   "name": "卤牛肉",
+   "code": "luniurou",
+   "calory": "116",
+   "protein": "14.5",
+   "fat": "5.2",
+   "carbohydrate": "3.3",
+   "natrium": "179.18",
+   "units": [
+    {
+     "unit_id": 560,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "40.0",
+     "eat_weight": "40.0",
+     "calory": "46.48"
+    },
+    {
+     "unit_id": 559,
+     "amount": "1.0",
+     "unit": "片",
+     "unit_name": "片",
+     "weight": "15.0",
+     "eat_weight": "15.0",
+     "calory": "17.43"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_luniurou"
+  },
+  "跷脚牛肉": {
+   "name": "跷脚牛肉",
+   "code": "fd67e21a",
+   "calory": "167",
+   "protein": "15.3",
+   "fat": "11.0",
+   "carbohydrate": "2.0",
+   "natrium": "68.12",
+   "units": [
+    {
+     "unit_id": 1117448,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "499.98"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd67e21a"
+  },
+  "熟牛肉": {
+   "name": "熟牛肉",
+   "code": "pingyaoshuniurou",
+   "calory": "63",
+   "protein": "9.8",
+   "fat": "2.1",
+   "carbohydrate": "1.4",
+   "natrium": "428.22",
+   "units": [
+    {
+     "unit_id": 1124572,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "190.26"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_pingyaoshuniurou"
+  },
+  "番茄牛肉": {
+   "name": "番茄牛肉",
+   "code": "fanqieniurou",
+   "calory": "84",
+   "protein": "9.1",
+   "fat": "3.4",
+   "carbohydrate": "5.4",
+   "natrium": "288.26",
+   "units": [
+    {
+     "unit_id": 1070475,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "252.18"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fanqieniurou"
+  },
+  "烧牛肉": {
+   "name": "烧牛肉",
+   "code": "shaoniurou",
+   "calory": "229",
+   "protein": "8.7",
+   "fat": "3.7",
+   "carbohydrate": "40.2",
+   "natrium": "219.18",
+   "units": [
+    {
+     "unit_id": 1123427,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "686.7"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_shaoniurou"
+  },
+  "烤牛肉": {
+   "name": "烤牛肉",
+   "code": "kaoniurou",
+   "calory": "102",
+   "protein": "16.9",
+   "fat": "2.7",
+   "carbohydrate": "2.0",
+   "natrium": "281.45",
+   "units": [
+    {
+     "unit_id": 1108012,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "204.12"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_kaoniurou"
+  },
+  "回锅牛肉": {
+   "name": "回锅牛肉",
+   "code": "huiguoniurou",
+   "calory": "189",
+   "protein": "13.9",
+   "fat": "12.9",
+   "carbohydrate": "4.8",
+   "natrium": "428.71",
+   "units": [
+    {
+     "unit_id": 1102043,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "567.3"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_huiguoniurou"
+  },
+  "冷片牛肉": {
+   "name": "冷片牛肉",
+   "code": "lengpianniurou",
+   "calory": "157",
+   "protein": "17.6",
+   "fat": "7.8",
+   "carbohydrate": "4.6",
+   "natrium": "70.49",
+   "units": [
+    {
+     "unit_id": 1109998,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "470.58"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_lengpianniurou"
+  },
+  "煨牛肉": {
+   "name": "煨牛肉",
+   "code": "weiniurou",
+   "calory": "159",
+   "protein": "17.2",
+   "fat": "7.7",
+   "carbohydrate": "5.5",
+   "natrium": "652.42",
+   "units": [
+    {
+     "unit_id": 1130994,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "350.0",
+     "eat_weight": "350.0",
+     "calory": "556.47"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_weiniurou"
+  },
+  "牛肉": {
+   "name": "牛肉",
+   "code": "fd60bf20",
+   "calory": "160",
+   "protein": "20.0",
+   "fat": "8.7",
+   "carbohydrate": "0.5",
+   "natrium": "64.1",
+   "units": [
+    {
+     "unit_id": 1153481,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "320.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fd60bf20"
+  },
+  "熏牛肉": {
+   "name": "熏牛肉",
+   "code": "xunniurou",
+   "calory": "164",
+   "protein": "18.0",
+   "fat": "8.5",
+   "carbohydrate": "4.5",
+   "natrium": "289.38",
+   "units": [
+    {
+     "unit_id": 1137201,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "327.92"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_xunniurou"
+  },
+  "腊牛肉": {
+   "name": "腊牛肉",
+   "code": "laniurou",
+   "calory": "119",
+   "protein": "18.1",
+   "fat": "3.7",
+   "carbohydrate": "3.4",
+   "natrium": "746.35",
+   "units": [
+    {
+     "unit_id": 1109585,
+     "amount": "1.0",
+     "unit": "盘",
+     "unit_name": "盘",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "358.17"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_laniurou"
+  },
+  "牛肉罩饼": {
+   "name": "牛肉罩饼",
+   "code": "niurouzhaobing",
+   "calory": "106",
+   "protein": "4.8",
+   "fat": "4.7",
+   "carbohydrate": "11.7",
+   "natrium": "299.93",
+   "units": [
+    {
+     "unit_id": 1115888,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "90.0",
+     "eat_weight": "90.0",
+     "calory": "95.36"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_niurouzhaobing"
+  },
+  "牛肉清汤": {
+   "name": "牛肉清汤",
+   "code": "niurouqingtang",
+   "calory": "33",
+   "protein": "6.2",
+   "fat": "0.3",
+   "carbohydrate": "1.3",
+   "natrium": "154.15",
+   "units": [
+    {
+     "unit_id": 985636,
+     "amount": "1.0",
+     "unit": "碗",
+     "unit_name": "碗",
+     "weight": "300.0",
+     "eat_weight": "300.0",
+     "calory": "98.49"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_niurouqingtang"
+  },
+  "黄牛肉": {
+   "name": "黄牛肉",
+   "code": "fdd479b8",
+   "calory": "95",
+   "protein": "18.3",
+   "fat": "2.3",
+   "carbohydrate": "0.0",
+   "natrium": "41.8",
+   "units": [
+    {
+     "unit_id": 1154400,
+     "amount": "1.0",
+     "unit": "块",
+     "unit_name": "块",
+     "weight": "200.0",
+     "eat_weight": "200.0",
+     "calory": "190.0"
+    }
+   ],
+   "health_light": 1,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_fdd479b8"
+  },
+  "酱牛肉": {
+   "name": "酱牛肉",
+   "code": "jiangniurou",
+   "calory": "246",
+   "protein": "31.4",
+   "fat": "11.9",
+   "carbohydrate": "3.2",
+   "natrium": "896.2",
+   "units": [
+    {
+     "unit_id": 937,
+     "amount": "1.0",
+     "unit": "片",
+     "unit_name": "片",
+     "weight": "15.0",
+     "eat_weight": "15.0",
+     "calory": "36.9"
+    }
+   ],
+   "health_light": 2,
+   "via": "牛肉",
+   "source_url": "https://food.boohee.com/fb/view_detail_jiangniurou"
+  }
+ },
+ "done_tokens": [
+  "鸡",
+  "鸡蛋"
+ ]
+}

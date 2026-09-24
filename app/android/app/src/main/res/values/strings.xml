@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">食聊</string>
+    <string name="title_activity_main">食聊</string>
+    <string name="package_name">com.shiliao.app</string>
+    <string name="custom_url_scheme">com.shiliao.app</string>
+</resources>

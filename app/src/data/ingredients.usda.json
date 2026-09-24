@@ -1,0 +1,646 @@
+{
+  "fetched_at": "2026-09-22",
+  "dataset": "USDA FDC SR Legacy 2018-04",
+  "ingredients": {
+    "rice-cooked": {
+      "usda_description": "Rice, white, medium-grain, enriched, cooked",
+      "fdc_id": "168880",
+      "per100g": {
+        "calories": 130,
+        "protein_g": 2.38,
+        "fat_g": 0.21,
+        "carbs_g": 28.59
+      }
+    },
+    "flour": {
+      "usda_description": "Wheat flour, white, all-purpose, enriched, bleached",
+      "fdc_id": "168894",
+      "per100g": {
+        "calories": 364,
+        "protein_g": 10.33,
+        "fat_g": 0.98,
+        "carbs_g": 76.31
+      }
+    },
+    "noodles-cooked": {
+      "usda_description": "Noodles, egg, cooked, enriched, with added salt",
+      "fdc_id": "168919",
+      "per100g": {
+        "calories": 138,
+        "protein_g": 4.54,
+        "fat_g": 2.07,
+        "carbs_g": 25.16
+      }
+    },
+    "egg": {
+      "usda_description": "Egg, whole, raw, fresh",
+      "fdc_id": "171287",
+      "per100g": {
+        "calories": 143,
+        "protein_g": 12.56,
+        "fat_g": 9.51,
+        "carbs_g": 0.72
+      }
+    },
+    "tomato": {
+      "usda_description": "Tomatoes, red, ripe, raw, year round average",
+      "fdc_id": "170457",
+      "per100g": {
+        "calories": 18,
+        "protein_g": 0.88,
+        "fat_g": 0.2,
+        "carbs_g": 3.89
+      }
+    },
+    "cucumber": {
+      "usda_description": "Cucumber, with peel, raw",
+      "fdc_id": "168409",
+      "per100g": {
+        "calories": 15,
+        "protein_g": 0.65,
+        "fat_g": 0.11,
+        "carbs_g": 3.63
+      }
+    },
+    "broccoli": {
+      "usda_description": "Broccoli, raw",
+      "fdc_id": "170379",
+      "per100g": {
+        "calories": 34,
+        "protein_g": 2.82,
+        "fat_g": 0.37,
+        "carbs_g": 6.64
+      }
+    },
+    "lettuce": {
+      "usda_description": "Lettuce, green leaf, raw",
+      "fdc_id": "169249",
+      "per100g": {
+        "calories": 15,
+        "protein_g": 1.36,
+        "fat_g": 0.15,
+        "carbs_g": 2.87
+      }
+    },
+    "cabbage": {
+      "usda_description": "Cabbage, common (danish, domestic, and pointed types), freshly harvest, raw",
+      "fdc_id": "169335",
+      "per100g": {
+        "calories": 24,
+        "protein_g": 1.21,
+        "fat_g": 0.18,
+        "carbs_g": 5.37
+      }
+    },
+    "green-pepper": {
+      "usda_description": "Peppers, sweet, green, raw",
+      "fdc_id": "170427",
+      "per100g": {
+        "calories": 20,
+        "protein_g": 0.86,
+        "fat_g": 0.17,
+        "carbs_g": 4.64
+      }
+    },
+    "potato": {
+      "usda_description": "Potatoes, flesh and skin, raw",
+      "fdc_id": "170026",
+      "per100g": {
+        "calories": 77,
+        "protein_g": 2.05,
+        "fat_g": 0.09,
+        "carbs_g": 17.49
+      }
+    },
+    "carrot": {
+      "usda_description": "Carrots, raw",
+      "fdc_id": "170393",
+      "per100g": {
+        "calories": 41,
+        "protein_g": 0.93,
+        "fat_g": 0.24,
+        "carbs_g": 9.58
+      }
+    },
+    "tofu-north": {
+      "usda_description": "Tofu, raw, firm, prepared with calcium sulfate",
+      "fdc_id": "172475",
+      "per100g": {
+        "calories": 144,
+        "protein_g": 17.27,
+        "fat_g": 8.72,
+        "carbs_g": 2.78
+      }
+    },
+    "chicken-breast": {
+      "usda_description": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+      "fdc_id": "171477",
+      "per100g": {
+        "calories": 165,
+        "protein_g": 31.02,
+        "fat_g": 3.57,
+        "carbs_g": 0
+      }
+    },
+    "chicken-thigh": {
+      "usda_description": "Chicken, broilers or fryers, thigh, meat and skin, raw",
+      "fdc_id": "172385",
+      "per100g": {
+        "calories": 221,
+        "protein_g": 16.52,
+        "fat_g": 16.61,
+        "carbs_g": 0.25
+      }
+    },
+    "pork-loin": {
+      "usda_description": "Pork, fresh, loin, tenderloin, separable lean only, raw",
+      "fdc_id": "168249",
+      "per100g": {
+        "calories": 109,
+        "protein_g": 20.95,
+        "fat_g": 2.17,
+        "carbs_g": 0
+      }
+    },
+    "pork-belly": {
+      "usda_description": "Pork, fresh, belly, raw",
+      "fdc_id": "167812",
+      "per100g": {
+        "calories": 518,
+        "protein_g": 9.34,
+        "fat_g": 53.01,
+        "carbs_g": 0
+      }
+    },
+    "pork-mince": {
+      "usda_description": "Pork, fresh, ground, raw",
+      "fdc_id": "167902",
+      "per100g": {
+        "calories": 263,
+        "protein_g": 16.88,
+        "fat_g": 21.19,
+        "carbs_g": 0
+      }
+    },
+    "pork-ribs": {
+      "usda_description": "Pork, fresh, spareribs, separable lean and fat, raw",
+      "fdc_id": "167853",
+      "per100g": {
+        "calories": 277,
+        "protein_g": 15.47,
+        "fat_g": 23.4,
+        "carbs_g": 0
+      }
+    },
+    "beef": {
+      "usda_description": "Beef, composite of trimmed retail cuts, separable lean only, trimmed to 0\" fat, all grades, cooked",
+      "fdc_id": "170208",
+      "per100g": {
+        "calories": 203,
+        "protein_g": 29.9,
+        "fat_g": 8.37,
+        "carbs_g": 0
+      }
+    },
+    "fish-bass": {
+      "usda_description": "Fish, bass, striped, raw",
+      "fdc_id": "171948",
+      "per100g": {
+        "calories": 97,
+        "protein_g": 17.73,
+        "fat_g": 2.33,
+        "carbs_g": 0
+      }
+    },
+    "shrimp": {
+      "usda_description": "Crustaceans, shrimp, raw",
+      "fdc_id": "175179",
+      "per100g": {
+        "calories": 85,
+        "protein_g": 20.1,
+        "fat_g": 0.51,
+        "carbs_g": 0
+      }
+    },
+    "peanuts": {
+      "usda_description": "Peanuts, all types, raw",
+      "fdc_id": "172430",
+      "per100g": {
+        "calories": 567,
+        "protein_g": 25.8,
+        "fat_g": 49.24,
+        "carbs_g": 16.13
+      }
+    },
+    "oil": {
+      "usda_description": "Oil, vegetable, soybean, refined",
+      "fdc_id": "172370",
+      "per100g": {
+        "calories": 884,
+        "protein_g": 0,
+        "fat_g": 100,
+        "carbs_g": 0
+      }
+    },
+    "sugar": {
+      "usda_description": "Sugars, granulated",
+      "fdc_id": "169655",
+      "per100g": {
+        "calories": 387,
+        "protein_g": 0,
+        "fat_g": 0,
+        "carbs_g": 99.98
+      }
+    },
+    "salt": {
+      "usda_description": "Salt, table",
+      "fdc_id": "173468",
+      "per100g": {
+        "calories": 0,
+        "protein_g": 0,
+        "fat_g": 0,
+        "carbs_g": 0
+      }
+    },
+    "soy": {
+      "usda_description": "Soy sauce made from soy and wheat (shoyu)",
+      "fdc_id": "174277",
+      "per100g": {
+        "calories": 53,
+        "protein_g": 8.14,
+        "fat_g": 0.57,
+        "carbs_g": 4.93
+      }
+    },
+    "starch": {
+      "usda_description": "Cornstarch",
+      "fdc_id": "169698",
+      "per100g": {
+        "calories": 381,
+        "protein_g": 0.26,
+        "fat_g": 0.05,
+        "carbs_g": 91.27
+      }
+    },
+    "cola": {
+      "usda_description": "Beverages, carbonated, cola, regular",
+      "fdc_id": "174852",
+      "per100g": {
+        "calories": 42,
+        "protein_g": 0,
+        "fat_g": 0.25,
+        "carbs_g": 10.36
+      }
+    },
+    "milk": {
+      "usda_description": "Milk, whole, 3.25% milkfat, with added vitamin D",
+      "fdc_id": "171265",
+      "per100g": {
+        "calories": 61,
+        "protein_g": 3.15,
+        "fat_g": 3.25,
+        "carbs_g": 4.8
+      }
+    },
+    "soymilk": {
+      "usda_description": "Soymilk, original and vanilla, light, unsweetened, with added calcium, vitamins A and D",
+      "fdc_id": "173768",
+      "per100g": {
+        "calories": 34,
+        "protein_g": 2.62,
+        "fat_g": 0.85,
+        "carbs_g": 3.85
+      }
+    },
+    "apple": {
+      "usda_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "fdc_id": "171688",
+      "per100g": {
+        "calories": 52,
+        "protein_g": 0.26,
+        "fat_g": 0.17,
+        "carbs_g": 13.81
+      }
+    },
+    "banana": {
+      "usda_description": "Bananas, raw",
+      "fdc_id": "173944",
+      "per100g": {
+        "calories": 89,
+        "protein_g": 1.09,
+        "fat_g": 0.33,
+        "carbs_g": 22.84
+      }
+    },
+    "shiitake": {
+      "usda_description": "Mushrooms, shiitake, raw",
+      "fdc_id": "169242",
+      "per100g": {
+        "calories": 34,
+        "protein_g": 2.24,
+        "fat_g": 0.49,
+        "carbs_g": 6.79
+      }
+    },
+    "enoki": {
+      "usda_description": "Mushrooms, enoki, raw",
+      "fdc_id": "169382",
+      "per100g": {
+        "calories": 37,
+        "protein_g": 2.66,
+        "fat_g": 0.29,
+        "carbs_g": 7.81
+      }
+    },
+    "eggplant": {
+      "usda_description": "Eggplant, raw",
+      "fdc_id": "169228",
+      "per100g": {
+        "calories": 25,
+        "protein_g": 0.98,
+        "fat_g": 0.18,
+        "carbs_g": 5.88
+      }
+    },
+    "snap-bean": {
+      "usda_description": "Beans, snap, green, raw",
+      "fdc_id": "169961",
+      "per100g": {
+        "calories": 31,
+        "protein_g": 1.83,
+        "fat_g": 0.22,
+        "carbs_g": 6.97
+      }
+    },
+    "celery": {
+      "usda_description": "Celery, raw",
+      "fdc_id": "169988",
+      "per100g": {
+        "calories": 14,
+        "protein_g": 0.69,
+        "fat_g": 0.17,
+        "carbs_g": 2.97
+      }
+    },
+    "spinach": {
+      "usda_description": "Spinach, raw",
+      "fdc_id": "168462",
+      "per100g": {
+        "calories": 23,
+        "protein_g": 2.86,
+        "fat_g": 0.39,
+        "carbs_g": 3.63
+      }
+    },
+    "bok-choy": {
+      "usda_description": "Cabbage, chinese (pak-choi), raw",
+      "fdc_id": "170390",
+      "per100g": {
+        "calories": 13,
+        "protein_g": 1.5,
+        "fat_g": 0.2,
+        "carbs_g": 2.18
+      }
+    },
+    "water-spinach": {
+      "usda_description": "Water convolvulus,raw",
+      "fdc_id": "169301",
+      "per100g": {
+        "calories": 19,
+        "protein_g": 2.6,
+        "fat_g": 0.2,
+        "carbs_g": 3.13
+      }
+    },
+    "daikon": {
+      "usda_description": "Radishes, oriental, raw",
+      "fdc_id": "168451",
+      "per100g": {
+        "calories": 18,
+        "protein_g": 0.6,
+        "fat_g": 0.1,
+        "carbs_g": 4.1
+      }
+    },
+    "pumpkin": {
+      "usda_description": "Pumpkin, raw",
+      "fdc_id": "168448",
+      "per100g": {
+        "calories": 26,
+        "protein_g": 1,
+        "fat_g": 0.1,
+        "carbs_g": 6.5
+      }
+    },
+    "sweet-potato": {
+      "usda_description": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+      "fdc_id": "168482",
+      "per100g": {
+        "calories": 86,
+        "protein_g": 1.57,
+        "fat_g": 0.05,
+        "carbs_g": 20.12
+      }
+    },
+    "lotus-root": {
+      "usda_description": "Lotus root, raw",
+      "fdc_id": "169250",
+      "per100g": {
+        "calories": 74,
+        "protein_g": 2.6,
+        "fat_g": 0.1,
+        "carbs_g": 17.23
+      }
+    },
+    "corn": {
+      "usda_description": "Corn, sweet, yellow, raw",
+      "fdc_id": "169998",
+      "per100g": {
+        "calories": 86,
+        "protein_g": 3.27,
+        "fat_g": 1.35,
+        "carbs_g": 18.7
+      }
+    },
+    "kelp": {
+      "usda_description": "Seaweed, kelp, raw",
+      "fdc_id": "168457",
+      "per100g": {
+        "calories": 43,
+        "protein_g": 1.68,
+        "fat_g": 0.56,
+        "carbs_g": 9.57
+      }
+    },
+    "mung-sprout": {
+      "usda_description": "Mung beans, mature seeds, sprouted, raw",
+      "fdc_id": "169957",
+      "per100g": {
+        "calories": 30,
+        "protein_g": 3.04,
+        "fat_g": 0.18,
+        "carbs_g": 5.94
+      }
+    },
+    "squid": {
+      "usda_description": "Mollusks, squid, mixed species, raw",
+      "fdc_id": "174223",
+      "per100g": {
+        "calories": 92,
+        "protein_g": 15.58,
+        "fat_g": 1.38,
+        "carbs_g": 3.08
+      }
+    },
+    "lamb": {
+      "usda_description": "Lamb, Australian, imported, fresh, leg, bottom, boneless, separable lean only, trimmed to 1/8\" fat, raw",
+      "fdc_id": "172653",
+      "per100g": {
+        "calories": 136,
+        "protein_g": 22.28,
+        "fat_g": 5.24,
+        "carbs_g": 0
+      }
+    },
+    "duck": {
+      "usda_description": "Duck, domesticated, meat only, raw",
+      "fdc_id": "172410",
+      "per100g": {
+        "calories": 135,
+        "protein_g": 18.28,
+        "fat_g": 5.95,
+        "carbs_g": 0.94
+      }
+    },
+    "chicken-wing": {
+      "usda_description": "Chicken, broilers or fryers, wing, meat and skin, raw",
+      "fdc_id": "172390",
+      "per100g": {
+        "calories": 191,
+        "protein_g": 17.52,
+        "fat_g": 12.85,
+        "carbs_g": 0
+      }
+    },
+    "pork-liver": {
+      "usda_description": "Pork, fresh, variety meats and by-products, liver, raw",
+      "fdc_id": "167862",
+      "per100g": {
+        "calories": 134,
+        "protein_g": 21.39,
+        "fat_g": 3.65,
+        "carbs_g": 2.47
+      }
+    },
+    "salmon": {
+      "usda_description": "Fish, salmon, Atlantic, farmed, raw",
+      "fdc_id": "175167",
+      "per100g": {
+        "calories": 208,
+        "protein_g": 20.42,
+        "fat_g": 13.42,
+        "carbs_g": 0
+      }
+    },
+    "yogurt": {
+      "usda_description": "Yogurt, plain, whole milk",
+      "fdc_id": "171284",
+      "per100g": {
+        "calories": 61,
+        "protein_g": 3.47,
+        "fat_g": 3.25,
+        "carbs_g": 4.66
+      }
+    },
+    "glutinous-rice": {
+      "usda_description": "Rice, white, glutinous, unenriched, uncooked",
+      "fdc_id": "168883",
+      "per100g": {
+        "calories": 370,
+        "protein_g": 6.81,
+        "fat_g": 0.55,
+        "carbs_g": 81.68
+      }
+    },
+    "bread": {
+      "usda_description": "Bread, white, commercially prepared, low sodium, no salt",
+      "fdc_id": "172818",
+      "per100g": {
+        "calories": 267,
+        "protein_g": 8.2,
+        "fat_g": 3.6,
+        "carbs_g": 49.6
+      }
+    },
+    "sesame-oil": {
+      "usda_description": "Oil, sesame, salad or cooking",
+      "fdc_id": "171016",
+      "per100g": {
+        "calories": 884,
+        "protein_g": 0,
+        "fat_g": 100,
+        "carbs_g": 0
+      }
+    },
+    "vinegar": {
+      "usda_description": "Vinegar, cider",
+      "fdc_id": "173469",
+      "per100g": {
+        "calories": 21,
+        "protein_g": 0,
+        "fat_g": 0,
+        "carbs_g": 0.93
+      }
+    },
+    "celtuce": {
+      "usda_description": "Celtuce, raw",
+      "fdc_id": "169990",
+      "per100g": {
+        "calories": 18,
+        "protein_g": 0.85,
+        "fat_g": 0.3,
+        "carbs_g": 3.65
+      }
+    },
+    "edamame": {
+      "usda_description": "Edamame, frozen, unprepared",
+      "fdc_id": "168410",
+      "per100g": {
+        "calories": 109,
+        "protein_g": 11.22,
+        "fat_g": 4.73,
+        "carbs_g": 7.61
+      }
+    },
+    "millet": {
+      "usda_description": "Millet, raw",
+      "fdc_id": "169702",
+      "per100g": {
+        "calories": 378,
+        "protein_g": 11.02,
+        "fat_g": 4.22,
+        "carbs_g": 72.85
+      }
+    },
+    "oats": {
+      "usda_description": "Cereals, oats, regular and quick, not fortified, dry",
+      "fdc_id": "173904",
+      "per100g": {
+        "calories": 379,
+        "protein_g": 13.15,
+        "fat_g": 6.52,
+        "carbs_g": 67.7
+      }
+    },
+    "mung-bean": {
+      "usda_description": "Mung beans, mature seeds, raw",
+      "fdc_id": "174256",
+      "per100g": {
+        "calories": 347,
+        "protein_g": 23.86,
+        "fat_g": 1.15,
+        "carbs_g": 62.62
+      }
+    }
+  }
+}
