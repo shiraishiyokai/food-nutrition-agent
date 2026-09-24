@@ -5,10 +5,11 @@
 import { getChatUrl } from './providers'
 import { resolveEndpoint } from '../lib/native_http'
 import { OpsSchema, type Op } from '../lib/correction'
-import { lookupDish } from '../lib/nutrition_db'
+import { lookupDish, computeMeal } from '../lib/nutrition_db'
+import { recognizeMeal } from './vlm'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
 import type { MealRecord } from '../data/mealRepo'
-import type { RecognitionItem } from '../ai/schema'
+import type { RecognitionItem, MealRecognition } from '../ai/schema'
 
 const SYSTEM_PROMPT = `你是饮食记录的修正解析器。给定当前识别条目和用户的一句话，把句子转换成要执行的操作 JSON。
 只输出一个 JSON 对象，不要任何其他文字或 markdown 代码块标记。格式：
@@ -171,6 +172,14 @@ const TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'recognize_meal',
+      description: '识别用户刚上传的餐食照片，生成可编辑的识别卡片。用户发来餐照时 MUST 调用',
+      parameters: { type: 'object', properties: {}, required: [] as string[] },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'lookup_food',
       description: '按菜名查本地营养库：每百克热量/三大营养素、常见份量、数值来源',
       parameters: {
@@ -184,11 +193,33 @@ const TOOLS = [
 
 const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：简短、口语，先给结论再给一句建议。
 本地数据工具：今天吃了什么用 query_today；一段时间的趋势用 query_week；某道菜的营养用 lookup_food。
+用户发来餐食照片时 MUST 调用 recognize_meal 识别并生成卡片；识别后等用户确认入库或提出修改，不要替用户决定是否记录。
 凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。
 用户提到过敏/忌口/目标等个人信息时，在回复末尾用一行确认。不得提供医疗诊断，涉及疾病建议就医。`
 
+/** 识别卡片数据：recognize_meal 产出，UI 渲染为可编辑卡片；status=saved 后锁定 */
+export interface CardData {
+  result: MealRecognition
+  /** 已压缩餐照 dataURL（与卡片同存，确认入库时直接写入记录） */
+  photoDataUrl: string
+  status: 'pending' | 'saved'
+  /** 对话/一句话修正日志 */
+  corrLogs: string[]
+}
+
+/** 工具执行上下文：ChatPage 注入记录与刚上传的图片；onCard 把识别卡片推给 UI 渲染 */
+export interface ToolCtx {
+  meals: MealRecord[]
+  /** 用户刚发送的餐照（dataURL，已压缩）；recognize_meal 一次性消费 */
+  image?: string
+  /** 识别模型配置（视觉模型），与对话文本模型分开 */
+  vlmCfg?: { presetId: string; baseUrl: string; model: string; apiKey: string }
+  /** 识别完成回调：UI 据此插入卡片消息 */
+  onCard?: (card: CardData) => void
+}
+
 /** 工具执行器：模型只决定「调什么、传什么参」，数据计算全部本地（两段式同一哲学） */
-function executeTool(name: string, rawArgs: string, meals: MealRecord[]): string {
+async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise<string> {
   let args: { days?: number; name?: string } = {}
   try {
     args = JSON.parse(rawArgs || '{}') as typeof args
@@ -197,10 +228,10 @@ function executeTool(name: string, rawArgs: string, meals: MealRecord[]): string
   }
   switch (name) {
     case 'query_today':
-      return todayText(aggregateToday(meals))
+      return todayText(aggregateToday(ctx.meals))
     case 'query_week': {
       const days = Math.min(Math.max(Number(args.days) || 7, 1), 30)
-      return weekText(aggregateByDay(meals).slice(0, days))
+      return weekText(aggregateByDay(ctx.meals).slice(0, days))
     }
     case 'lookup_food': {
       const q = String(args.name ?? '').trim()
@@ -208,6 +239,23 @@ function executeTool(name: string, rawArgs: string, meals: MealRecord[]): string
       const m = lookupDish(q)
       if (!m) return `本地营养库未命中「${q}」`
       return JSON.stringify({ 菜名: m.dish.name, 每百克: m.dish.per100g, 常见份量g: m.dish.typical_portion_g, 数值来源: m.dish.origin })
+    }
+    case 'recognize_meal': {
+      if (!ctx.image) return '错误：本轮没有收到图片。请提示用户先上传餐食照片再识别。'
+      if (!ctx.vlmCfg) return '错误：识别模型未配置，请提示用户到设置页填写。'
+      const img = ctx.image
+      ctx.image = undefined
+      const c = ctx.vlmCfg
+      const outcome = await recognizeMeal(img, {
+        presetId: c.presetId,
+        baseUrl: c.baseUrl,
+        model: c.model,
+        apiKey: c.apiKey,
+      })
+      ctx.onCard?.({ result: outcome.result, photoDataUrl: img, status: 'pending', corrLogs: [] })
+      const meal = computeMeal(outcome.result)
+      const names = meal.items.map((i) => i.name).join('、')
+      return `识别完成，共 ${meal.items.length} 项（${names}），合计约 ${Math.round(meal.totals.calories)} kcal。识别卡片已展示给用户，请等待用户确认入库或提出修改，不要罗列完整营养明细。`
     }
     default:
       return `未知工具 ${name}`
@@ -226,7 +274,7 @@ export async function answerQueryTools(
   ctx: QueryContext,
   history: Array<{ role: 'user' | 'assistant'; content: string }>,
   cfg: ChatConfig,
-  meals: MealRecord[],
+  toolCtx: ToolCtx,
 ): Promise<ToolsAnswer> {
   const messages: ToolMsg[] = [
     { role: 'system', content: `${TOOLS_SYSTEM_PROMPT}\n\n[档案] ${ctx.profile}` },
@@ -259,7 +307,7 @@ export async function answerQueryTools(
       messages.push({
         role: 'tool',
         tool_call_id: c.id,
-        content: executeTool(c.function?.name ?? '', c.function?.arguments ?? '', meals),
+        content: await executeTool(c.function?.name ?? '', c.function?.arguments ?? '', toolCtx),
       })
     }
   }

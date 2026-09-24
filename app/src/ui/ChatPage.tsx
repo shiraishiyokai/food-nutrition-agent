@@ -1,18 +1,29 @@
-/** M3「能对话」（spec 5.4 / F5 / 场景 3）：对话查询页。
- *  上下文 = 档案 + 本地聚合（今日/近7天），不喂原始记录；Mock 预设走本地模板应答。
- *  多会话：fna.chat.v2 { sessions, activeId }，每会话独立历史，可新建/删除。 */
+/** M3+对话化重构（spec 5.4 / F5 / 需求①③④）：对话是唯一主入口。
+ *  发餐照 → 模型调 recognize_meal 工具 → 本地识别+查库 → 卡片消息 →
+ *  卡片点改 / 对话一句话修正（规则层→语义层）/ 确认入库；纯文本走查询工具或 mock 模板。
+ *  多会话：fna.chat.v2 { sessions, activeId }；布局：左侧会话栏可收起（手机抽屉）。 */
 import { useEffect, useRef, useState } from 'react'
-import { answerQuery, answerQueryTools, mockAnswer, type ChatConfig, type QueryContext } from '../ai/chat'
+import { answerQuery, answerQueryTools, mockAnswer, type CardData, type ChatConfig, type QueryContext } from '../ai/chat'
+import { recognizeMeal } from '../ai/vlm'
 import { loadSettings } from '../lib/settings'
 import { getPreset } from '../ai/providers'
-import { getMealRepo } from '../data/mealRepo'
+import { computeMeal } from '../lib/nutrition_db'
+import { applyCorrectionText } from '../lib/correction'
+import { compressImage, makeSyntheticMealImage, type CompressedImage } from '../lib/image'
+import { isNative } from '../data/sqlite'
+import { getMealRepo, localDateStr, type MealRecord, type MealType } from '../data/mealRepo'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
 import { getProfileRepo, profileText, type Profile } from '../data/profileRepo'
+import { MealCard } from './MealCard'
 
 interface ChatMsg {
-  role: 'user' | 'assistant'
+  role: 'user' | 'assistant' | 'card'
   content: string
   ts: number
+  /** 用户消息附带餐照（缩略展示） */
+  image?: string
+  /** role=card 时的识别卡片数据 */
+  card?: CardData
 }
 
 interface ChatSession {
@@ -49,8 +60,12 @@ export function ChatPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [attach, setAttach] = useState<CompressedImage | null>(null)
+  const [saving, setSaving] = useState(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)
-  // 会话侧栏：桌面默认展开,手机(≤760px)默认收起为抽屉
+  const attachInputRef = useRef<HTMLInputElement | null>(null)
+  const autotestRanRef = useRef(false)
+  // 会话侧栏：桌面默认展开，手机（≤760px）默认收起为抽屉
   const [sideOpen, setSideOpen] = useState(() => !window.matchMedia('(max-width: 760px)').matches)
 
   const active = store.sessions.find((s) => s.id === store.activeId) ?? store.sessions[0]
@@ -98,18 +113,78 @@ export function ChatPage() {
     await getProfileRepo().save(p)
   }
 
+  async function acceptAttach(file: File | null | undefined) {
+    if (!file || !file.type.startsWith('image/')) return
+    try {
+      setAttach(await compressImage(file))
+      setError('')
+    } catch (e) {
+      setError(`图片处理失败：${e instanceof Error ? e.message : String(e)}`)
+    }
+  }
+
+  function pushAssistant(text: string) {
+    patchActive((se) => ({ ...se, msgs: [...se.msgs, { role: 'assistant' as const, content: text, ts: Date.now() }] }))
+  }
+
+  function pushCard(card: CardData) {
+    patchActive((se) => ({ ...se, msgs: [...se.msgs, { role: 'card' as const, content: '识别卡片', card, ts: Date.now() }] }))
+  }
+
+  function updateCardAt(idx: number, card: CardData) {
+    patchActive((se) => ({ ...se, msgs: se.msgs.map((m, i) => (i === idx ? { ...m, card } : m)) }))
+  }
+
+  /** 确认入库：卡片当前状态写为 MealRecord（数值由 computeMeal 现算，两段式红线） */
+  async function confirmSave(idx: number, card: CardData, mealType: MealType) {
+    setSaving(true)
+    try {
+      const computed = computeMeal(card.result)
+      const rec: MealRecord = {
+        id: crypto.randomUUID(),
+        date: localDateStr(),
+        mealType,
+        photoDataUrl: card.photoDataUrl,
+        items: computed.items.map((c) => ({
+          name: c.name,
+          portionG: c.portionG,
+          calories: c.calories,
+          proteinG: c.proteinG,
+          fatG: c.fatG,
+          carbsG: c.carbsG,
+          confidence: c.confidence,
+          confirmed: true,
+          estimate: c.estimate,
+        })),
+        totals: computed.totals,
+        corrLogs: [...card.corrLogs],
+        createdAt: Date.now(),
+      }
+      await (await getMealRepo()).add(rec)
+      updateCardAt(idx, { ...card, status: 'saved' })
+      pushAssistant(`已记录「${mealType}」 ${Math.round(rec.totals.calories)} kcal ✓（到「📒 记录」页查看）`)
+    } catch (e) {
+      setError(`入库失败：${e instanceof Error ? e.message : String(e)}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function send() {
     const q = input.trim()
-    if (!q || busy || !active) return
+    const img = attach?.dataUrl ?? null
+    if ((!q && !img) || busy || !active) return
     const s = loadSettings()
-    // 历史回传时剥掉工具使用徽标行（仅展示用，不进模型上下文）
-    const history = active.msgs.map(({ role, content }) => ({ role, content: content.replace(/\n🔧[^\n]*$/, '') }))
+    const history = active.msgs
+      .filter((m): m is ChatMsg & { role: 'user' | 'assistant' } => m.role !== 'card')
+      .map(({ role, content }) => ({ role, content: content.replace(/\n🔧[^\n]*$/, '') }))
     patchActive((se) => ({
       ...se,
-      title: se.msgs.length === 0 ? q.slice(0, 12) : se.title,
-      msgs: [...se.msgs, { role: 'user', content: q, ts: Date.now() }],
+      title: se.msgs.length === 0 ? (q || '图片识别').slice(0, 12) : se.title,
+      msgs: [...se.msgs, { role: 'user', content: q || '（发了一张餐食照片，请识别）', ts: Date.now(), image: img ?? undefined }],
     }))
     setInput('')
+    setAttach(null)
     setBusy(true)
     setError('')
     try {
@@ -119,31 +194,102 @@ export function ChatPage() {
         today: todayText(aggregateToday(all)),
         week: weekText(aggregateByDay(all)),
       }
-      let reply: string
-      if (s.presetId === 'mock') {
-        await new Promise((r) => setTimeout(r, 300))
-        reply = mockAnswer(q, ctx)
-      } else {
-        if (!s.apiKey.trim()) throw new Error('未配置 API Key（点上方模式徽标去设置）')
-        const cfg: ChatConfig = { baseUrl: s.baseUrl, model: s.chatModel || s.model, apiKey: s.apiKey.trim() }
-        try {
-          // Function Calling 优先：模型自主决定调 query_today / query_week / lookup_food
-          const r = await answerQueryTools(q, ctx, history, cfg, all)
-          const used = [...new Set(r.toolsUsed)]
-          reply = used.length ? `${r.reply}\n🔧 ${used.join('、')}` : r.reply
-        } catch (toolErr) {
-          // 供应商不支持 tools 或工具循环失败 → 回落注入式（原 M3 路径）
-          console.warn('function calling 回落注入式：', toolErr)
-          reply = await answerQuery(q, ctx, history, cfg)
+
+      // 有待确认卡片且用户输入纯文本 → 先试卡片修正（规则层正则先行，失败走语义层，见 D10）。
+      // 规则层纯本地零成本,mock 模式也可用,故放在 mock 分支之前
+      const pendIdx = active.msgs.findIndex((m) => m.role === 'card' && m.card?.status === 'pending')
+      if (pendIdx >= 0 && q && !img) {
+        const cardMsg = active.msgs[pendIdx]
+        const outcome = await applyCorrectionText(cardMsg.card!.result, q, async (sentence, items) => {
+          const { parseCorrection } = await import('../ai/chat')
+          return parseCorrection(sentence, items, {
+            baseUrl: s.baseUrl.trim(),
+            model: (s.chatModel || s.model).trim(),
+            apiKey: s.apiKey.trim(),
+          })
+        })
+        if (outcome.changed) {
+          updateCardAt(pendIdx, { ...cardMsg.card!, result: outcome.result, corrLogs: [...outcome.logs, ...cardMsg.card!.corrLogs] })
+          pushAssistant(outcome.logs.join('\n') || '已修改。')
+          return
         }
+        // 修正未命中 → 按普通查询继续
       }
-      patchActive((se) => ({ ...se, msgs: [...se.msgs, { role: 'assistant', content: reply, ts: Date.now() }] }))
+
+      // Mock 预设：不联网。图片直接走 mock 识别出卡片；文本走模板应答
+      if (s.presetId === 'mock') {
+        if (img) {
+          await new Promise((r) => setTimeout(r, 400))
+          const outcome = await recognizeMeal(img, { presetId: 'mock', baseUrl: '', model: 'mock-meal', apiKey: '' })
+          pushCard({ result: outcome.result, photoDataUrl: img, status: 'pending', corrLogs: [] })
+          pushAssistant('识别完成（模拟模式）：卡片在下面，可直接点改，或输入「米饭只有一半」这类话让我改；没问题点「✓ 确认记录」。')
+        } else {
+          await new Promise((r) => setTimeout(r, 300))
+          pushAssistant(mockAnswer(q, ctx))
+        }
+        return
+      }
+
+      if (!s.apiKey.trim()) throw new Error('未配置 API Key（点上方模式徽标去设置）')
+      const cfg: ChatConfig = { baseUrl: s.baseUrl, model: s.chatModel || s.model, apiKey: s.apiKey.trim() }
+      const vlmCfg = { presetId: s.presetId, baseUrl: s.baseUrl.trim(), model: s.model.trim(), apiKey: s.apiKey.trim() }
+
+      try {
+        const r = await answerQueryTools(q || '请识别用户刚上传的餐食照片并生成卡片', ctx, history, cfg, {
+          meals: all,
+          image: img ?? undefined,
+          vlmCfg,
+          onCard: pushCard,
+        })
+        const used = [...new Set(r.toolsUsed)]
+        pushAssistant(used.length ? `${r.reply}\n🔧 ${used.join('、')}` : r.reply)
+      } catch (toolErr) {
+        // 供应商不支持 tools 或工具循环失败 → 回落注入式（识别类问题则直接报错提示）
+        console.warn('function calling 回落注入式：', toolErr)
+        if (img) throw toolErr
+        pushAssistant(await answerQuery(q, ctx, history, cfg))
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
       setBusy(false)
     }
   }
+
+  // autotest：?autotest=1 时用合成图走 mock 识别出卡片（不依赖任何配置）
+  useEffect(() => {
+    if (autotestRanRef.current) return
+    if (new URLSearchParams(window.location.search).get('autotest') !== '1') return
+    autotestRanRef.current = true
+    void (async () => {
+      try {
+        const dataUrl = makeSyntheticMealImage()
+        const outcome = await recognizeMeal(dataUrl, { presetId: 'mock', baseUrl: '', model: 'mock-meal', apiKey: '' })
+        setStore((st) => {
+          const se = st.sessions[0]
+          return {
+            ...st,
+            activeId: se.id,
+            sessions: [
+              {
+                ...se,
+                title: se.msgs.length ? se.title : '自检识别',
+                msgs: [
+                  ...se.msgs,
+                  { role: 'user' as const, content: '（发了一张餐食照片，请识别）', ts: Date.now(), image: dataUrl },
+                  { role: 'card' as const, content: '识别卡片', ts: Date.now(), card: { result: outcome.result, photoDataUrl: dataUrl, status: 'pending' as const, corrLogs: [] } },
+                ],
+              },
+              ...st.sessions.slice(1),
+            ],
+          }
+        })
+        document.title = 'AUTOTEST_PASS'
+      } catch {
+        document.title = 'AUTOTEST_FAIL'
+      }
+    })()
+  }, [])
 
   const numOrNull = (v: string): number | null => (v.trim() === '' ? null : Number(v) || null)
 
@@ -242,35 +388,92 @@ export function ChatPage() {
           </button>
         </header>
 
-      <section className="card chat-stream">
-        {!active || active.msgs.length === 0 ? (
-          <p className="hint">问问看：「今天吃了多少热量」「蛋白够了吗」「本周趋势怎么样」。</p>
-        ) : (
-          active.msgs.map((m, i) => (
-            <div key={i} className={`bubble ${m.role}`}>
-              {m.content}
-            </div>
-          ))
+        <section className="card chat-stream">
+          {!active || active.msgs.length === 0 ? (
+            <p className="hint">
+              发一张餐照我来识别，或问「今天吃了多少热量」「蛋白够了吗」「本周趋势怎么样」。
+            </p>
+          ) : (
+            active.msgs.map((m, i) =>
+              m.role === 'card' && m.card ? (
+                <div key={i} className="bubble card-bubble">
+                  <MealCard
+                    card={m.card}
+                    saving={saving}
+                    onChange={(c) => updateCardAt(i, c)}
+                    onSave={(mt) => void confirmSave(i, m.card!, mt)}
+                  />
+                </div>
+              ) : (
+                <div key={i} className={`bubble ${m.role}`}>
+                  {m.image && <img className="msg-img" src={m.image} alt="餐照" />}
+                  {m.content}
+                </div>
+              ),
+            )
+          )}
+          {busy && <div className="bubble assistant typing">…</div>}
+          <div ref={bottomRef} />
+        </section>
+
+        {error && <p className="hint warn chat-error">⚠ {error}</p>}
+
+        {attach && (
+          <div className="attach-preview">
+            <img src={attach.dataUrl} alt="待发送餐照" />
+            <button onClick={() => setAttach(null)}>×</button>
+          </div>
         )}
-        {busy && <div className="bubble assistant typing">…</div>}
-        <div ref={bottomRef} />
-      </section>
 
-      {error && <p className="hint warn">⚠ {error}</p>}
-
-      <div className="chat-row">
-        <input
-          value={input}
-          placeholder="问我今天吃了什么 / 热量够不够…"
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') void send()
-          }}
-        />
-        <button className="primary" disabled={busy || !input.trim()} onClick={() => void send()}>
-          {busy ? '思考中…' : '发送'}
-        </button>
-      </div>
+        <div className="chat-row">
+          <button
+            className="attach-btn"
+            title={isNative() ? '拍照 / 相册' : '选择餐照'}
+            onClick={() => {
+              if (isNative()) {
+                void (async () => {
+                  try {
+                    const { Camera, CameraSource, CameraResultType } = await import('@capacitor/camera')
+                    const photo = await Camera.getPhoto({
+                      resultType: CameraResultType.DataUrl,
+                      source: CameraSource.Prompt,
+                      quality: 80,
+                      width: 1024,
+                    })
+                    if (photo.dataUrl) setAttach({ dataUrl: photo.dataUrl, width: 1024, height: 1024, bytes: 0, originalBytes: 0 })
+                  } catch {
+                    /* 用户取消或插件缺失 */
+                  }
+                })()
+              } else {
+                attachInputRef.current?.click()
+              }
+            }}
+          >
+            📷
+          </button>
+          <input
+            ref={attachInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              void acceptAttach(e.target.files?.[0])
+              e.target.value = ''
+            }}
+          />
+          <input
+            value={input}
+            placeholder={attach ? '可写备注后发送，或直接发送识别' : '发餐照识别 / 问今天吃了什么 / 「米饭只有一半」改卡片'}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void send()
+            }}
+          />
+          <button className="primary" disabled={busy || (!input.trim() && !attach)} onClick={() => void send()}>
+            {busy ? '…' : '发送'}
+          </button>
+        </div>
       </div>
     </div>
   )

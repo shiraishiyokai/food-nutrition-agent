@@ -50,3 +50,30 @@ function loadViaImg(file: File): Promise<HTMLImageElement> {
     img.src = url
   })
 }
+
+/** 合成测试餐照(autotest 用):米饭+炸鸡腿简笔画,mock 识别固定返回对应条目 */
+export function makeSyntheticMealImage(): string {
+  const canvas = document.createElement('canvas')
+  canvas.width = 640
+  canvas.height = 400
+  const ctx = canvas.getContext('2d')!
+  ctx.fillStyle = '#f5f0e6'
+  ctx.fillRect(0, 0, 640, 400)
+  ctx.fillStyle = '#ffffff'
+  ctx.beginPath()
+  ctx.arc(320, 230, 170, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.fillStyle = '#e8e4d8'
+  ctx.beginPath()
+  ctx.arc(300, 200, 70, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.fillStyle = '#c8722f'
+  ctx.beginPath()
+  ctx.ellipse(410, 270, 55, 35, 0.4, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.fillStyle = '#333333'
+  ctx.font = '24px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.fillText('测试图：米饭 + 炸鸡腿（Mock 联调用）', 320, 50)
+  return canvas.toDataURL('image/jpeg', 0.85)
+}

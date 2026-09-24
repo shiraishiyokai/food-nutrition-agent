@@ -746,3 +746,29 @@ footer code {
   .chat-side.open { transform: none; display: flex; }
   .side-overlay.open, .side-overlay { display: block; position: fixed; inset: 0 0 52px 0; background: rgba(0,0,0,.25); z-index: 30; }
 }
+
+/* ─── P2/P3:图片消息 + 识别卡片 ─── */
+.msg-img { max-width: 240px; max-height: 180px; border-radius: 10px; display: block; margin-bottom: 6px; }
+.bubble.card-bubble { background: none; border: none; padding: 0; box-shadow: none; max-width: 100%; }
+.meal-card { background: #fff; border: 1px solid #e5dfd0; border-radius: 14px; padding: 12px; max-width: 480px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+.mc-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.mc-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; }
+.mc-title { display: flex; flex-direction: column; gap: 2px; }
+.mc-status { font-size: 12px; color: #8a8271; }
+.mc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.mc-table th { text-align: left; color: #999; font-weight: 500; padding: 2px 4px; border-bottom: 1px solid #f0eadc; }
+.mc-table td { padding: 4px; border-bottom: 1px dashed #f0eadc; }
+.mc-name { width: 110px; border: 1px solid transparent; background: none; font-size: 13px; padding: 3px 4px; border-radius: 6px; }
+.mc-name:hover:not(:disabled), .mc-name:focus { border-color: #d8d2c4; background: #faf8f3; }
+.mc-grams { width: 56px; border: 1px solid transparent; background: none; font-size: 13px; padding: 3px 4px; border-radius: 6px; }
+.mc-grams:hover:not(:disabled), .mc-grams:focus { border-color: #d8d2c4; background: #faf8f3; }
+.mc-kcal { font-variant-numeric: tabular-nums; color: #2f6b3a; font-weight: 500; }
+.mc-del { border: none; background: none; color: #c9c2b0; font-size: 15px; cursor: pointer; padding: 2px 6px; }
+.mc-del:hover { color: #c0392b; }
+.mc-total { font-size: 13px; color: #555; margin: 8px 0 4px; }
+.mc-logs { font-size: 12px; margin: 4px 0; }
+.attach-preview { display: flex; align-items: center; gap: 8px; margin: 0 auto 8px; max-width: 720px; width: calc(100% - 24px); }
+.attach-preview img { height: 52px; width: 52px; object-fit: cover; border-radius: 8px; border: 1px solid #e5dfd0; }
+.attach-preview button { border: none; background: #eee8da; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; color: #6b6353; }
+.attach-btn { border: 1px solid #ddd6c6; background: #fff; border-radius: 10px; padding: 9px 11px; cursor: pointer; font-size: 15px; flex-shrink: 0; }
+.chat-error { margin: 0 auto 8px; max-width: 720px; width: calc(100% - 24px); }
