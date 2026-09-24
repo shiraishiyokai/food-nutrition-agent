@@ -772,3 +772,7 @@ footer code {
 .attach-preview button { border: none; background: #eee8da; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; color: #6b6353; }
 .attach-btn { border: 1px solid #ddd6c6; background: #fff; border-radius: 10px; padding: 9px 11px; cursor: pointer; font-size: 15px; flex-shrink: 0; }
 .chat-error { margin: 0 auto 8px; max-width: 720px; width: calc(100% - 24px); }
+
+/* ─── P5:档案 BMI 与推荐提示 ─── */
+.bmi-line { font-size: 13px; color: #2f6b3a; margin: 6px 2px 0; font-weight: 500; }
+.rec-msg { font-size: 12px; color: #8a6d1f; background: #faf3df; border-radius: 6px; padding: 5px 8px; margin: 6px 2px 0; }

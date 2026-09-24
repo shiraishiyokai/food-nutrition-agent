@@ -13,7 +13,7 @@ import { compressImage, makeSyntheticMealImage, type CompressedImage } from '../
 import { isNative } from '../data/sqlite'
 import { getMealRepo, localDateStr, type MealRecord, type MealType } from '../data/mealRepo'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
-import { getProfileRepo, profileText, type Profile } from '../data/profileRepo'
+import { getProfileRepo, profileText, bmi, bmiLabel, recommendEnergy, parseProfileUpdate, type Profile } from '../data/profileRepo'
 import { MealCard } from './MealCard'
 
 interface ChatMsg {
@@ -62,6 +62,7 @@ export function ChatPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [attach, setAttach] = useState<CompressedImage | null>(null)
   const [saving, setSaving] = useState(false)
+  const [recMsg, setRecMsg] = useState('')
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const attachInputRef = useRef<HTMLInputElement | null>(null)
   const autotestRanRef = useRef(false)
@@ -111,6 +112,39 @@ export function ChatPage() {
   async function saveProfile(p: Profile) {
     setProfile(p)
     await getProfileRepo().save(p)
+  }
+
+  /** P5：选目标模板后按公式自动填推荐热量（数据齐才填，绝不编造）；随时可手动改 */
+  function applyGoal(goal: string) {
+    if (!profile) return
+    const next: Profile = { ...profile, goal }
+    fillRec(next, goal)
+    void saveProfile(next)
+  }
+
+  /** 身体数据改完后:目标已选则按新数据重算推荐,否则只提示 */
+  function applyBody(field: 'age' | 'heightCm' | 'weightKg', raw: string) {
+    if (!profile) return
+    const next: Profile = { ...profile, [field]: numOrNull(raw) }
+    fillRec(next, next.goal)
+    void saveProfile(next)
+  }
+
+  /** 依据 goal 与身体数据填推荐;纯本地公式,不联网不编造 */
+  function fillRec(next: Profile, goal: string) {
+    const rec = recommendEnergy(next)
+    if (rec && goal === '减脂') {
+      next.dailyCalorieTarget = rec.cut
+      setRecMsg(`已按公式填入减脂推荐 ${rec.cut} kcal（BMR ${rec.bmr} × 1.375 轻活动 − 400），可手动修改`)
+    } else if (rec && goal === '增肌') {
+      next.dailyCalorieTarget = rec.bulk
+      setRecMsg(`已按公式填入增肌推荐 ${rec.bulk} kcal（BMR ${rec.bmr} × 1.375 + 300），可手动修改`)
+    } else if (rec && goal === '维持') {
+      next.dailyCalorieTarget = rec.maintain
+      setRecMsg(`已按公式填入维持推荐 ${rec.maintain} kcal（BMR ${rec.bmr} × 1.375 轻活动）`)
+    } else {
+      setRecMsg(rec ? '' : '补全 性别/年龄/身高/体重 后，选目标会自动填入公式推荐热量')
+    }
   }
 
   async function acceptAttach(file: File | null | undefined) {
@@ -193,6 +227,18 @@ export function ChatPage() {
         profile: profileText(profile ?? prof),
         today: todayText(aggregateToday(all)),
         week: weekText(aggregateByDay(all)),
+      }
+
+      // P5：档案类指令（体重/身高/年龄/热量目标）优先解析，纯本地规则层，mock 与真实模式 alike
+      const profUpd = q ? parseProfileUpdate(q) : null
+      if (profUpd && !img) {
+        const np: Profile = { ...(profile ?? prof), ...profUpd.patch }
+        await saveProfile(np)
+        const b = bmi(np)
+        pushAssistant(
+          `已记入档案：${profUpd.desc}${b != null && profUpd.patch.weightKg != null ? `（BMI ${b}，${bmiLabel(b)}）` : ''}`,
+        )
+        return
       }
 
       // 有待确认卡片且用户输入纯文本 → 先试卡片修正（规则层正则先行，失败走语义层，见 D10）。
@@ -332,7 +378,7 @@ export function ChatPage() {
             <div className="profile-grid">
               <label>
                 目标
-                <select value={profile.goal} onChange={(e) => void saveProfile({ ...profile, goal: e.target.value })}>
+                <select value={profile.goal} onChange={(e) => applyGoal(e.target.value)}>
                   <option value="">未设置</option>
                   <option>减脂</option>
                   <option>增肌</option>
@@ -340,19 +386,46 @@ export function ChatPage() {
                 </select>
               </label>
               <label>
-                每日热量目标 kcal
+                性别
+                <select value={profile.sex ?? ''} onChange={(e) => { const next = { ...profile, sex: e.target.value as Profile['sex'] }; fillRec(next, next.goal); void saveProfile(next) }}>
+                  <option value="">未设置</option>
+                  <option>男</option>
+                  <option>女</option>
+                </select>
+              </label>
+              <label>
+                年龄
                 <input
                   type="number"
-                  value={profile.dailyCalorieTarget ?? ''}
-                  onChange={(e) => void saveProfile({ ...profile, dailyCalorieTarget: numOrNull(e.target.value) })}
+                  defaultValue={profile.age ?? ''}
+                  key={`age-${profile.age ?? ''}`}
+                  onBlur={(e) => applyBody('age', e.target.value)}
+                />
+              </label>
+              <label>
+                身高 cm
+                <input
+                  type="number"
+                  defaultValue={profile.heightCm ?? ''}
+                  key={`h-${profile.heightCm ?? ''}`}
+                  onBlur={(e) => applyBody('heightCm', e.target.value)}
                 />
               </label>
               <label>
                 体重 kg
                 <input
                   type="number"
-                  value={profile.weightKg ?? ''}
-                  onChange={(e) => void saveProfile({ ...profile, weightKg: numOrNull(e.target.value) })}
+                  defaultValue={profile.weightKg ?? ''}
+                  key={`w-${profile.weightKg ?? ''}`}
+                  onBlur={(e) => applyBody('weightKg', e.target.value)}
+                />
+              </label>
+              <label>
+                每日热量目标 kcal
+                <input
+                  type="number"
+                  value={profile.dailyCalorieTarget ?? ''}
+                  onChange={(e) => void saveProfile({ ...profile, dailyCalorieTarget: numOrNull(e.target.value) })}
                 />
               </label>
               <label>
@@ -373,6 +446,12 @@ export function ChatPage() {
               </label>
             </div>
           )}
+          {(() => {
+            if (!profile) return null
+            const v = bmi(profile)
+            return v != null ? <p className="bmi-line">BMI {v}（{bmiLabel(v)}，中国成人标准）</p> : null
+          })()}
+          {recMsg && <p className="rec-msg">{recMsg}</p>}
         </details>
       </aside>
       <div className="chat-main">
