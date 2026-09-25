@@ -190,6 +190,11 @@ export function parseProfileUpdate(sentence: string): { patch: Partial<Profile>;
       descs.push(`性别 ${combo[4]}`)
     }
   }
+  const g = sentence.match(/(?:目标[是为]?|想|要|改成|换成|设为|调整为)\s*(减脂|增肌|维持)/) ?? sentence.match(/^\s*(减脂|增肌|维持)\s*$/)
+  if (g) {
+    patch.goal = g[1]
+    descs.push(`目标 ${g[1]}`)
+  }
   if (descs.length === 0) return null
   return { patch, desc: descs.join('、') }
 }

@@ -223,10 +223,13 @@ export function ChatPage() {
     setError('')
     try {
       const [all, prof] = await Promise.all([getMealRepo().then((r) => r.list()), getProfileRepo().load()])
+      const profNow = profile ?? prof
       const ctx: QueryContext = {
-        profile: profileText(profile ?? prof),
+        profile: profileText(profNow),
         today: todayText(aggregateToday(all)),
         week: weekText(aggregateByDay(all)),
+        targetKcal: profNow.dailyCalorieTarget,
+        eatenKcal: aggregateToday(all).calories,
       }
 
       // P5：档案类指令。配置了真模型时 MUST 交给模型走 update_profile 工具（统一 🔧 可见、可验证）；
@@ -234,10 +237,30 @@ export function ChatPage() {
       const profUpd = q ? parseProfileUpdate(q) : null
       if (profUpd && !img && (s.presetId === 'mock' || !s.apiKey.trim())) {
         const np: Profile = { ...(profile ?? prof), ...profUpd.patch }
+        // 目标为三大模板 → 按公式填推荐热量（与工具路径同一公式,见 D17）
+        const rec = recommendEnergy(np)
+        let recLine = ''
+        if (rec && profUpd.patch.goal) {
+          if (np.goal === '减脂') {
+            np.dailyCalorieTarget = rec.cut
+            recLine = `；已按公式填入减脂推荐 ${rec.cut} kcal`
+          } else if (np.goal === '增肌') {
+            np.dailyCalorieTarget = rec.bulk
+            recLine = `；已按公式填入增肌推荐 ${rec.bulk} kcal`
+          } else if (np.goal === '维持') {
+            np.dailyCalorieTarget = rec.maintain
+            recLine = `；已按公式填入维持推荐 ${rec.maintain} kcal`
+          }
+        }
         await saveProfile(np)
         const b = bmi(np)
+        const eaten = Math.round(aggregateToday(all).calories)
+        const remain = np.dailyCalorieTarget != null ? Math.round(np.dailyCalorieTarget - eaten) : null
+        const remainLine = remain != null ? (remain >= 0 ? `今日已吃 ${eaten} kcal，还可吃约 ${remain} kcal。` : `今日已吃 ${eaten} kcal，已超出约 ${-remain} kcal。`) : ''
         pushAssistant(
-          `已记入档案：${profUpd.desc}${b != null && profUpd.patch.weightKg != null ? `（BMI ${b}，${bmiLabel(b)}）` : ''}\n🔧 本地档案更新（模拟模式）`,
+          `已记入档案：${profUpd.desc}${recLine}${remainLine ? `\n${remainLine}` : ''}${
+            b != null && profUpd.patch.weightKg != null ? `（BMI ${b}，${bmiLabel(b)}）` : ''
+          }\n🔧 本地档案更新（模拟模式）`,
         )
         return
       }

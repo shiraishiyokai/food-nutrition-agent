@@ -8,7 +8,7 @@ import { OpsSchema, type Op } from '../lib/correction'
 import { lookupDish, computeMeal } from '../lib/nutrition_db'
 import { recognizeMeal } from './vlm'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
-import { bmi as calcBmi, type Profile } from '../data/profileRepo'
+import { bmi as calcBmi, recommendEnergy, type Profile } from '../data/profileRepo'
 import type { MealRecord } from '../data/mealRepo'
 import type { RecognitionItem, MealRecognition } from '../ai/schema'
 
@@ -83,6 +83,9 @@ export interface QueryContext {
   profile: string
   today: string
   week: string
+  /** 剩余额度计算用（mock 应答与工具返回） */
+  targetKcal?: number | null
+  eatenKcal?: number
 }
 
 const QUERY_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：简短、口语、不啰嗦，先给结论再给一句建议。
@@ -130,6 +133,15 @@ export function mockAnswer(question: string, ctx: QueryContext): string {
   const lines: string[] = []
   if (isWeek) lines.push(`[Mock 应答] 本周概览：${ctx.week}。`)
   else lines.push(`[Mock 应答] ${ctx.today}。`)
+  if (ctx.targetKcal != null) {
+    const eaten = Math.round(ctx.eatenKcal ?? 0)
+    const remain = Math.round(ctx.targetKcal - eaten)
+    lines.push(
+      remain >= 0
+        ? `今日目标 ${ctx.targetKcal} kcal，已吃 ${eaten} kcal，还可吃约 ${remain} kcal。`
+        : `今日目标 ${ctx.targetKcal} kcal，已吃 ${eaten} kcal，已超出约 ${-remain} kcal，下一餐清淡些。`,
+    )
+  }
   if (hasProtein && ctx.today !== '今日还没有记录') lines.push('按一般减脂目标，蛋白再补 20~30g 就很稳了。')
   else if (hasCal) lines.push('整体量级参考你档案里的目标来控制即可。')
   else lines.push('想查热量/蛋白直接问，比如「今天热量够吗」。')
@@ -218,7 +230,7 @@ const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：
 本地数据工具：今天吃了什么用 query_today；一段时间的趋势用 query_week；某道菜的营养用 lookup_food。
 用户发来餐食照片时 MUST 调用 recognize_meal 识别并生成卡片；识别后等用户确认入库或提出修改，不要替用户决定是否记录。
 用户陈述或修改身体指标/档案信息（体重、身高、年龄、性别、目标、热量目标、过敏忌口、偏好）时 MUST 调用 update_profile 落库；一句话报多个指标（如「175cm/75kg/30岁/男」）时一次性提取全部字段、只调一次；身体指标类问题直接依据 [档案] 与 BMI 回答。
-凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。
+凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。用户问还能吃多少/吃得够不够时，依据 query_today 返回的剩余额度与档案目标回答并给一句可执行建议。
 用户提到过敏/忌口/目标等个人信息时，在回复末尾用一行确认。不得提供医疗诊断，涉及疾病建议就医。`
 
 /** 识别卡片数据：recognize_meal 产出，UI 渲染为可编辑卡片；status=saved 后锁定 */
@@ -266,8 +278,16 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
     // 参数不是合法 JSON 时按空参处理
   }
   switch (name) {
-    case 'query_today':
-      return todayText(aggregateToday(ctx.meals))
+    case 'query_today': {
+      const agg = aggregateToday(ctx.meals)
+      const base = todayText(agg)
+      const target = ctx.profile?.dailyCalorieTarget
+      if (!target) return base
+      const remain = Math.round(target - agg.calories)
+      return `${base}\n今日热量目标 ${target} kcal，已吃约 ${Math.round(agg.calories)} kcal，${
+        remain >= 0 ? `还可吃约 ${remain} kcal` : `已超出约 ${-remain} kcal`
+      }`
+    }
     case 'query_week': {
       const days = Math.min(Math.max(Number(args.days) || 7, 1), 30)
       return weekText(aggregateByDay(ctx.meals).slice(0, days))
@@ -342,9 +362,36 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
         return '错误：没有合法可更新的字段（数值需在合理范围内）。请向用户说明需要正确的数值。'
       }
       const np: Profile = { ...cur, ...patch }
+      // 选定/切换三大目标且本次未显式给热量目标 → 按公式自动填推荐（D17；只在 goal 变更时填，避免覆盖手改值）
+      let recLine = ''
+      const rec = recommendEnergy(np)
+      if (rec && patch.goal && num(args.dailyCalorieTarget) == null) {
+        if (np.goal === '减脂') {
+          np.dailyCalorieTarget = rec.cut
+          recLine = `；已按公式填入减脂推荐 ${rec.cut} kcal（BMR ${rec.bmr} × 1.375 轻活动 − 400）`
+        } else if (np.goal === '增肌') {
+          np.dailyCalorieTarget = rec.bulk
+          recLine = `；已按公式填入增肌推荐 ${rec.bulk} kcal（BMR ${rec.bmr} × 1.375 + 300）`
+        } else if (np.goal === '维持') {
+          np.dailyCalorieTarget = rec.maintain
+          recLine = `；已按公式填入维持推荐 ${rec.maintain} kcal（BMR ${rec.bmr} × 1.375 轻活动）`
+        }
+        if (recLine) applied.push(`每日热量目标 ${np.dailyCalorieTarget} kcal（公式推荐）`)
+      }
       ctx.onProfile?.(np)
       const b = calcBmi(np)
-      return `档案已更新并同步到用户档案卡：${applied.join('、')}${b != null ? `（BMI ${b}）` : ''}。`
+      const agg = aggregateToday(ctx.meals)
+      let remainLine = ''
+      if (np.dailyCalorieTarget) {
+        const remain = Math.round(np.dailyCalorieTarget - agg.calories)
+        remainLine =
+          remain >= 0
+            ? `今日已吃约 ${Math.round(agg.calories)} kcal，还可吃约 ${remain} kcal。`
+            : `今日已吃约 ${Math.round(agg.calories)} kcal，已超出约 ${-remain} kcal。`
+      }
+      return `档案已更新并同步到用户档案卡：${applied.join('、')}${b != null ? `（BMI ${b}）` : ''}。${recLine}${
+        remainLine ? `\n${remainLine}` : ''
+      }`
     }
     default:
       return `未知工具 ${name}`
