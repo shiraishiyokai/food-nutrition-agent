@@ -229,14 +229,15 @@ export function ChatPage() {
         week: weekText(aggregateByDay(all)),
       }
 
-      // P5：档案类指令（体重/身高/年龄/热量目标）优先解析，纯本地规则层，mock 与真实模式 alike
+      // P5：档案类指令。配置了真模型时 MUST 交给模型走 update_profile 工具（统一 🔧 可见、可验证）；
+      // 规则层只在 mock/无 Key 模式下兜底（此时没有模型可调），纯本地零成本
       const profUpd = q ? parseProfileUpdate(q) : null
-      if (profUpd && !img) {
+      if (profUpd && !img && (s.presetId === 'mock' || !s.apiKey.trim())) {
         const np: Profile = { ...(profile ?? prof), ...profUpd.patch }
         await saveProfile(np)
         const b = bmi(np)
         pushAssistant(
-          `已记入档案：${profUpd.desc}${b != null && profUpd.patch.weightKg != null ? `（BMI ${b}，${bmiLabel(b)}）` : ''}`,
+          `已记入档案：${profUpd.desc}${b != null && profUpd.patch.weightKg != null ? `（BMI ${b}，${bmiLabel(b)}）` : ''}\n🔧 本地档案更新（模拟模式）`,
         )
         return
       }
