@@ -1,7 +1,9 @@
 // 薄荷科学官方 API 客户端（按需补库）：本地库未命中的菜 → 搜索（1 次调用，搜索即含每百克值+份量单位）
 // → 永久缓存进本地库，此后零调用。文档：https://ai.boohee.com/docs/
 // 免费档：7 个食物数据接口，50 次请求/天（每日重置）；高级 API（拍照识别等）不开放。
-// 开发期经 Vite 代理 /boohee → api.boohee.com 绕 CORS（官方响应无 CORS 头）；APK 后改 CapacitorHttp 直连。
+// 请求路径经 resolveEndpoint 解析：开发期走 Vite 代理；线上 web 与 APK 直连 api.boohee.com。
+// 2026-09-25 实测官方支持浏览器跨域（预检放行 github.io 源 + x-api-key 头，实响应亦带 ACAO）；
+// 旧结论「官方响应无 CORS 头」已失效，勿再据此加代理。
 
 import { loadSettings } from './settings'
 import { resolveEndpoint } from './native_http'
