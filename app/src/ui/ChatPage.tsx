@@ -480,7 +480,18 @@ export function ChatPage() {
           {recMsg && <p className="rec-msg">{recMsg}</p>}
         </details>
       </aside>
-      <div className="chat-main">
+      {/* 需求④ web 快捷入口：餐照文件可拖进对话区任意位置，与 Ctrl+V 粘贴同走 acceptAttach */}
+      <div
+        className="chat-main"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          const f = Array.from(e.dataTransfer.files).find((x) => x.type.startsWith('image/'))
+          if (f) {
+            e.preventDefault()
+            void acceptAttach(f)
+          }
+        }}
+      >
         <header className="chat-head">
           <button className="side-toggle" onClick={() => setSideOpen((v) => !v)} aria-label="切换会话栏">
             ☰
@@ -496,7 +507,7 @@ export function ChatPage() {
         <section className="card chat-stream">
           {!active || active.msgs.length === 0 ? (
             <p className="hint">
-              发一张餐照我来识别，或问「今天吃了多少热量」「蛋白够了吗」「本周趋势怎么样」。
+              发一张餐照我来识别（📷 选择 / 拖入对话区 / Ctrl+V 粘贴均可），或问「今天吃了多少热量」「蛋白够了吗」「本周趋势怎么样」。
             </p>
           ) : (
             active.msgs.map((m, i) =>
@@ -533,7 +544,7 @@ export function ChatPage() {
         <div className="chat-row">
           <button
             className="attach-btn"
-            title={isNative() ? '拍照 / 相册' : '选择餐照'}
+            title={isNative() ? '拍照 / 相册' : '选择 / 拖拽 / Ctrl+V 粘贴餐照'}
             onClick={() => {
               if (isNative()) {
                 void (async () => {
@@ -571,6 +582,14 @@ export function ChatPage() {
             value={input}
             placeholder={attach ? '可写备注后发送，或直接发送识别' : '发餐照识别 / 问今天吃了什么 / 「米饭只有一半」改卡片'}
             onChange={(e) => setInput(e.target.value)}
+            onPaste={(e) => {
+              // 需求④ web 快捷入口：Ctrl+V 直接粘贴餐照截图；纯文本粘贴不受影响
+              const f = Array.from(e.clipboardData.files).find((x) => x.type.startsWith('image/'))
+              if (f) {
+                e.preventDefault()
+                void acceptAttach(f)
+              }
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') void send()
             }}
