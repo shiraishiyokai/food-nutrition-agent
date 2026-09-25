@@ -11,14 +11,17 @@ interface Props {
   saving: boolean
   onChange: (c: CardData) => void
   onSave: (mealType: MealType) => void
+  /** 推荐卡（kind=rec）：再次随机——同一约束重新组合；识别卡无此按钮 */
+  onReroll?: () => void
 }
 
 const MEAL_TYPES: MealType[] = ['早餐', '午餐', '晚餐', '加餐']
 
-export function MealCard({ card, saving, onChange, onSave }: Props) {
+export function MealCard({ card, saving, onChange, onSave, onReroll }: Props) {
   const computed = useMemo(() => computeMeal(card.result), [card])
   const items = card.result.items
   const locked = card.status === 'saved'
+  const isRec = card.kind === 'rec'
   const [mealType, setMealType] = useState<MealType>(guessMealType)
 
   function patchItem(i: number, patch: Partial<{ name: string; portion_g: number }>) {
@@ -39,7 +42,7 @@ export function MealCard({ card, saving, onChange, onSave }: Props) {
       <div className="mc-head">
         {card.photoDataUrl && <img className="mc-thumb" src={card.photoDataUrl} alt="餐照" />}
         <div className="mc-title">
-          <strong>🍽 识别卡片</strong>
+          <strong>{isRec ? '🎲 推荐搭配' : '🍽 识别卡片'}</strong>
           <span className="mc-status">{locked ? '✓ 已入库' : '待确认'}</span>
         </div>
       </div>
@@ -115,13 +118,18 @@ export function MealCard({ card, saving, onChange, onSave }: Props) {
 
       {!locked && (
         <div className="save-row">
+          {isRec && onReroll && (
+            <button className="reroll" disabled={saving} onClick={onReroll}>
+              🎲 再次随机
+            </button>
+          )}
           <select value={mealType} onChange={(e) => setMealType(e.target.value as MealType)}>
             {MEAL_TYPES.map((t) => (
               <option key={t}>{t}</option>
             ))}
           </select>
           <button className="primary" disabled={saving} onClick={() => onSave(mealType)}>
-            {saving ? '保存中…' : '✓ 确认记录'}
+            {saving ? '保存中…' : isRec ? '✓ 记录这餐' : '✓ 确认记录'}
           </button>
         </div>
       )}

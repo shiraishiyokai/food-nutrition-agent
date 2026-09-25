@@ -779,3 +779,18 @@ footer code {
 
 /* 输入框随可用宽度伸展（与消息流同宽） */
 .chat-main .chat-row input { flex: 1; min-width: 0; }
+
+/* ---- 推荐卡（D18） ---- */
+.save-row .reroll {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.save-row .reroll:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

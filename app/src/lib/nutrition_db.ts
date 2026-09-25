@@ -221,6 +221,11 @@ const DEFAULT_DISHES: DishNutrition[] = DISH_DB.dishes.map((d) => buildDish(d, d
 /** 直录轨·精选（外部参考值，经人工核定/精确匹配）：查找顺序在派生轨之前 */
 const REFERENCE_DISHES: DishNutrition[] = DISH_REF_DB.dishes.map(buildReferenceDish)
 
+/** 推荐引擎用（D18）：暴露精选直录库供组合餐食（数值可溯源，来源见 source_url） */
+export function listReferenceDishes(): DishNutrition[] {
+  return REFERENCE_DISHES
+}
+
 // ─── 类目兜底（D8）：未命中菜品按同类均值估算，明确标注、不冒充精确值 ──
 
 interface CategoryMean {

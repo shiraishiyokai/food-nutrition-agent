@@ -8,8 +8,9 @@ import { OpsSchema, type Op } from '../lib/correction'
 import { lookupDish, computeMeal } from '../lib/nutrition_db'
 import { recognizeMeal } from './vlm'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
+import { composeRecommendation, inferMealType, mainSlotsUsedToday, parseRecPreferences, perMealBudget, type RecMealType } from '../lib/recommend'
 import { bmi as calcBmi, recommendEnergy, type Profile } from '../data/profileRepo'
-import type { MealRecord } from '../data/mealRepo'
+import { localDateStr, type MealRecord } from '../data/mealRepo'
 import type { RecognitionItem, MealRecognition } from '../ai/schema'
 
 const SYSTEM_PROMPT = `你是饮食记录的修正解析器。给定当前识别条目和用户的一句话，把句子转换成要执行的操作 JSON。
@@ -193,6 +194,25 @@ const TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'recommend_meal',
+      description:
+        '根据剩余热量额度与用户约束，从本地营养库组合一套餐食（默认荤素搭配、有菜有汤）并生成推荐卡片。用户问「吃什么好 / 晚饭吃点啥 / 推荐一餐」等推荐类问题时 MUST 调用',
+      parameters: {
+        type: 'object',
+        properties: {
+          mealType: { type: 'string', enum: ['早餐', '午餐', '晚餐', '加餐'], description: '本餐类型；用户没明说时按当前时段判断' },
+          preferences: {
+            type: 'string',
+            description: '用户对本餐的饮食约束原话（如「不吃荤」「不吃碳水」「想吃两个素菜」「少喝点汤」），没有则传空',
+          },
+        },
+        required: [] as string[],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'update_profile',
       description:
         '更新用户档案（体重/身高/年龄/性别/目标/每日热量目标/过敏忌口/偏好）。用户陈述或修改这些信息时 MUST 调用，只传本次要改的字段；更新成功以工具返回为准，MUST NOT 在未调用工具时声称已更新',
@@ -229,6 +249,7 @@ const TOOLS = [
 const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：简短、口语，先给结论再给一句建议。
 本地数据工具：今天吃了什么用 query_today；一段时间的趋势用 query_week；某道菜的营养用 lookup_food。
 用户发来餐食照片时 MUST 调用 recognize_meal 识别并生成卡片；识别后等用户确认入库或提出修改，不要替用户决定是否记录。
+用户问「吃什么好 / 晚饭吃点啥 / 推荐一餐」这类推荐类问题时 MUST 调用 recommend_meal，把餐次和用户约束原话（如「不吃荤」「想吃两个素菜」）传入；依据工具返回的预算与菜品做一两句拟人化介绍，营养数值以卡片为准，不要自行另报数值。
 用户陈述或修改身体指标/档案信息（体重、身高、年龄、性别、目标、热量目标、过敏忌口、偏好）时 MUST 调用 update_profile 落库；一句话报多个指标（如「175cm/75kg/30岁/男」）时一次性提取全部字段、只调一次；身体指标类问题直接依据 [档案] 与 BMI 回答。
 凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。用户问还能吃多少/吃得够不够时，依据 query_today 返回的剩余额度与档案目标回答并给一句可执行建议。
 用户提到过敏/忌口/目标等个人信息时，在回复末尾用一行确认。不得提供医疗诊断，涉及疾病建议就医。`
@@ -236,11 +257,15 @@ const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：
 /** 识别卡片数据：recognize_meal 产出，UI 渲染为可编辑卡片；status=saved 后锁定 */
 export interface CardData {
   result: MealRecognition
-  /** 已压缩餐照 dataURL（与卡片同存，确认入库时直接写入记录） */
+  /** 已压缩餐照 dataURL（与卡片同存，确认入库时直接写入记录）；推荐卡无照片传空串 */
   photoDataUrl: string
   status: 'pending' | 'saved'
   /** 对话/一句话修正日志 */
   corrLogs: string[]
+  /** 推荐卡（recommend_meal 产出）：无餐照、默认不入库，用户点「记录这餐」才存 */
+  kind?: 'rec'
+  /** 再次随机的重放参数：同一约束重新组合（预算按最新档案与当日记录现算） */
+  recParams?: { mealType: string; preferences: string }
 }
 
 /** 工具执行上下文：ChatPage 注入记录/图片/当前档案；onCard/onProfile 把结果同步给 UI */
@@ -263,6 +288,8 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
   let args: {
     days?: number
     name?: string
+    mealType?: string
+    preferences?: string
     weightKg?: number
     heightCm?: number
     age?: number
@@ -315,6 +342,28 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
       const meal = computeMeal(outcome.result)
       const names = meal.items.map((i) => i.name).join('、')
       return `识别完成，共 ${meal.items.length} 项（${names}），合计约 ${Math.round(meal.totals.calories)} kcal。识别卡片已展示给用户，请等待用户确认入库或提出修改，不要罗列完整营养明细。`
+    }
+    case 'recommend_meal': {
+      // 模型只传餐次+约束原话；预算、选菜、克数配平全部本地（D18 两段式同一哲学）
+      const mealType: RecMealType = ['早餐', '午餐', '晚餐', '加餐'].includes(args.mealType ?? '')
+        ? (args.mealType as RecMealType)
+        : inferMealType('')
+      const prefsRaw = String(args.preferences ?? '').slice(0, 120)
+      const prefs = parseRecPreferences(prefsRaw)
+      const agg = aggregateToday(ctx.meals)
+      const slotsUsed = mainSlotsUsedToday(ctx.meals, localDateStr())
+      const budget = perMealBudget(ctx.profile?.dailyCalorieTarget ?? null, agg.calories, slotsUsed, mealType)
+      const comp = composeRecommendation(mealType, prefs, budget)
+      ctx.onCard?.({
+        result: comp.result,
+        photoDataUrl: '',
+        status: 'pending',
+        corrLogs: [budget.note, ...comp.applied],
+        kind: 'rec',
+        recParams: { mealType, preferences: prefsRaw },
+      })
+      const names = comp.result.items.map((i) => i.name).join('、')
+      return `推荐卡片已生成：${mealType}（本餐预算约 ${budget.budget} kcal）＝ ${names}。${budget.note}。请用一两句话介绍这套搭配的思路（荤素/汤的考虑、结合用户约束），并提醒用户：不满意点卡片上的「🎲 再次随机」，满意点「✓ 记录这餐」，默认不会自动记录；卡片上的数值不要复述。`
     }
     case 'update_profile': {
       const cur = ctx.profile

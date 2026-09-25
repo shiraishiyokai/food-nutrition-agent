@@ -9,6 +9,7 @@ import { loadSettings } from '../lib/settings'
 import { getPreset } from '../ai/providers'
 import { computeMeal } from '../lib/nutrition_db'
 import { applyCorrectionText } from '../lib/correction'
+import { composeRecommendation, inferMealType, mainSlotsUsedToday, parseRecPreferences, perMealBudget, type RecMealType } from '../lib/recommend'
 import { compressImage, makeSyntheticMealImage, type CompressedImage } from '../lib/image'
 import { isNative } from '../data/sqlite'
 import { getMealRepo, localDateStr, type MealRecord, type MealType } from '../data/mealRepo'
@@ -38,6 +39,9 @@ interface ChatStore {
 }
 
 const CHAT_KEY = 'fna.chat.v2'
+
+/** mock 模式的推荐意图识别（配置真模型时由模型自主调 recommend_meal 工具判断） */
+const REC_INTENT_RE = /吃(什么|啥)|吃点(什么|啥)|推荐.{0,8}(餐|菜|吃)|安排.{0,4}(餐|饭|吃)|帮我想.{0,4}(吃|餐)|来.{0,3}(套|份).{0,3}(餐|菜|吃)/
 
 function newSession(): ChatSession {
   return { id: crypto.randomUUID(), title: '新对话', msgs: [] }
@@ -154,6 +158,29 @@ export function ChatPage() {
       setError('')
     } catch (e) {
       setError(`图片处理失败：${e instanceof Error ? e.message : String(e)}`)
+    }
+  }
+
+  /** 推荐卡「再次随机」：同一约束重新组合；预算按最新档案与当日记录现算（D18） */
+  async function rerollRec(idx: number, card: CardData) {
+    if (!card.recParams) return
+    try {
+      const all = await (await getMealRepo()).list()
+      const prof = profile ?? (await getProfileRepo().load())
+      const mealType = (
+        ['早餐', '午餐', '晚餐', '加餐'].includes(card.recParams.mealType) ? card.recParams.mealType : inferMealType('')
+      ) as RecMealType
+      const prefs = parseRecPreferences(card.recParams.preferences)
+      const budget = perMealBudget(
+        prof.dailyCalorieTarget ?? null,
+        aggregateToday(all).calories,
+        mainSlotsUsedToday(all, localDateStr()),
+        mealType,
+      )
+      const comp = composeRecommendation(mealType, prefs, budget)
+      updateCardAt(idx, { ...card, result: comp.result, corrLogs: [budget.note, ...comp.applied] })
+    } catch (e) {
+      setError(`重新推荐失败：${e instanceof Error ? e.message : String(e)}`)
     }
   }
 
@@ -286,13 +313,32 @@ export function ChatPage() {
         // 修正未命中 → 按普通查询继续
       }
 
-      // Mock 预设：不联网。图片直接走 mock 识别出卡片；文本走模板应答
+      // Mock 预设：不联网。图片直接走 mock 识别出卡片；推荐问题走同一本地推荐引擎；其余文本走模板应答
       if (s.presetId === 'mock') {
         if (img) {
           await new Promise((r) => setTimeout(r, 400))
           const outcome = await recognizeMeal(img, { presetId: 'mock', baseUrl: '', model: 'mock-meal', apiKey: '' })
           pushCard({ result: outcome.result, photoDataUrl: img, status: 'pending', corrLogs: [] })
           pushAssistant('识别完成（模拟模式）：卡片在下面，可直接点改，或输入「米饭只有一半」这类话让我改；没问题点「✓ 确认记录」。')
+        } else if (REC_INTENT_RE.test(q)) {
+          const mealType = inferMealType(q)
+          const prefs = parseRecPreferences(q)
+          const budget = perMealBudget(
+            ctx.targetKcal ?? null,
+            ctx.eatenKcal ?? 0,
+            mainSlotsUsedToday(all, localDateStr()),
+            mealType,
+          )
+          const comp = composeRecommendation(mealType, prefs, budget)
+          pushCard({
+            result: comp.result,
+            photoDataUrl: '',
+            status: 'pending',
+            corrLogs: [budget.note, ...comp.applied],
+            kind: 'rec',
+            recParams: { mealType, preferences: q.slice(0, 120) },
+          })
+          pushAssistant(`[Mock 应答] ${mealType}推荐来了（本餐约 ${budget.budget} kcal）：不满意点「🎲 再次随机」换一套，满意点「✓ 记录这餐」，默认不会自动记录。`)
         } else {
           await new Promise((r) => setTimeout(r, 300))
           pushAssistant(mockAnswer(q, ctx))
@@ -518,6 +564,7 @@ export function ChatPage() {
                     saving={saving}
                     onChange={(c) => updateCardAt(i, c)}
                     onSave={(mt) => void confirmSave(i, m.card!, mt)}
+                    onReroll={m.card.kind === 'rec' ? () => void rerollRec(i, m.card!) : undefined}
                   />
                 </div>
               ) : (
