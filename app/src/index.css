@@ -776,3 +776,6 @@ footer code {
 /* ─── P5:档案 BMI 与推荐提示 ─── */
 .bmi-line { font-size: 13px; color: #2f6b3a; margin: 6px 2px 0; font-weight: 500; }
 .rec-msg { font-size: 12px; color: #8a6d1f; background: #faf3df; border-radius: 6px; padding: 5px 8px; margin: 6px 2px 0; }
+
+/* 输入框随可用宽度伸展（与消息流同宽） */
+.chat-main .chat-row input { flex: 1; min-width: 0; }

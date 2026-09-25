@@ -8,6 +8,7 @@ import { OpsSchema, type Op } from '../lib/correction'
 import { lookupDish, computeMeal } from '../lib/nutrition_db'
 import { recognizeMeal } from './vlm'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
+import { bmi as calcBmi, type Profile } from '../data/profileRepo'
 import type { MealRecord } from '../data/mealRepo'
 import type { RecognitionItem, MealRecognition } from '../ai/schema'
 
@@ -180,6 +181,28 @@ const TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'update_profile',
+      description:
+        '更新用户档案（体重/身高/年龄/性别/目标/每日热量目标/过敏忌口/偏好）。用户陈述或修改这些信息时 MUST 调用，只传本次要改的字段；更新成功以工具返回为准，MUST NOT 在未调用工具时声称已更新',
+      parameters: {
+        type: 'object',
+        properties: {
+          weightKg: { type: 'number', description: '体重 kg' },
+          heightCm: { type: 'number', description: '身高 cm' },
+          age: { type: 'integer', description: '年龄岁' },
+          dailyCalorieTarget: { type: 'integer', description: '每日热量目标 kcal' },
+          sex: { type: 'string', enum: ['男', '女'] },
+          goal: { type: 'string', description: '目标：减脂/增肌/维持或自定义' },
+          allergies: { type: 'string', description: '过敏/忌口，整体替换；需追加时包含原内容' },
+          preference: { type: 'string', description: '偏好，整体替换；需追加时包含原内容' },
+        },
+        required: [] as string[],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'lookup_food',
       description: '按菜名查本地营养库：每百克热量/三大营养素、常见份量、数值来源',
       parameters: {
@@ -194,6 +217,7 @@ const TOOLS = [
 const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：简短、口语，先给结论再给一句建议。
 本地数据工具：今天吃了什么用 query_today；一段时间的趋势用 query_week；某道菜的营养用 lookup_food。
 用户发来餐食照片时 MUST 调用 recognize_meal 识别并生成卡片；识别后等用户确认入库或提出修改，不要替用户决定是否记录。
+用户陈述或修改身体指标/档案信息（体重、身高、年龄、性别、目标、热量目标、过敏忌口、偏好）时 MUST 调用 update_profile 落库；身体指标类问题直接依据 [档案] 与 BMI 回答。
 凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。
 用户提到过敏/忌口/目标等个人信息时，在回复末尾用一行确认。不得提供医疗诊断，涉及疾病建议就医。`
 
@@ -207,7 +231,7 @@ export interface CardData {
   corrLogs: string[]
 }
 
-/** 工具执行上下文：ChatPage 注入记录与刚上传的图片；onCard 把识别卡片推给 UI 渲染 */
+/** 工具执行上下文：ChatPage 注入记录/图片/当前档案；onCard/onProfile 把结果同步给 UI */
 export interface ToolCtx {
   meals: MealRecord[]
   /** 用户刚发送的餐照（dataURL，已压缩）；recognize_meal 一次性消费 */
@@ -216,11 +240,26 @@ export interface ToolCtx {
   vlmCfg?: { presetId: string; baseUrl: string; model: string; apiKey: string }
   /** 识别完成回调：UI 据此插入卡片消息 */
   onCard?: (card: CardData) => void
+  /** 当前档案（update_profile 的合并基底） */
+  profile?: Profile
+  /** 档案更新回调：UI 刷新侧栏档案卡并持久化 */
+  onProfile?: (p: Profile) => void
 }
 
 /** 工具执行器：模型只决定「调什么、传什么参」，数据计算全部本地（两段式同一哲学） */
 async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise<string> {
-  let args: { days?: number; name?: string } = {}
+  let args: {
+    days?: number
+    name?: string
+    weightKg?: number
+    heightCm?: number
+    age?: number
+    dailyCalorieTarget?: number
+    sex?: string
+    goal?: string
+    allergies?: string
+    preference?: string
+  } = {}
   try {
     args = JSON.parse(rawArgs || '{}') as typeof args
   } catch {
@@ -256,6 +295,56 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
       const meal = computeMeal(outcome.result)
       const names = meal.items.map((i) => i.name).join('、')
       return `识别完成，共 ${meal.items.length} 项（${names}），合计约 ${Math.round(meal.totals.calories)} kcal。识别卡片已展示给用户，请等待用户确认入库或提出修改，不要罗列完整营养明细。`
+    }
+    case 'update_profile': {
+      const cur = ctx.profile
+      if (!cur) return '错误：没有当前档案可更新。'
+      const patch: Partial<Profile> = {}
+      const applied: string[] = []
+      const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null)
+      const w = num(args.weightKg)
+      if (w && w > 20 && w < 300) {
+        patch.weightKg = w
+        applied.push(`体重 ${w}kg`)
+      }
+      const h = num(args.heightCm)
+      if (h && h > 100 && h < 250) {
+        patch.heightCm = h
+        applied.push(`身高 ${h}cm`)
+      }
+      const a = num(args.age)
+      if (a && a > 5 && a < 100) {
+        patch.age = a
+        applied.push(`年龄 ${a}岁`)
+      }
+      const t = num(args.dailyCalorieTarget)
+      if (t && t >= 800 && t <= 6000) {
+        patch.dailyCalorieTarget = t
+        applied.push(`每日热量目标 ${t} kcal`)
+      }
+      if (args.sex === '男' || args.sex === '女') {
+        patch.sex = args.sex
+        applied.push(`性别 ${args.sex}`)
+      }
+      if (typeof args.goal === 'string' && args.goal.trim()) {
+        patch.goal = args.goal.trim().slice(0, 20)
+        applied.push(`目标 ${patch.goal}`)
+      }
+      if (typeof args.allergies === 'string' && args.allergies.trim()) {
+        patch.allergies = args.allergies.trim().slice(0, 100)
+        applied.push(`过敏/忌口「${patch.allergies}」`)
+      }
+      if (typeof args.preference === 'string' && args.preference.trim()) {
+        patch.preference = args.preference.trim().slice(0, 100)
+        applied.push(`偏好「${patch.preference}」`)
+      }
+      if (applied.length === 0) {
+        return '错误：没有合法可更新的字段（数值需在合理范围内）。请向用户说明需要正确的数值。'
+      }
+      const np: Profile = { ...cur, ...patch }
+      ctx.onProfile?.(np)
+      const b = calcBmi(np)
+      return `档案已更新并同步到用户档案卡：${applied.join('、')}${b != null ? `（BMI ${b}）` : ''}。`
     }
     default:
       return `未知工具 ${name}`

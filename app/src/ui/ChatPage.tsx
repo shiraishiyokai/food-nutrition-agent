@@ -286,6 +286,8 @@ export function ChatPage() {
           image: img ?? undefined,
           vlmCfg,
           onCard: pushCard,
+          profile: profile ?? prof,
+          onProfile: (np) => void saveProfile(np),
         })
         const used = [...new Set(r.toolsUsed)]
         pushAssistant(used.length ? `${r.reply}\n🔧 ${used.join('、')}` : r.reply)

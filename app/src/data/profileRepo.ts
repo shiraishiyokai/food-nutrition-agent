@@ -159,6 +159,37 @@ export function parseProfileUpdate(sentence: string): { patch: Partial<Profile>;
       descs.push(`每日热量目标 ${v} kcal`)
     }
   }
+  // 连报格式：「175cm/75kg/30岁/男」「175cm，75公斤，30岁，男」；已有字段不重复记
+  const combo = sentence.match(
+    /(\d{3}(?:\.\d)?)\s*(?:cm|厘米)\s*[/，,、]\s*(\d{2,3}(?:\.\d)?)\s*(?:kg|公斤|千克)\s*[/，,、]?\s*(?:(\d{1,2})\s*岁)?\s*[/，,、]?\s*(男|女)?/,
+  )
+  if (combo) {
+    if (patch.heightCm == null) {
+      const v = Number(combo[1])
+      if (v > 100 && v < 250) {
+        patch.heightCm = v
+        descs.push(`身高 ${v}cm`)
+      }
+    }
+    if (patch.weightKg == null) {
+      const v = Number(combo[2])
+      if (v > 20 && v < 300) {
+        patch.weightKg = v
+        descs.push(`体重 ${v}kg`)
+      }
+    }
+    if (patch.age == null && combo[3]) {
+      const v = Number(combo[3])
+      if (v > 5 && v < 100) {
+        patch.age = v
+        descs.push(`年龄 ${v}岁`)
+      }
+    }
+    if (!patch.sex && combo[4]) {
+      patch.sex = combo[4] as Profile['sex']
+      descs.push(`性别 ${combo[4]}`)
+    }
+  }
   if (descs.length === 0) return null
   return { patch, desc: descs.join('、') }
 }
