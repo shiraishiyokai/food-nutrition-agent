@@ -55,3 +55,14 @@ export function getPreset(id: string): ProviderPreset {
 export function getChatUrl(baseUrl: string): string {
   return `${baseUrl.replace(/\/+$/, '')}/chat/completions`
 }
+
+/** 配料表解读 RAG（D19）：各预设的 embedding 模型（与对话同 Key 同根地址）；未列出的预设不支持向量层 */
+export const EMBED_MODELS: Record<string, string> = {
+  zhipu: 'embedding-2',
+  dashscope: 'text-embedding-v3',
+}
+
+/** 根地址 + /embeddings = 向量端点 */
+export function getEmbedUrl(baseUrl: string): string {
+  return `${baseUrl.replace(/\/+$/, '')}/embeddings`
+}

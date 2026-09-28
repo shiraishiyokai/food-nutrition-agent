@@ -125,6 +125,53 @@ export async function recognizeMeal(
   }
 }
 
+/** 配料表成分提取（D19 RAG 第一步）：VLM 只做「看图抄文字」，输出标准 JSON；
+ *  与识别同理——提取是感知任务（模型强项），成分知识由本地 RAG 检索（红线不破）。 */
+const LABEL_EXTRACT_PROMPT = `你是食品配料表识别器。看图找到「配料表」或「配料」一栏，按出现顺序提取全部成分名，保留原文完整写法（含括号备注，如「阿斯巴甜（含苯丙氨酸）」）。
+只输出一个 JSON 对象，格式：{"ingredients": ["成分1", "成分2"]}。图中没有配料表时输出 {"ingredients": []}。不要输出任何其他文字。`
+
+const MOCK_LABEL_EXTRACT: { ingredients: string[] } = {
+  ingredients: ['水', '白砂糖', '脱脂乳粉', '卡拉胶', '柠檬酸', '阿斯巴甜（含苯丙氨酸）', '食用香精'],
+}
+
+export async function extractLabelIngredients(
+  dataUrl: string,
+  cfg: RecognizeConfig,
+  signal?: AbortSignal,
+): Promise<{ ingredients: string[] }> {
+  if (cfg.presetId === 'mock') {
+    await new Promise((r) => setTimeout(r, 500))
+    return { ...MOCK_LABEL_EXTRACT }
+  }
+  const parse = (raw: string): { ingredients: string[] } => {
+    const obj = extractJson(raw) as { ingredients?: unknown }
+    const list = Array.isArray(obj.ingredients) ? obj.ingredients : []
+    return { ingredients: list.map((x) => String(x).trim()).filter(Boolean).slice(0, 40) }
+  }
+  const messages = [
+    {
+      role: 'user',
+      content: [
+        { type: 'text', text: LABEL_EXTRACT_PROMPT },
+        { type: 'image_url', image_url: { url: dataUrl } },
+      ],
+    },
+  ]
+  const first = await callChat(cfg, messages, signal, 600)
+  try {
+    return parse(first.content)
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err)
+    const retryMessages = [
+      ...messages,
+      { role: 'assistant', content: first.content },
+      { role: 'user', content: `上面的输出无法通过 JSON 校验（${reason}）。请重新只输出 {"ingredients":[...]} 格式的 JSON。` },
+    ]
+    const second = await callChat(cfg, retryMessages, signal, 600)
+    return parse(second.content)
+  }
+}
+
 /** 连通性测试：发一条最小文本消息，验证 地址 + Key + 模型 三者是否可用 */
 export async function testConnection(cfg: RecognizeConfig): Promise<{ ok: boolean; message: string }> {
   if (cfg.presetId === 'mock') return { ok: true, message: '模拟模式不联网，无需测试' }

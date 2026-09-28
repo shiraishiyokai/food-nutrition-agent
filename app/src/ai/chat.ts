@@ -6,7 +6,8 @@ import { getChatUrl } from './providers'
 import { resolveEndpoint } from '../lib/native_http'
 import { OpsSchema, type Op } from '../lib/correction'
 import { lookupDish, computeMeal } from '../lib/nutrition_db'
-import { recognizeMeal } from './vlm'
+import { recognizeMeal, extractLabelIngredients } from './vlm'
+import { retrieveAll, type LabelHit } from '../lib/rag'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
 import { composeRecommendation, inferMealType, mainSlotsUsedToday, parseRecPreferences, perMealBudget, type RecMealType } from '../lib/recommend'
 import { bmi as calcBmi, recommendEnergy, type Profile } from '../data/profileRepo'
@@ -235,6 +236,26 @@ const TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'interpret_label',
+      description:
+        '识别并解读食品配料表（RAG 检索本地添加剂知识库）。用户上传配料表/包装成分照片、以文字给出配料清单、或询问某配料/添加剂是什么与是否健康时 MUST 调用',
+      parameters: {
+        type: 'object',
+        properties: {
+          ingredients: {
+            type: 'array',
+            items: { type: 'string' },
+            description: '用户以文字直接提供配料清单时传入成分名数组；照片识别时无需传',
+          },
+          question: { type: 'string', description: '用户对这份配料表的疑问原话（如「能给孩子吃吗」），没有则传空' },
+        },
+        required: [] as string[],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'lookup_food',
       description: '按菜名查本地营养库：每百克热量/三大营养素、常见份量、数值来源',
       parameters: {
@@ -250,6 +271,7 @@ const TOOLS_SYSTEM_PROMPT = `你是用户的私人营养助手。回答风格：
 本地数据工具：今天吃了什么用 query_today；一段时间的趋势用 query_week；某道菜的营养用 lookup_food。
 用户发来餐食照片时 MUST 调用 recognize_meal 识别并生成卡片；识别后等用户确认入库或提出修改，不要替用户决定是否记录。
 用户问「吃什么好 / 晚饭吃点啥 / 推荐一餐」这类推荐类问题时 MUST 调用 recommend_meal，把餐次和用户约束原话（如「不吃荤」「想吃两个素菜」）传入；依据工具返回的预算与菜品做一两句拟人化介绍，营养数值以卡片为准，不要自行另报数值。
+用户发来配料表/包装成分照片、以文字给出配料清单、或问某配料/添加剂是什么与是否健康时 MUST 调用 interpret_label（文字配料传 ingredients 数组，用户疑问传 question）；解读只能依据工具返回的知识条目并标注来源，未收录的成分如实说明暂未收录，严禁自行编造健康结论；涉及健康话题在结尾提醒仅供参考、不构成医疗建议。
 用户陈述或修改身体指标/档案信息（体重、身高、年龄、性别、目标、热量目标、过敏忌口、偏好）时 MUST 调用 update_profile 落库；一句话报多个指标（如「175cm/75kg/30岁/男」）时一次性提取全部字段、只调一次；身体指标类问题直接依据 [档案] 与 BMI 回答。
 凡涉及数量的问题 MUST 先调工具再回答，严禁凭空回答数值；工具没查到就直说没有记录。用户问还能吃多少/吃得够不够时，依据 query_today 返回的剩余额度与档案目标回答并给一句可执行建议。
 用户提到过敏/忌口/目标等个人信息时，在回复末尾用一行确认。不得提供医疗诊断，涉及疾病建议就医。`
@@ -262,10 +284,12 @@ export interface CardData {
   status: 'pending' | 'saved'
   /** 对话/一句话修正日志 */
   corrLogs: string[]
-  /** 推荐卡（recommend_meal 产出）：无餐照、默认不入库，用户点「记录这餐」才存 */
-  kind?: 'rec'
+  /** 卡片种类：rec=推荐卡（默认不入库，点「记录这餐」才存）；label=配料表解读卡（纯查阅，D19） */
+  kind?: 'rec' | 'label'
   /** 再次随机的重放参数：同一约束重新组合（预算按最新档案与当日记录现算） */
   recParams?: { mealType: string; preferences: string }
+  /** 配料表解读数据（kind=label 时存在）：每成分的知识命中 + 未收录清单 */
+  label?: { items: LabelHit[]; viaPhoto: boolean; kbVersion: string }
 }
 
 /** 工具执行上下文：ChatPage 注入记录/图片/当前档案；onCard/onProfile 把结果同步给 UI */
@@ -283,13 +307,16 @@ export interface ToolCtx {
   onProfile?: (p: Profile) => void
 }
 
-/** 工具执行器：模型只决定「调什么、传什么参」，数据计算全部本地（两段式同一哲学） */
-async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise<string> {
+/** 工具执行器：模型只决定「调什么、传什么参」，数据计算全部本地（两段式同一哲学）。
+ *  cfg 供 interpret_label 的向量层使用（与对话同 Key 同供应商）。 */
+async function executeTool(name: string, rawArgs: string, ctx: ToolCtx, cfg: ChatConfig): Promise<string> {
   let args: {
     days?: number
     name?: string
     mealType?: string
     preferences?: string
+    ingredients?: string[]
+    question?: string
     weightKg?: number
     heightCm?: number
     age?: number
@@ -364,6 +391,43 @@ async function executeTool(name: string, rawArgs: string, ctx: ToolCtx): Promise
       })
       const names = comp.result.items.map((i) => i.name).join('、')
       return `推荐卡片已生成：${mealType}（本餐预算约 ${budget.budget} kcal）＝ ${names}。${budget.note}。请用一两句话介绍这套搭配的思路（荤素/汤的考虑、结合用户约束），并提醒用户：不满意点卡片上的「🎲 再次随机」，满意点「✓ 记录这餐」，默认不会自动记录；卡片上的数值不要复述。`
+    }
+    case 'interpret_label': {
+      // RAG 三步全部本地/确定化：VLM 只抄文字（第一步）、检索在本地知识库（第二步）、
+      // 模型最后只能引用检索到的条目转述（第三步，红线见 docs/rag-design.md）
+      let names: string[] = []
+      let viaPhoto = false
+      if (ctx.image) {
+        if (!ctx.vlmCfg) return '错误：识别模型未配置，请提示用户到设置页填写。'
+        const img = ctx.image
+        ctx.image = undefined
+        const c = ctx.vlmCfg
+        const ex = await extractLabelIngredients(img, {
+          presetId: c.presetId,
+          baseUrl: c.baseUrl,
+          model: c.model,
+          apiKey: c.apiKey,
+        })
+        names = ex.ingredients
+        viaPhoto = true
+      } else if (args.ingredients?.length) {
+        names = args.ingredients.map((x) => String(x).trim()).filter(Boolean).slice(0, 30)
+      }
+      if (names.length === 0) return '错误：没有配料表照片也没有文字配料清单可解读。请提示用户发配料表照片或输入「配料表：成分1、成分2…」。'
+      const rag = await retrieveAll(names, { presetId: ctx.vlmCfg?.presetId ?? '', baseUrl: cfg.baseUrl, apiKey: cfg.apiKey })
+      ctx.onCard?.({
+        result: { meal_type: 'snack', items: [], notes: [] },
+        photoDataUrl: '',
+        status: 'pending',
+        corrLogs: [],
+        kind: 'label',
+        label: { items: rag.items, viaPhoto, kbVersion: '2026-09-26.1' },
+      })
+      const miss = rag.items.filter((i) => !i.entry).map((i) => i.name).join('、') || '无'
+      return (
+        `已${viaPhoto ? '从照片提取' : '解析文字'} ${rag.stats.total} 项成分：知识库精确命中 ${rag.stats.exact}、语义命中 ${rag.stats.semantic}、关键词命中 ${rag.stats.keyword}、未收录 ${rag.stats.miss}（${miss}）。` +
+        `解读卡已展示（每条含来源）。请依据卡片上命中的知识条目用两三句话总结这份配料表（成分复杂度、值得留意的点${args.question ? `，并回答用户问题「${args.question}」` : ''}），只能引用条目内的信息与来源编号，未收录的成分不要猜测其作用；结尾提醒仅供参考、不构成医疗建议。不要逐条复述卡片全部内容。`
+      )
     }
     case 'update_profile': {
       const cur = ctx.profile
@@ -492,7 +556,7 @@ export async function answerQueryTools(
       messages.push({
         role: 'tool',
         tool_call_id: c.id,
-        content: await executeTool(c.function?.name ?? '', c.function?.arguments ?? '', toolCtx),
+        content: await executeTool(c.function?.name ?? '', c.function?.arguments ?? '', toolCtx, cfg),
       })
     }
   }

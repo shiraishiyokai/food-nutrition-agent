@@ -794,3 +794,13 @@ footer code {
   opacity: 0.5;
   cursor: default;
 }
+
+/* ---- 配料表解读卡（D19 RAG） ---- */
+.label-card .lc-name { white-space: nowrap; font-weight: 600; }
+.label-card .lc-tier { font-size: 11px; color: #94a3b8; font-style: normal; }
+.label-card .lc-desc { font-size: 13px; line-height: 1.5; }
+.label-card .lc-warn { display: block; color: #b45309; margin-top: 2px; }
+.label-card .lc-src { color: #2563eb; font-size: 11px; margin-left: 4px; }
+.label-card .lc-miss td { color: #94a3b8; }
+.label-card .lc-note { font-size: 12px; color: #64748b; margin: 6px 0 0; }
+.label-card .lc-sources { font-size: 12px; color: #475569; margin: 8px 0 0; padding-left: 18px; }

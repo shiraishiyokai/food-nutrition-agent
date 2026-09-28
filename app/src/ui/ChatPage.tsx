@@ -10,12 +10,14 @@ import { getPreset } from '../ai/providers'
 import { computeMeal } from '../lib/nutrition_db'
 import { applyCorrectionText } from '../lib/correction'
 import { composeRecommendation, inferMealType, mainSlotsUsedToday, parseRecPreferences, perMealBudget, type RecMealType } from '../lib/recommend'
+import { retrieveAll, KB_VERSION } from '../lib/rag'
 import { compressImage, makeSyntheticMealImage, type CompressedImage } from '../lib/image'
 import { isNative } from '../data/sqlite'
 import { getMealRepo, localDateStr, type MealRecord, type MealType } from '../data/mealRepo'
 import { aggregateByDay, aggregateToday, todayText, weekText } from '../lib/stats'
 import { getProfileRepo, profileText, bmi, bmiLabel, recommendEnergy, parseProfileUpdate, type Profile } from '../data/profileRepo'
 import { MealCard } from './MealCard'
+import { LabelCard } from './LabelCard'
 
 interface ChatMsg {
   role: 'user' | 'assistant' | 'card'
@@ -42,6 +44,19 @@ const CHAT_KEY = 'fna.chat.v2'
 
 /** mock 模式的推荐意图识别（配置真模型时由模型自主调 recommend_meal 工具判断） */
 const REC_INTENT_RE = /吃(什么|啥)|吃点(什么|啥)|推荐.{0,8}(餐|菜|吃)|安排.{0,4}(餐|饭|吃)|帮我想.{0,4}(吃|餐)|来.{0,3}(套|份).{0,3}(餐|菜|吃)/
+
+/** mock 模式的配料表解读意图：输入「配料表：成分1、成分2…」即可在无 Key 下走通 RAG 链路 */
+const LABEL_INTENT_RE = /配料表|成分表|添加剂|配料解读/
+
+function extractIngredientList(q: string): string[] {
+  const m = q.match(/(?:配料表|成分表)[:：]\s*(.+)/)
+  if (!m) return []
+  return m[1]
+    .split(/[、，,;；\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 30)
+}
 
 function newSession(): ChatSession {
   return { id: crypto.randomUUID(), title: '新对话', msgs: [] }
@@ -320,6 +335,24 @@ export function ChatPage() {
           const outcome = await recognizeMeal(img, { presetId: 'mock', baseUrl: '', model: 'mock-meal', apiKey: '' })
           pushCard({ result: outcome.result, photoDataUrl: img, status: 'pending', corrLogs: [] })
           pushAssistant('识别完成（模拟模式）：卡片在下面，可直接点改，或输入「米饭只有一半」这类话让我改；没问题点「✓ 确认记录」。')
+        } else if (LABEL_INTENT_RE.test(q) && /[:：]/.test(q)) {
+          const list = extractIngredientList(q)
+          if (list.length > 0) {
+            // mock 模式的 RAG 链路：无 Key → 自动降级为精确/关键词两层（向量层需 Key，见 rag-design.md）
+            const rag = await retrieveAll(list, { presetId: 'mock', baseUrl: '', apiKey: '' })
+            pushCard({
+              result: { meal_type: 'snack', items: [], notes: [] },
+              photoDataUrl: '',
+              status: 'pending',
+              corrLogs: [],
+              kind: 'label',
+              label: { items: rag.items, viaPhoto: false, kbVersion: KB_VERSION },
+            })
+            pushAssistant(
+              `[Mock 应答] 解读完成：${rag.stats.total} 项成分命中 ${rag.stats.exact + rag.stats.semantic + rag.stats.keyword} 项、未收录 ${rag.stats.miss} 项（已在卡片如实标注）。配置真模型后可直接发配料表照片解读。`,
+            )
+            return
+          }
         } else if (REC_INTENT_RE.test(q)) {
           const mealType = inferMealType(q)
           const prefs = parseRecPreferences(q)
@@ -559,13 +592,17 @@ export function ChatPage() {
             active.msgs.map((m, i) =>
               m.role === 'card' && m.card ? (
                 <div key={i} className="bubble card-bubble">
-                  <MealCard
-                    card={m.card}
-                    saving={saving}
-                    onChange={(c) => updateCardAt(i, c)}
-                    onSave={(mt) => void confirmSave(i, m.card!, mt)}
-                    onReroll={m.card.kind === 'rec' ? () => void rerollRec(i, m.card!) : undefined}
-                  />
+                  {m.card.kind === 'label' ? (
+                    <LabelCard card={m.card} />
+                  ) : (
+                    <MealCard
+                      card={m.card}
+                      saving={saving}
+                      onChange={(c) => updateCardAt(i, c)}
+                      onSave={(mt) => void confirmSave(i, m.card!, mt)}
+                      onReroll={m.card.kind === 'rec' ? () => void rerollRec(i, m.card!) : undefined}
+                    />
+                  )}
                 </div>
               ) : (
                 <div key={i} className={`bubble ${m.role}`}>
