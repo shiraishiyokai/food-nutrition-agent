@@ -1,10 +1,11 @@
-// 全量枚举库装配：boohee-full-raw.json（枚举爬取，自动过滤）→ src/data/dishes-reference-full.json
+// 全量枚举库装配：boohee-full-raw.json（枚举爬取）→ 质检（quality-screen.mjs）→ src/data/dishes-reference-full.json
 // 用法：node scripts/build-full-reference.mjs
 // 类别由菜名启发式推断（仅用于未命中时的类目均值兜底，不参与精确值计算）。
 
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { screenFoods } from './quality-screen.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const full = JSON.parse(readFileSync(join(here, 'boohee-full-raw.json'), 'utf8'))
@@ -13,6 +14,8 @@ const curated = new Set(
   JSON.parse(readFileSync(join(here, '../src/data/dishes-reference.json'), 'utf8'))
     .dishes.flatMap((d) => [d.name, ...d.aliases]),
 )
+// 质检筛离谱值（能量不自洽/油酱类/空热量），规则见 quality-screen.mjs
+const { keep, issues } = screenFoods(Object.values(full.foods), curated)
 
 function categoryOf(name) {
   if (/汤|羹$/.test(name)) return '汤'
@@ -41,7 +44,7 @@ function portionFromUnits(units) {
 }
 
 const dishes = []
-for (const food of Object.values(full.foods)) {
+for (const food of Object.values(keep)) {
   if (curated.has(food.name)) continue
   const portion = portionFromUnits(food.units)
   dishes.push({
@@ -68,5 +71,5 @@ const out = {
   dishes,
 }
 writeFileSync(join(here, '../src/data/dishes-reference-full.json'), JSON.stringify(out, null, 1))
-console.log(`全量库 ${dishes.length} 道（排除精选库同名 ${Object.keys(full.foods).length - dishes.length} 条）→ dishes-reference-full.json`)
+console.log(`全量库 ${dishes.length} 道（质检剔除 ${issues.length} 条 + 排除精选库同名）→ dishes-reference-full.json`)
 console.log('类别分布:', dishes.reduce((m, d) => ((m[d.category] = (m[d.category] ?? 0) + 1), m), {}))

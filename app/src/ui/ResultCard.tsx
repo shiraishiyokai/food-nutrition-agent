@@ -32,6 +32,14 @@ function MatchBadge({ matchType }: { matchType: 'exact' | 'alias' | 'fuzzy' }) {
 function OriginBadge({ origin, sourceUrl }: { origin: DishOrigin; sourceUrl?: string }) {
   if (origin === 'calibration') return <span className="badge match-alias">个人校准值</span>
   if (origin === 'recipe_override') return <span className="badge match-alias">我的配方</span>
+  if (origin === 'reference_full') {
+    return (
+      <a className="badge match-alias ref-link" href={sourceUrl} target="_blank" rel="noreferrer"
+        title="批量枚举自薄荷食物库（已质检，未经逐条核定），点击可查看来源">
+        批量参考值
+      </a>
+    )
+  }
   if (origin === 'reference') {
     return (
       <a className="badge match-alias ref-link" href={sourceUrl} target="_blank" rel="noreferrer"

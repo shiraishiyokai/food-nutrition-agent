@@ -391,3 +391,10 @@ src/
 - `app/scripts/crawl-boohee-full.mjs`：薄荷食物库公开接口（food.boohee.com，无 Key）按 40 通用词枚举，断点续采+429 退避+1.2s 限速；9-23 试跑 2 词 62 条后中止。
 - 下游：`build-full-reference.mjs` → dishes-reference-full.json（排除精选 108，精选优先）→ **尚未接入运行时加载**。
 - 待办：跑完全量 → 用户要求的数据质检（筛离谱值）→ 再定全量库是否进公开仓库（再分发授权待确认；文档页 JS 渲染无法核验条款）。
+
+### D18 扩库完成（2026-09-26 晚）
+- 爬取完成：958 条 / 50 词全跑完（429 退避扛过，断点续采未丢数据）。
+- 质检（scripts/quality-screen.mjs，规则可解释）：939 条通过；剔除 19 条（能量不自洽/油酱类/空热量/与精选重名）。
+- 装配：build-full-reference.mjs 已接入质检 → dishes-reference-full.json（939 道，含 source_url 溯源）。
+- 运行时接入：nutrition_db 增直录全量层，查找优先级=校准>API缓存>精选核定>全量>配方>类目；origin='reference_full'（UI 徽章「批量参考值」）；推荐池=listReferenceDishes()=精选+全量。
+- **用户决策：全量库随仓库公开**（2026-09-26）；README 已标注来源与采集方式。

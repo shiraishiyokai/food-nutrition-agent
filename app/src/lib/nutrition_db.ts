@@ -1,6 +1,7 @@
 import ingredientsRaw from '../data/ingredients.json'
 import dishesRaw from '../data/dishes.json'
 import dishesRefRaw from '../data/dishes-reference.json'
+import dishesFullRaw from '../data/dishes-reference-full.json'
 import type { MealRecognition } from '../ai/schema'
 
 // ─── 数据类型 ───────────────────────────────────────────────
@@ -65,8 +66,9 @@ export interface DishNutrition {
   portion_presets: Record<string, number>
   category: string
   note?: string
-  /** 数值来源：default=库内配方派生；reference=外部参考值直录；recipe_override=用户配方；calibration=用户直接校准 */
-  origin: 'default' | 'reference' | 'recipe_override' | 'calibration'
+  /** 数值来源：default=库内配方派生；reference=直录核定；reference_full=直录全量（批量枚举+质检，未经逐条核定）；
+   *  recipe_override=用户配方；calibration=用户直接校准 */
+  origin: 'default' | 'reference' | 'reference_full' | 'recipe_override' | 'calibration'
   recipe: RecipeLine[]
   /** origin=reference 时的溯源链接 */
   source_url?: string
@@ -89,6 +91,7 @@ interface DishRefDbFile {
 const INGREDIENT_DB = ingredientsRaw as DbFiles
 const DISH_DB = dishesRaw as unknown as DishDbFile
 const DISH_REF_DB = dishesRefRaw as unknown as DishRefDbFile
+const DISH_FULL_DB = dishesFullRaw as unknown as DishRefDbFile
 
 const INGREDIENT_BY_ID = new Map(INGREDIENT_DB.ingredients.map((i) => [i.id, i]))
 
@@ -200,7 +203,7 @@ function buildDish(record: DishRecord, recipe: RecipeLine[], origin: DishNutriti
   }
 }
 
-function buildReferenceDish(record: ReferenceDishRecord): DishNutrition {
+function buildReferenceDish(record: ReferenceDishRecord, origin: DishNutrition['origin'] = 'reference'): DishNutrition {
   return {
     id: record.id,
     name: record.name,
@@ -210,7 +213,7 @@ function buildReferenceDish(record: ReferenceDishRecord): DishNutrition {
     portion_presets: record.portion_presets,
     category: record.category,
     note: record.note ?? (record.review ? '采集时名称非精确匹配，建议复核' : undefined),
-    origin: 'reference',
+    origin,
     recipe: [],
     source_url: record.source_url,
   }
@@ -219,11 +222,13 @@ function buildReferenceDish(record: ReferenceDishRecord): DishNutrition {
 /** 派生轨（配方假设） */
 const DEFAULT_DISHES: DishNutrition[] = DISH_DB.dishes.map((d) => buildDish(d, d.recipe, 'default'))
 /** 直录轨·精选（外部参考值，经人工核定/精确匹配）：查找顺序在派生轨之前 */
-const REFERENCE_DISHES: DishNutrition[] = DISH_REF_DB.dishes.map(buildReferenceDish)
+const REFERENCE_DISHES: DishNutrition[] = DISH_REF_DB.dishes.map((d) => buildReferenceDish(d))
+/** 直录轨·全量（批量枚举+质检筛离谱值，未经逐条核定）：查找/推荐池优先级低于精选 */
+const FULL_DISHES: DishNutrition[] = DISH_FULL_DB.dishes.map((d) => buildReferenceDish(d, 'reference_full'))
 
-/** 推荐引擎用（D18）：暴露精选直录库供组合餐食（数值可溯源，来源见 source_url） */
+/** 推荐引擎用（D18）：推荐池 = 精选核定库 + 质检通过的全量枚举库（数值均可溯源，来源见 source_url） */
 export function listReferenceDishes(): DishNutrition[] {
-  return REFERENCE_DISHES
+  return [...REFERENCE_DISHES, ...FULL_DISHES]
 }
 
 // ─── 类目兜底（D8）：未命中菜品按同类均值估算，明确标注、不冒充精确值 ──
@@ -278,10 +283,10 @@ function normalize(s: string): string {
 }
 
 function allDishes(): DishNutrition[] {
-  return [...userCalibrations.values(), ...apiCached.values(), ...REFERENCE_DISHES, ...DEFAULT_DISHES]
+  return [...userCalibrations.values(), ...apiCached.values(), ...REFERENCE_DISHES, ...FULL_DISHES, ...DEFAULT_DISHES]
 }
 
-/** 校准 > 直录参考值 > 配方派生 > 包含式模糊；全落空返回 null（触发类目兜底，禁止直接用模型估算） */
+/** 校准 > API缓存 > 直录核定 > 直录全量 > 配方派生 > 包含式模糊；全落空返回 null（触发类目兜底，禁止直接用模型估算） */
 export function lookupDish(name: string): DishMatch | null {
   const target = normalize(name)
   if (!target) return null
